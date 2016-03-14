@@ -18,6 +18,8 @@ namespace SpaceGame
         private Texture2D BaseShip;
         private float angle = 0;
 
+        //private AnimatedSprite animatedSprite;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -48,6 +50,9 @@ namespace SpaceGame
 
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             font = Content.Load<SpriteFont>("myFont");
+
+           //Texture2D texture = Content.Load<Texture2D>("SmileyWalk");
+            //animatedSprite = new AnimatedSprite(texture, 4, 4);
         }
 
         /// <summary>
@@ -72,6 +77,8 @@ namespace SpaceGame
             score++;
             angle += 0.02f;
 
+           // animatedSprite.Update();
+
             base.Update(gameTime);
         }
 
@@ -82,6 +89,8 @@ namespace SpaceGame
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            //animatedSprite.Draw(spriteBatch, new Vector2(400, 200));
 
             spriteBatch.Begin();
 
