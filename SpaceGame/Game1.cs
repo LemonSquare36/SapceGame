@@ -18,6 +18,19 @@ namespace SpaceGame
         private Texture2D BaseShip;
         private float angle = 0;
 
+        private Texture2D blue;
+        private Texture2D green;
+        private Texture2D red;
+
+        private float blueAngle = 0;
+        private float greenAngle = 0;
+        private float redAngle = 0;
+
+        private float blueSpeed = 0.025f;
+        private float greenSpeed = 0.017f;
+        private float redSpeed = 0.022f;
+
+        private float distance = 100;
         //private AnimatedSprite animatedSprite;
 
         public Game1()
@@ -51,6 +64,10 @@ namespace SpaceGame
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             font = Content.Load<SpriteFont>("myFont");
 
+            blue = Content.Load<Texture2D>("Color/blue");
+            green = Content.Load<Texture2D>("Color/green");
+            red = Content.Load<Texture2D>("Color/red");
+
            //Texture2D texture = Content.Load<Texture2D>("SmileyWalk");
             //animatedSprite = new AnimatedSprite(texture, 4, 4);
         }
@@ -76,6 +93,10 @@ namespace SpaceGame
 
             score++;
             angle += 0.02f;
+
+            blueAngle += blueSpeed;
+            greenAngle += greenSpeed;
+            redAngle += redSpeed;
 
            // animatedSprite.Update();
 
