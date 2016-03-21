@@ -16,7 +16,7 @@ namespace SpaceGame
     /// </summary>
     public class Game1 : Game
     {
-        GraphicsDeviceManager graphics;
+        GraphicsDeviceManager graphics; 
         SpriteBatch spriteBatch;
 
         private SpriteFont font;
