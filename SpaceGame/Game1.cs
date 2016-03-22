@@ -14,9 +14,11 @@ namespace SpaceGame
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game
+    public class Main : Game
     {
-        GraphicsDeviceManager graphics; 
+        Ship BaseShipSprite;
+
+        GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         private SpriteFont font;
@@ -29,21 +31,20 @@ namespace SpaceGame
         private Texture2D green;
         private Texture2D red;
 
-        private float blueAngle = 0;
-        private float greenAngle = 0;
-        private float redAngle = 0;
 
-        private float blueSpeed = 0.025f;
-        private float greenSpeed = 0.017f;
-        private float redSpeed = 0.022f;
-
-        private float distance = 100;
+        private static ContentManager content;
+        public static ContentManager GameContent
+        {
+            get { return content; }
+            set { content = value; }
+        }
         //private AnimatedSprite animatedSprite;
 
-        public Game1()
+        public Main()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            content = Content;
         }
 
         /// <summary>
@@ -55,7 +56,7 @@ namespace SpaceGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            BaseShipSprite = new Ship();
             base.Initialize();
         }
 
@@ -70,6 +71,9 @@ namespace SpaceGame
 
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             font = Content.Load<SpriteFont>("myFont");
+
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            BaseShipSprite.LoadContent(this.Content);
 
             blue = Content.Load<Texture2D>("blue");
             green = Content.Load<Texture2D>("green");
@@ -98,13 +102,10 @@ namespace SpaceGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            BaseShipSprite.Update(gameTime);
+
             score++;
             angle += 0.02f;
-
-            blueAngle += blueSpeed;
-            greenAngle += greenSpeed;
-            redAngle += redSpeed;
-
            // animatedSprite.Update();
 
             base.Update(gameTime);
@@ -116,27 +117,20 @@ namespace SpaceGame
         /// <param name="gameTimeFunTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
-
-            Vector2 bluePosition = new Vector2((float)Math.Cos(blueAngle) * distance, (float)Math.Sin(blueAngle) * distance);
-            Vector2 greenPosition = new Vector2((float)Math.Cos(greenAngle) * distance, (float)Math.Sin(greenAngle) * distance);
-            Vector2 redPosition = new Vector2((float)Math.Cos(redAngle) * distance, (float)Math.Sin(redAngle) * distance);
-            Vector2 center = new Vector2(300, 140);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             //animatedSprite.Draw(spriteBatch, new Vector2(400, 200));
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+            spriteBatch.Begin();
 
             spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
             spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Black);
 
+            BaseShipSprite.Draw(this.spriteBatch);
+
             Vector2 location = new Vector2(300, 400);
             Rectangle sourceRectangle = new Rectangle(0, 0, BaseShip.Width, BaseShip.Height);
             Vector2 origin = new Vector2(BaseShip.Width / 2, BaseShip.Height * 3);
-
-            spriteBatch.Draw(blue, center + bluePosition, Color.White);
-            spriteBatch.Draw(green, center + greenPosition, Color.White);
-            spriteBatch.Draw(red, center + redPosition, Color.White);
 
             spriteBatch.Draw(BaseShip, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
 
