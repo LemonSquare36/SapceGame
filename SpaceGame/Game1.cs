@@ -17,6 +17,9 @@ namespace SpaceGame
     public class Main : Game
     {
         Ship BaseShipSprite;
+        Sprite Background1;
+        Sprite Background2;
+        Sprite Background3;
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -26,9 +29,6 @@ namespace SpaceGame
 
         private Texture2D BaseShip;
         private float angle = 0;
-
-        Sprite Background1;
-        Sprite Background2;
 
         private static ContentManager content;
         public static ContentManager GameContent
@@ -57,6 +57,7 @@ namespace SpaceGame
             BaseShipSprite = new Ship();
             Background1 = new Sprite();
             Background2 = new Sprite();
+            Background3 = new Sprite();
             base.Initialize();
         }
 
@@ -74,8 +75,10 @@ namespace SpaceGame
 
             Background1.LoadContent(this.Content, "Sprites/maxresdefault");
             Background1.Position = new Vector2(0, 0);
-            Background1.LoadContent(this.Content, "Sprites/maxresdefault");
-            Background1.Position = new Vector2(Background2.Position.X + Background2.Size.Width, 0);
+            Background2.LoadContent(this.Content, "Sprites/maxresdefault");
+            Background2.Position = new Vector2(Background2.Position.X + Background2.Size.Width, 0);
+            Background3.LoadContent(this.Content, "Sprites/maxresdefault");
+            Background3.Position = new Vector2(Background3.Position.X + Background3.Size.Width, 0);
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -105,6 +108,27 @@ namespace SpaceGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            if(Background1.Position.X <  800)
+            {
+                Background1.Position.X = Background2.Position.X + 800;
+            }
+            if(Background2.Position.X < -800)
+            {
+                Background2.Position.X = Background3.Position.X + -800;
+            }
+            
+             if (Background3.Position.X < 800)
+           {
+               Background3.Position.X = Background1.Position.X + 800;
+           }
+
+            Vector2 aDirection = new Vector2(-1, 0);
+            Vector2 aSpeed = new Vector2(50, 0);
+
+            Background1.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Background2.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Background3.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             BaseShipSprite.Update(gameTime);
 
             score++;
@@ -129,6 +153,9 @@ namespace SpaceGame
             spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
             spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Black);
 
+            Background1.Draw(this.spriteBatch);
+            Background2.Draw(this.spriteBatch);
+            Background3.Draw(this.spriteBatch);
             BaseShipSprite.Draw(this.spriteBatch);
 
             Vector2 location = new Vector2(300, 400);
