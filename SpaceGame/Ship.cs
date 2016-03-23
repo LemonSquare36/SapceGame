@@ -12,6 +12,7 @@ namespace SpaceGame
 {
     class Ship : Sprite
     {
+        private Texture2D baseShip, Starrybackground;
         // For Movement
         const string ShipAssetName = "Ship";
         const int StartPositionX = 125;
@@ -36,6 +37,8 @@ namespace SpaceGame
         public void LoadContent(ContentManager theContentManager)
         {
             Position = new Vector2(StartPositionX, StartPositionY);
+            baseShip = Main.GameContent.Load<Texture2D>("Sprites/Base Ship");
+            Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
             base.LoadContent(theContentManager, ShipAssetName);
         }
         public void Update(GameTime gameTime)
@@ -78,5 +81,10 @@ namespace SpaceGame
 
             }
         }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(baseShip, Position, new Rectangle(0, 0, baseShip.Width, baseShip.Height), Color.White);
+        }
     }
+
 }
