@@ -36,6 +36,7 @@ namespace SpaceGame
             get { return content; }
             set { content = value; }
         }
+        //private AnimatedSprite animatedSprite;
 
         public Main()
         {
@@ -79,6 +80,10 @@ namespace SpaceGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
 
+
+
+            //Texture2D texture = Content.Load<Texture2D>("SmileyWalk");
+            //animatedSprite = new AnimatedSprite(texture, 4, 4);
         }
 
         /// <summary>
@@ -104,6 +109,7 @@ namespace SpaceGame
 
             score++;
             angle += 0.02f;
+            // animatedSprite.Update();
 
             base.Update(gameTime);
         }
@@ -116,6 +122,7 @@ namespace SpaceGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            //animatedSprite.Draw(spriteBatch, new Vector2(400, 200));
 
             spriteBatch.Begin();
 
