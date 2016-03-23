@@ -27,10 +27,8 @@ namespace SpaceGame
         private Texture2D BaseShip;
         private float angle = 0;
 
-        private Texture2D blue;
-        private Texture2D green;
-        private Texture2D red;
-
+        Sprite Background1;
+        Sprite Background2;
 
         private static ContentManager content;
         public static ContentManager GameContent
@@ -57,6 +55,8 @@ namespace SpaceGame
         {
             // TODO: Add your initialization logic here
             BaseShipSprite = new Ship();
+            Background1 = new Sprite();
+            Background2 = new Sprite();
             base.Initialize();
         }
 
@@ -72,12 +72,15 @@ namespace SpaceGame
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             font = Content.Load<SpriteFont>("myFont");
 
+            Background1.LoadContent(this.Content, "Sprites/maxresdefault");
+            Background1.Position = new Vector2(0, 0);
+            Background1.LoadContent(this.Content, "Sprites/maxresdefault");
+            Background1.Position = new Vector2(Background2.Position.X + Background2.Size.Width, 0);
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
 
-            blue = Content.Load<Texture2D>("blue");
-            green = Content.Load<Texture2D>("green");
-            red = Content.Load<Texture2D>("red");
+
 
            //Texture2D texture = Content.Load<Texture2D>("SmileyWalk");
             //animatedSprite = new AnimatedSprite(texture, 4, 4);

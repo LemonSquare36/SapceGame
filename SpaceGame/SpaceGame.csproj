@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Sprites\Base Ship.png" />
+    <Content Include="Content\Sprites\maxresdefault.png" />
     <Content Include="Content\Sprites\SmileyWalk.png" />
     <Content Include="Content\Sprites\Wall.png" />
     <Content Include="Icon.ico" />

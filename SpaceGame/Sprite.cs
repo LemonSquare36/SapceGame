@@ -14,13 +14,13 @@ namespace SpaceGame
     class Sprite
     {
         public string AssetName;
-        private Texture2D baseShip;
+        private Texture2D baseShip, Starrybackground;
         // Size of sprite
         public Rectangle Size;
         // Amount to increase/decrease size
         private float mScale = 1.0f;
         //For Updating under move
-        protected Vector2 Position = Vector2.Zero;
+        public Vector2 Position = Vector2.Zero;
 
         public float Scale
         {
@@ -33,6 +33,7 @@ namespace SpaceGame
         }
         public void LoadContent(ContentManager theContentManager, string theAssetName)
         {
+            Starrybackground = theContentManager.Load<Texture2D>("Sprites/maxresdefault");
             baseShip = Main.GameContent.Load<Texture2D>("Sprites/Base Ship");
             Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
         }
