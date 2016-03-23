@@ -15,6 +15,8 @@ namespace SpaceGame
         private SpriteFont font;
         private int score = 0;
 
+        //private AnimatedSprite animatedSprite;
+
         private Texture2D BaseShip;
         private float angle = 0;
 
@@ -48,6 +50,9 @@ namespace SpaceGame
 
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             font = Content.Load<SpriteFont>("myFont");
+
+            Texture2D texture = Content.Load<Texture2D>("Sprites/SmileyWalk");
+            //animatedSprite = new AnimatedSprite(texture, 4, 4);
         }
 
         /// <summary>
@@ -73,6 +78,7 @@ namespace SpaceGame
             angle += 0.02f;
 
             base.Update(gameTime);
+            //animatedSprite.Update();
         }
 
         /// <summary>
@@ -83,16 +89,20 @@ namespace SpaceGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+
+            //animatedSprite.Draw(spriteBatch, new Vector2(400, 200));
+
+           //spriteBatch.Begin();
             spriteBatch.Begin();
 
-            spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
-            spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Black);
-
-            Vector2 location = new Vector2(300, 400);
             Rectangle sourceRectangle = new Rectangle(0, 0, BaseShip.Width, BaseShip.Height);
             Vector2 origin = new Vector2(BaseShip.Width / 2, BaseShip.Height * 3);
-
+            Vector2 location = new Vector2(300, 400);
+            spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
+            spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Black);
             spriteBatch.Draw(BaseShip, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
+ 
+           
 
             spriteBatch.End();
 

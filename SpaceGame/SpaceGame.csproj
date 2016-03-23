@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AnimatedSprite.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -50,7 +51,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\SmileyWalk.png" />
     <Content Include="Content\Sprites\Base Ship.png" />
+    <Content Include="Content\Sprites\blue.png" />
+    <Content Include="Content\Sprites\green.png" />
+    <Content Include="Content\Sprites\red.png" />
     <Content Include="Content\Sprites\SmileyWalk.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
