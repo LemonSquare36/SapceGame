@@ -82,7 +82,7 @@ namespace SpaceGame
 
 
 
-           //Texture2D texture = Content.Load<Texture2D>("SmileyWalk");
+            //Texture2D texture = Content.Load<Texture2D>("SmileyWalk");
             //animatedSprite = new AnimatedSprite(texture, 4, 4);
         }
 
@@ -109,7 +109,7 @@ namespace SpaceGame
 
             score++;
             angle += 0.02f;
-           // animatedSprite.Update();
+            // animatedSprite.Update();
 
             base.Update(gameTime);
         }
