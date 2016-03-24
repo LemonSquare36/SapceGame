@@ -12,7 +12,7 @@ namespace SpaceGame
 {
     class Ship : Sprite
     {
-        private Texture2D baseShip, Starrybackground;
+        private Texture2D baseShip;
         // For Movement
         const string ShipAssetName = "Ship";
         const int StartPositionX = 125;

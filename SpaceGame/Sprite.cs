@@ -34,7 +34,6 @@ namespace SpaceGame
         public void LoadContent(ContentManager theContentManager, string theAssetName)
         {
             Starrybackground = theContentManager.Load<Texture2D>("Sprites/maxresdefault");
-
         }
         public void Update(GameTime gameTime, Vector2 theSpeed, Vector2 theDirection)
         {
