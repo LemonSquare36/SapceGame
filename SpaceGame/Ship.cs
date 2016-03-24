@@ -48,6 +48,7 @@ namespace SpaceGame
             UpdateMovement(CurrentKeyBoardState);
             mPreviousKeyboardState = CurrentKeyBoardState;
 
+            ///these work
             //upper left hand corner
             if (Position.X <= 0 && Position.Y <= 0)
             {
@@ -74,13 +75,6 @@ namespace SpaceGame
                 Position.X = 775;
             }
 
-            //lower left hand corner
-            else if(Position.X <= 0 && Position.Y >= 460)
-            {
-                Position.X = 0;
-                Position.Y = 460;
-            }
-
             //top wall
             else if (Position.Y <= 0)
             {
@@ -92,12 +86,21 @@ namespace SpaceGame
             {
                 Position.Y = 460;
             }
+             
 
+            ///these dont work
             //lower left hand corner
-            else if (Position.X <= 0 && Position.Y >= 460)
+            if (Position.X <= 0 && Position.Y >= 460)
             {
                 Position.X = 0;
                 Position.Y = 460;
+            }
+
+            //upper right hand corner
+            else if (Position.X >= 775 && Position.Y <= 0)
+            {
+                Position.X = 775;
+                Position.Y = 0;
             }
 
 
