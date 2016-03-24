@@ -74,6 +74,32 @@ namespace SpaceGame
                 Position.X = 775;
             }
 
+            //lower left hand corner
+            else if(Position.X <= 0 && Position.Y >= 460)
+            {
+                Position.X = 0;
+                Position.Y = 460;
+            }
+
+            //top wall
+            else if (Position.Y <= 0)
+            {
+                Position.Y = 0;
+            }
+
+            //bottom wall
+            else if (Position.Y >= 460)
+            {
+                Position.Y = 460;
+            }
+
+            //lower left hand corner
+            else if (Position.X <= 0 && Position.Y >= 460)
+            {
+                Position.X = 0;
+                Position.Y = 460;
+            }
+
 
             base.Update(gameTime, mSpeed, mDirection);
 
