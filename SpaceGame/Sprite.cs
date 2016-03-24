@@ -34,7 +34,8 @@ namespace SpaceGame
         public void LoadContent(ContentManager theContentManager, string theAssetName)
         {
             Starrybackground = theContentManager.Load<Texture2D>("Sprites/maxresdefault");
-
+            baseShip = Main.GameContent.Load<Texture2D>("Sprites/Base Ship");
+            Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
         }
         public void Update(GameTime gameTime, Vector2 theSpeed, Vector2 theDirection)
         {
@@ -42,6 +43,7 @@ namespace SpaceGame
         }
         public void Draw(SpriteBatch spriteBatch)
         {
+            spriteBatch.Draw(baseShip, Position, new Rectangle(0, 0, baseShip.Width, baseShip.Height), Color.White);
             spriteBatch.Draw(Starrybackground, Position, new Rectangle(0, 0, Starrybackground.Width, Starrybackground.Height), Color.White);
         }
     }
