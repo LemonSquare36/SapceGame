@@ -35,7 +35,7 @@ namespace SpaceGame
 
         KeyboardState mPreviousKeyboardState;
 
-        public void LoadContent(ContentManager theContentManager)
+        public override void LoadContent(ContentManager theContentManager)
         {
             Position = new Vector2(StartPositionX, StartPositionY);
             baseShip = Main.GameContent.Load<Texture2D>("Sprites/Base Ship");
@@ -100,16 +100,19 @@ namespace SpaceGame
                 Position.Y = 0;
             }
 
+            base.Update(gameTime, mSpeed, mDirection);
 
         }
         private void UpdateMovement(KeyboardState CurrentKeyBoardState)
         {
+            Console.WriteLine(CurrentKeyBoardState.IsKeyDown(Keys.Left));
+
             if (mCurrentState == State.Moving)
             {
                 mSpeed = Vector2.Zero;
                 mDirection = Vector2.Zero;
 
-                if (CurrentKeyBoardState.IsKeyDown(Keys.Left) == true)
+                if (CurrentKeyBoardState.IsKeyDown(Keys.Left))
                 {
                     mSpeed.X = SpeedLR;
                     mDirection.X = MoveLeft;
@@ -133,7 +136,7 @@ namespace SpaceGame
 
             }
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(baseShip, Position, new Rectangle(0, 0, baseShip.Width, baseShip.Height), Color.White);
         }
