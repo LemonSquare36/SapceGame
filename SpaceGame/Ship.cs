@@ -100,6 +100,8 @@ namespace SpaceGame
                 Position.Y = 0;
             }
 
+            base.Update(gameTime, mSpeed, mDirection);
+
 
         }
         private void UpdateMovement(KeyboardState CurrentKeyBoardState)
