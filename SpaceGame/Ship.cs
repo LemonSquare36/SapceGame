@@ -110,7 +110,7 @@ namespace SpaceGame
                 mSpeed = Vector2.Zero;
                 mDirection = Vector2.Zero;
 
-                if (CurrentKeyBoardState.IsKeyDown(Keys.Left))
+                if (CurrentKeyBoardState.IsKeyDown(Keys.Left) == true)
                 {
                     mSpeed.X = SpeedLR;
                     mDirection.X = MoveLeft;
