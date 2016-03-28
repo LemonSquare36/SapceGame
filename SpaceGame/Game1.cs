@@ -19,7 +19,7 @@ namespace SpaceGame
         Ship BaseShipSprite;
         Background Background1;
         Background Background2;
-        Background Background3;
+        Background Background3; 
 
         Sprite Wall1; 
         Sprite Wall2;
