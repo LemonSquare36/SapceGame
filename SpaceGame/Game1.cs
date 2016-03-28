@@ -21,7 +21,7 @@ namespace SpaceGame
         Background Background2;
         Background Background3;
 
-        Sprite Wall1;
+        Sprite Wall1; 
         Sprite Wall2;
         Sprite Wall3;
         Vector2 Pos = new Vector2(600, 200);
