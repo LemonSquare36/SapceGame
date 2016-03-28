@@ -16,6 +16,7 @@ namespace SpaceGame
     /// </summary>
     public class Main : Game
     {
+
         Ship BaseShipSprite;
         Sprite Background1;
         Sprite Background2;
@@ -36,7 +37,6 @@ namespace SpaceGame
             get { return content; }
             set { content = value; }
         }
-        //private AnimatedSprite animatedSprite;
 
         public Main()
         {
@@ -70,6 +70,7 @@ namespace SpaceGame
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             font = Content.Load<SpriteFont>("myFont");
 
@@ -85,8 +86,6 @@ namespace SpaceGame
 
 
 
-            //Texture2D texture = Content.Load<Texture2D>("SmileyWalk");
-            //animatedSprite = new AnimatedSprite(texture, 4, 4);
         }
 
         /// <summary>
@@ -105,22 +104,23 @@ namespace SpaceGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param> 
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if(Background1.Position.X <  800)
+            if (Background1.Position.X < 800)
             {
                 Background1.Position.X = Background2.Position.X + 800;
             }
-            if(Background2.Position.X < -800)
+            if (Background2.Position.X < -800)
             {
                 Background2.Position.X = Background3.Position.X + -800;
             }
-            
-             if (Background3.Position.X < 800)
-           {
-               Background3.Position.X = Background1.Position.X + 800;
-           }
+
+            if (Background3.Position.X < 800)
+            {
+                Background3.Position.X = Background1.Position.X + 800;
+            }
 
             Vector2 aDirection = new Vector2(-1, 0);
             Vector2 aSpeed = new Vector2(50, 0);
@@ -129,11 +129,11 @@ namespace SpaceGame
             Background2.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Background3.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+
             BaseShipSprite.Update(gameTime);
 
             score++;
             angle += 0.02f;
-            // animatedSprite.Update();
 
             base.Update(gameTime);
         }
@@ -146,7 +146,6 @@ namespace SpaceGame
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            //animatedSprite.Draw(spriteBatch, new Vector2(400, 200));
 
             spriteBatch.Begin();
 
