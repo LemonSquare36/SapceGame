@@ -17,9 +17,14 @@ namespace SpaceGame
     public class Main : Game
     {
         Ship BaseShipSprite;
-        Sprite Background1;
-        Sprite Background2;
-        Sprite Background3;
+        Background Background1;
+        Background Background2;
+        Background Background3;
+
+        Sprite Wall1;
+        Sprite Wall2;
+        Sprite Wall3;
+        Vector2 Pos = new Vector2(600, 200);
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -55,9 +60,14 @@ namespace SpaceGame
         {
             // TODO: Add your initialization logic here
             BaseShipSprite = new Ship();
-            Background1 = new Sprite();
-            Background2 = new Sprite();
-            Background3 = new Sprite();
+            Background1 = new Background();
+            Background2 = new Background();
+            Background3 = new Background();
+
+            Wall1 = new WALL();
+            Wall2 = new WALL();
+            Wall3 = new WALL();
+
             base.Initialize();
         }
 
@@ -73,12 +83,19 @@ namespace SpaceGame
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             font = Content.Load<SpriteFont>("myFont");
 
-            Background1.LoadContent(this.Content, "Sprites/maxresdefault");
+            Background1.LoadContent(this.Content);
             Background1.Position = new Vector2(0, 0);
-            Background2.LoadContent(this.Content, "Sprites/maxresdefault");
+            Background2.LoadContent(this.Content);
             Background2.Position = new Vector2(Background2.Position.X + Background2.Size.Width, 0);
-            Background3.LoadContent(this.Content, "Sprites/maxresdefault");
+            Background3.LoadContent(this.Content);
             Background3.Position = new Vector2(Background3.Position.X + Background3.Size.Width, 0);
+
+            Wall1.LoadContent(this.Content, "Sprites/Wall");
+            Wall1.Position = Pos;
+            Wall2.LoadContent(this.Content, "Sprites/Wall");
+            Wall2.Position = Pos;
+            Wall3.LoadContent(this.Content, "Sprites/Wall");
+            Wall3.Position = Pos;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -122,12 +139,32 @@ namespace SpaceGame
                Background3.Position.X = Background1.Position.X + 800;
            }
 
+             if (Wall1.Position.X < 600)
+             {
+                 Wall1.Position.X = Wall2.Position.X + 600;
+             }
+             if (Wall2.Position.X < -600)
+             {
+                 Wall2.Position.X = Wall3.Position.X + -600;
+             }
+
+             if (Wall3.Position.X < 600)
+             {
+                 Wall3.Position.X = Wall1.Position.X + 600;
+             }
+
             Vector2 aDirection = new Vector2(-1, 0);
             Vector2 aSpeed = new Vector2(50, 0);
+
+            Vector2 bSpeed = new Vector2(200, 0);
 
             Background1.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Background2.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             Background3.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Wall1.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Wall2.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Wall3.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             BaseShipSprite.Update(gameTime);
 
@@ -150,13 +187,18 @@ namespace SpaceGame
 
             spriteBatch.Begin();
 
-            spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
-            spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Black);
-
             Background1.Draw(this.spriteBatch);
             Background2.Draw(this.spriteBatch);
             Background3.Draw(this.spriteBatch);
+
+            spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
+
+            Wall1.Draw(this.spriteBatch);
+            Wall2.Draw(this.spriteBatch);
+            Wall3.Draw(this.spriteBatch);
+
             BaseShipSprite.Draw(this.spriteBatch);
+            spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
 
             Vector2 location = new Vector2(300, 400);
             Rectangle sourceRectangle = new Rectangle(0, 0, BaseShip.Width, BaseShip.Height);

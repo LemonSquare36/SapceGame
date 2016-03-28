@@ -14,7 +14,7 @@ namespace SpaceGame
     class Sprite
     {
         public string AssetName;
-        private Texture2D baseShip, Starrybackground;
+        private Texture2D baseShip, Starrybackground, Wall;
         // Size of sprite
         public Rectangle Size;
         // Amount to increase/decrease size
@@ -31,17 +31,19 @@ namespace SpaceGame
                 Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
             }
         }
-        public void LoadContent(ContentManager theContentManager, string theAssetName)
+        public virtual void LoadContent(ContentManager cM) { }
+        public virtual void LoadContent(ContentManager theContentManager, string theAssetName)
         {
+            Wall = theContentManager.Load<Texture2D>("Sprites/Wall");
             Starrybackground = theContentManager.Load<Texture2D>("Sprites/maxresdefault");
         }
-        public void Update(GameTime gameTime, Vector2 theSpeed, Vector2 theDirection)
+        public virtual void Update(GameTime gameTime, Vector2 theSpeed, Vector2 theDirection)
         {
             Position += theDirection * theSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Starrybackground, Position, new Rectangle(0, 0, Starrybackground.Width, Starrybackground.Height), Color.White);
+            
         }
     }
 }
