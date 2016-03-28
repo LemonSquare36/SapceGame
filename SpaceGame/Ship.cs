@@ -105,8 +105,6 @@ namespace SpaceGame
         }
         private void UpdateMovement(KeyboardState CurrentKeyBoardState)
         {
-            Console.WriteLine(CurrentKeyBoardState.IsKeyDown(Keys.Left));
-
             if (mCurrentState == State.Moving)
             {
                 mSpeed = Vector2.Zero;
