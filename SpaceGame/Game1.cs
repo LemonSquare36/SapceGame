@@ -28,10 +28,8 @@ namespace SpaceGame
 
         Random Rand = new Random();
         int WallPos;
-        int WallPos2;
         int Select;
         int Wall2Pos;
-        int Wall2Pos2;
 
         WALL Wall1; 
         WALL Wall2;
@@ -214,12 +212,12 @@ namespace SpaceGame
             if (DoneMoving && doneMoving)
             {
                 WallPos = Rand.Next(10, 160);
-                WallPos2 = Rand.Next(10, 160);
-                Wall2Pos = Rand.Next(220, 470);
-                Wall2Pos2 = Rand.Next(-100, -51);
+                Wall2Pos = Rand.Next(220, 455);
                 Select = Rand.Next(1, 3);
 
-                Console.WriteLine(WallPos);
+                Console.WriteLine("WallPos " + WallPos);
+                Console.WriteLine("Wall2Pos " + Wall2Pos);
+                Console.WriteLine("Wall2real " + Wall4.Position.Y);
                 Console.WriteLine(Select);
                 DoneMoving = false;
                 doneMoving = false;
@@ -256,34 +254,34 @@ namespace SpaceGame
                     }
                 }
             }
-           if(!DoneMoving)
+           if(!doneMoving)
             {
                 if (Select == 1)
                 {
-                    if (Wall4.Position.Y <= 240)
+                    if (Wall4.Position.Y <= 250)
                     {
-                        DoneMoving = true;
+                        doneMoving = true;
                     }
                     else if (Wall4.Position.Y != Wall2Pos)
                     {
                         Wall4.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         Wall5.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         Wall6.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (Wall1.Position.Y >= Wall2Pos) doneMoving = true;
+                        if (Wall4.Position.Y <= Wall2Pos) doneMoving = true;
                     }
                 }
                 else if (Select == 2)
                 {
-                    if (Wall4.Position.Y >= 470)
+                    if (Wall4.Position.Y >= 460)
                     {
-                        DoneMoving = true;
+                        doneMoving = true;
                     }
                     else if (Wall4.Position.Y != Wall2Pos)
                     {
                         Wall4.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         Wall5.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         Wall6.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (Wall1.Position.Y >= Wall2Pos) doneMoving = true;
+                        if (Wall4.Position.Y >= Wall2Pos) doneMoving = true;
                     }
                 }
             }
