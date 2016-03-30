@@ -52,6 +52,13 @@ namespace SpaceGame
         private float angle = 0;
 
         private static ContentManager content;
+
+
+        private void ShipWallCollision()
+        {
+
+        }
+
         public static ContentManager GameContent
         {
             get { return content; }

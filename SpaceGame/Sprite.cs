@@ -22,6 +22,22 @@ namespace SpaceGame
         //For Updating under move
         public Vector2 Position = Vector2.Zero;
 
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                return new Rectangle((int)Position.X, (int)Position.Y, baseShip.Width, baseShip.Height);
+            }
+        }
+
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                return new Rectangle((int)Position.X, (int)Position.Y, Wall.Width, Wall.Height);
+            }
+        }
+
         public float Scale
         {
             get { return mScale; }

@@ -13,7 +13,7 @@ namespace SpaceGame
 {
     class WALL : Sprite
     {
-        private Texture2D Wall;
+        public Texture2D Wall;
         const string WallAssetName = "Wall";
 
         public void LoadContent(ContentManager theContentManager)
