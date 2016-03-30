@@ -21,6 +21,7 @@ namespace SpaceGame
         Background Background1;
         Background Background2;
         Background Background3;
+        Rectangle health = new Rectangle();
 
 
         bool DoneMoving = true;
@@ -46,7 +47,7 @@ namespace SpaceGame
         private SpriteFont font;
         private int score = 0;
 
-        private Texture2D BaseShip;
+        private Texture2D BaseShip, healthBar;
         private float angle = 0;
 
         private static ContentManager content;
@@ -105,6 +106,7 @@ namespace SpaceGame
 
 
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
+            healthBar = Content.Load<Texture2D>("Sprites/HealthBar");
             font = Content.Load<SpriteFont>("myFont");
 
             Background1.LoadContent(this.Content);
@@ -161,6 +163,8 @@ namespace SpaceGame
 
             BaseShipSprite.Update(gameTime);
 
+            health = new Rectangle(100, 5, (int)(((float)BaseShipSprite.HP/100f) * 300), 20);
+
             score++;
             angle += 0.02f;
 
@@ -193,6 +197,8 @@ namespace SpaceGame
             Wall4.Draw(this.spriteBatch);
             Wall5.Draw(this.spriteBatch);
             Wall6.Draw(this.spriteBatch);
+
+            spriteBatch.Draw(healthBar, health, Color.White);
 
             spriteBatch.End();
             spriteBatch.Begin();

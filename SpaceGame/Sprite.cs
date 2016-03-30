@@ -30,13 +30,13 @@ namespace SpaceGame
             }
         }
 
-        public Rectangle BoundingBox
-        {
-            get
-            {
-                return new Rectangle((int)Position.X, (int)Position.Y, Wall.Width, Wall.Height);
-            }
-        }
+        //public Rectangle BoundingBox
+        //{
+           // get
+           // {
+           //     return new Rectangle((int)Position.X, (int)Position.Y, Wall.Width, Wall.Height);
+           // }
+       // }
 
         public float Scale
         {
