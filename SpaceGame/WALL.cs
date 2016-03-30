@@ -22,7 +22,7 @@ namespace SpaceGame
            base.LoadContent(theContentManager, WallAssetName);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Wall, Position, new Rectangle(200, 480, Wall.Width, Wall.Height), Color.White);
         }

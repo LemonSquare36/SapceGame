@@ -7,7 +7,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{F7AA80BF-1726-44E4-9B68-64EC013C5B3B}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SpaceGame</RootNamespace>
     <AssemblyName>SpaceGame</AssemblyName>

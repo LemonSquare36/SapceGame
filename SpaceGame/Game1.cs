@@ -20,12 +20,27 @@ namespace SpaceGame
         Ship BaseShipSprite;
         Background Background1;
         Background Background2;
-        Background Background3; 
+        Background Background3;
 
-        Sprite Wall1; 
-        Sprite Wall2;
-        Sprite Wall3;
-        Vector2 Pos = new Vector2(600, 200);
+
+        bool DoneMoving = true;
+        bool doneMoving = true;
+
+        Random Rand = new Random();
+        int WallPos;
+        int WallPos2;
+        int Select;
+        int Wall2Pos;
+        int Wall2Pos2;
+
+        WALL Wall1; 
+        WALL Wall2;
+        WALL Wall3;
+        WALL Wall4;
+        WALL Wall5;
+        WALL Wall6;
+        Vector2 Pos = new Vector2(800, 100);
+        Vector2 Pos2 = new Vector2(800, 380);
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -67,6 +82,9 @@ namespace SpaceGame
             Wall1 = new WALL();
             Wall2 = new WALL();
             Wall3 = new WALL();
+            Wall4 = new WALL();
+            Wall5 = new WALL();
+            Wall6 = new WALL();
 
             base.Initialize();
         }
@@ -91,12 +109,19 @@ namespace SpaceGame
             Background3.LoadContent(this.Content);
             Background3.Position = new Vector2(Background3.Position.X + Background3.Size.Width, 0);
 
-            Wall1.LoadContent(this.Content, "Sprites/Wall");
+            Wall1.LoadContent(this.Content);
             Wall1.Position = Pos;
-            Wall2.LoadContent(this.Content, "Sprites/Wall");
+            Wall2.LoadContent(this.Content);
             Wall2.Position = Pos;
-            Wall3.LoadContent(this.Content, "Sprites/Wall");
+            Wall3.LoadContent(this.Content);
             Wall3.Position = Pos;
+
+            Wall4.LoadContent(this.Content);
+            Wall4.Position = Pos2;
+            Wall5.LoadContent(this.Content);
+            Wall5.Position = Pos2;
+            Wall6.LoadContent(this.Content);
+            Wall6.Position = Pos2;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -125,42 +150,9 @@ namespace SpaceGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (Background1.Position.X < 800)
-            {
-                Background1.Position.X = Background2.Position.X + 800;
-            }
-            if (Background2.Position.X < -800)
-            {
-                Background2.Position.X = Background3.Position.X + -800;
-            }
-            
-             if (Background3.Position.X < 800)
-           {
-               Background3.Position.X = Background1.Position.X + 800;
-           }
+            WallScroll();
 
-             if (Wall1.Position.X < 600)
-             {
-                 Wall1.Position.X = Wall2.Position.X + 600;
-             }
-             if (Wall2.Position.X < -600)
-             {
-                 Wall2.Position.X = Wall3.Position.X + -600;
-             }
-
-             if (Wall3.Position.X < 600)
-             {
-                 Wall3.Position.X = Wall1.Position.X + 600;
-             }
-
-            Vector2 aDirection = new Vector2(-1, 0);
-            Vector2 aSpeed = new Vector2(50, 0);
-
-            Vector2 bSpeed = new Vector2(200, 0);
-
-            Background1.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Background2.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Background3.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            WallMove(gameTime);
 
             BaseShipSprite.Update(gameTime);
 
@@ -176,7 +168,7 @@ namespace SpaceGame
         /// <param name="gameTimeFunTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
 
             spriteBatch.Begin();
@@ -187,9 +179,18 @@ namespace SpaceGame
 
             spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
 
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+
             Wall1.Draw(this.spriteBatch);
             Wall2.Draw(this.spriteBatch);
             Wall3.Draw(this.spriteBatch);
+            Wall4.Draw(this.spriteBatch);
+            Wall5.Draw(this.spriteBatch);
+            Wall6.Draw(this.spriteBatch);
+
+            spriteBatch.End();
+            spriteBatch.Begin();
 
             BaseShipSprite.Draw(this.spriteBatch);
             spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
@@ -202,6 +203,150 @@ namespace SpaceGame
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+        public void WallMove(GameTime gameTime)
+        {
+            Vector2 bDirection = new Vector2(0, -1);
+            Vector2 cDirection = new Vector2(0, 1);
+            Vector2 cSpeed = new Vector2(0, 20);
+            Vector2 dSpeed = new Vector2(0, -20);
+
+            if (DoneMoving && doneMoving)
+            {
+                WallPos = Rand.Next(10, 160);
+                WallPos2 = Rand.Next(10, 160);
+                Wall2Pos = Rand.Next(220, 470);
+                Wall2Pos2 = Rand.Next(-100, -51);
+                Select = Rand.Next(1, 3);
+
+                Console.WriteLine(WallPos);
+                Console.WriteLine(Select);
+                DoneMoving = false;
+                doneMoving = false;
+            }
+
+            if (!DoneMoving)
+            {
+                if (Select == 1)
+                {
+                    if (Wall1.Position.Y <= 10)
+                    {
+                        DoneMoving = true;
+                    }
+                    else if (Wall1.Position.Y != WallPos)
+                    {
+                        Wall1.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall2.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall3.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (Wall1.Position.Y >= WallPos) DoneMoving = true;
+                    }
+                }
+                else if (Select == 2)
+                {
+                    if (Wall1.Position.Y >= 160)
+                    {
+                        DoneMoving = true;
+                    }
+                    else if (Wall1.Position.Y != WallPos)
+                    {
+                        Wall1.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall2.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall3.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (Wall1.Position.Y >= WallPos) DoneMoving = true;
+                    }
+                }
+            }
+           if(!DoneMoving)
+            {
+                if (Select == 1)
+                {
+                    if (Wall4.Position.Y <= 240)
+                    {
+                        DoneMoving = true;
+                    }
+                    else if (Wall4.Position.Y != Wall2Pos)
+                    {
+                        Wall4.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall5.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall6.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (Wall1.Position.Y >= Wall2Pos) doneMoving = true;
+                    }
+                }
+                else if (Select == 2)
+                {
+                    if (Wall4.Position.Y >= 470)
+                    {
+                        DoneMoving = true;
+                    }
+                    else if (Wall4.Position.Y != Wall2Pos)
+                    {
+                        Wall4.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall5.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        Wall6.Position += bDirection * dSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                        if (Wall1.Position.Y >= Wall2Pos) doneMoving = true;
+                    }
+                }
+            }
+            Vector2 aDirection = new Vector2(-1, 0);
+            Vector2 aSpeed = new Vector2(50, 0);
+
+            Vector2 bSpeed = new Vector2(200, 0);
+
+            Background1.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Background2.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Background3.Position += aDirection * aSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Wall1.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Wall2.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Wall3.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Wall4.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Wall5.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Wall6.Position += aDirection * bSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        }
+        public void WallScroll()
+        {
+            if (Background1.Position.X < 800)
+            {
+                Background1.Position.X = Background2.Position.X + 800;
+            }
+            if (Background2.Position.X < -800)
+            {
+                Background2.Position.X = Background3.Position.X + -800;
+            }
+
+            if (Background3.Position.X < 800)
+            {
+                Background3.Position.X = Background1.Position.X + 800;
+            }
+
+            if (Wall4.Position.X < 800)
+            {
+                Wall4.Position.X = Wall5.Position.X + 800;
+            }
+            if (Wall5.Position.X < -800)
+            {
+                Wall5.Position.X = Wall6.Position.X + -800;
+            }
+
+            if (Wall6.Position.X < 800)
+            {
+                Wall6.Position.X = Wall4.Position.X + 800;
+            }
+
+            if (Wall1.Position.X < 800)
+            {
+                Wall1.Position.X = Wall2.Position.X + 800;
+            }
+            if (Wall2.Position.X < -800)
+            {
+                Wall2.Position.X = Wall3.Position.X + -800;
+            }
+
+            if (Wall3.Position.X < 800)
+            {
+                Wall3.Position.X = Wall1.Position.X + 800;
+            }
         }
     }
 }
