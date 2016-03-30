@@ -164,7 +164,7 @@ namespace SpaceGame
             BaseShipSprite.Update(gameTime);
 
             health = new Rectangle(100, 5, (int)(((float)BaseShipSprite.HP/100f) * 300), 20);
-
+             
             score++;
             angle += 0.02f;
 
