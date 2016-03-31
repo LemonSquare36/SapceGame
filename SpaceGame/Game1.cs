@@ -16,6 +16,20 @@ namespace SpaceGame
     /// </summary>
     public class Main : Game
     {
+        public enum GameStates{ Splash, MainMenu, GamePlaying, Pause, GameOver }
+        private GameStates gameState;
+        event EventHandler GameStateChanged;
+
+        public GameStates GameState
+        {
+            get { return gameState; }
+            set
+            {
+                gameState = value;
+                OnGameStateChange();
+            }
+        }
+
 
         Ship BaseShipSprite;
         Background Background1;
@@ -357,6 +371,13 @@ namespace SpaceGame
             if (Wall3.Position.X < 800)
             {
                 Wall3.Position.X = Wall1.Position.X + 800;
+            }
+        }
+        private void OnGameStateChange()
+        {
+            if (GameStateChanged != null)
+            {
+                GameStateChanged(this, EventArgs.Empty);
             }
         }
     }
