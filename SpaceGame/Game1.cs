@@ -18,6 +18,7 @@ namespace SpaceGame
     {
 
         Ship BaseShipSprite;
+
         Background Background1;
         Background Background2;
         Background Background3;
@@ -50,12 +51,6 @@ namespace SpaceGame
         private float angle = 0;
 
         private static ContentManager content;
-
-
-        private void ShipWallCollision()
-        {
-
-        }
 
         public static ContentManager GameContent
         {
@@ -160,6 +155,9 @@ namespace SpaceGame
             WallMove(gameTime);
 
             BaseShipSprite.Update(gameTime);
+
+            CheckShipWallCollision();
+            CheckWallShipCollision();
 
             score++;
             angle += 0.02f;
@@ -351,6 +349,71 @@ namespace SpaceGame
             if (Wall3.Position.X < 800)
             {
                 Wall3.Position.X = Wall1.Position.X + 800;
+            }
+        }
+        private void CheckShipWallCollision()
+        {
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall1.WallBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall1.WallBoundingBox.Bottom;
+            }
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall2.WallBoundingBox)) 
+            {
+                BaseShipSprite.Position.Y = Wall2.WallBoundingBox.Bottom;
+            }
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall3.WallBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall3.WallBoundingBox.Bottom;
+            }
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall4.WallBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall4.WallBoundingBox.Bottom;
+            }
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall5.WallBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall5.WallBoundingBox.Bottom;
+            }
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall6.WallBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall6.WallBoundingBox.Bottom;
+            }
+        }
+
+        private void CheckWallShipCollision()
+        {
+            if (Wall1.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall1.WallBoundingBox.Bottom;
+            }
+
+            if (Wall2.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall2.WallBoundingBox.Bottom;
+            }
+
+            if (Wall3.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall3.WallBoundingBox.Bottom;
+            }
+
+            if (Wall4.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall4.WallBoundingBox.Bottom;
+            }
+
+            if (Wall5.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall5.WallBoundingBox.Bottom;
+            }
+
+            if (Wall6.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall6.WallBoundingBox.Bottom;
             }
         }
     }
