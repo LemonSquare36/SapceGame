@@ -66,12 +66,6 @@ namespace SpaceGame
 
         private static ContentManager content;
 
-
-        private void ShipWallCollision()
-        {
-
-        }
-
         public static ContentManager GameContent
         {
             get { return content; }
@@ -147,8 +141,6 @@ namespace SpaceGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
 
-
-
         }
 
         /// <summary>
@@ -175,9 +167,10 @@ namespace SpaceGame
 
             WallMove(gameTime);
 
-            BaseShipSprite.Update(gameTime);
-
             CheckShipWallCollision();
+            CheckWallShipCollision();
+
+            BaseShipSprite.Update(gameTime);
 
             health = new Rectangle(100, 5, (int)(((float)BaseShipSprite.HP/100f) * 300), 20);
              
@@ -386,23 +379,48 @@ namespace SpaceGame
 
         private void CheckShipWallCollision()
         {
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall1.WallBoundingBox))
-                BaseShipSprite.Position.Y = Wall1.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.shipBoundingBox.Intersects(Wall1.wallBoundingBox))
+            {
+                BaseShipSprite.Position.Y = Wall1.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+                Console.WriteLine("Working");
+            }
 
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall2.WallBoundingBox))
-                BaseShipSprite.Position.Y = Wall2.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.shipBoundingBox.Intersects(Wall2.wallBoundingBox))
+                BaseShipSprite.Position.Y = Wall2.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
 
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall3.WallBoundingBox))
-                BaseShipSprite.Position.Y = Wall3.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.shipBoundingBox.Intersects(Wall3.wallBoundingBox))
+                BaseShipSprite.Position.Y = Wall3.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
 
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall4.WallBoundingBox))
-                BaseShipSprite.Position.Y = Wall4.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.shipBoundingBox.Intersects(Wall4.wallBoundingBox))
+                BaseShipSprite.Position.Y = Wall4.wallBoundingBox.Top;//Y - BaseShipSprite.ShipBoundingBox.Height;
 
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall5.WallBoundingBox))
-                BaseShipSprite.Position.Y = Wall5.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.shipBoundingBox.Intersects(Wall5.wallBoundingBox))
+                BaseShipSprite.Position.Y = Wall5.wallBoundingBox.Top;//Y - BaseShipSprite.ShipBoundingBox.Height;
 
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall6.WallBoundingBox))
-                BaseShipSprite.Position.Y = Wall6.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.shipBoundingBox.Intersects(Wall6.wallBoundingBox))
+                BaseShipSprite.Position.Y = Wall6.wallBoundingBox.Top;//Y - BaseShipSprite.ShipBoundingBox.Height;
+               
+        }
+
+            private void CheckWallShipCollision()
+            {
+                if (Wall1.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
+                    BaseShipSprite.Position.Y = Wall1.wallBoundingBox.Bottom;
+
+                if (Wall2.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
+                    BaseShipSprite.Position.Y = Wall2.wallBoundingBox.Bottom;
+
+                if (Wall3.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
+                    BaseShipSprite.Position.Y = Wall3.wallBoundingBox.Bottom;
+
+                if (Wall4.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
+                    BaseShipSprite.Position.Y = Wall4.wallBoundingBox.Top;
+
+                if (Wall5.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
+                    BaseShipSprite.Position.Y = Wall5.wallBoundingBox.Top;
+
+                if (Wall6.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
+                    BaseShipSprite.Position.Y = Wall6.wallBoundingBox.Top;
+            }
         }
     }
-}
