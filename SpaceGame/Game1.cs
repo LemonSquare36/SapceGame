@@ -16,7 +16,7 @@ namespace SpaceGame
     /// </summary>
     public class Main : Game
     {
-        public enum GameStates{ Splash, MainMenu, GamePlaying, Pause, GameOver }
+        public enum GameStates { Splash, MainMenu, GamePlaying, Pause, GameOver }
         private GameStates gameState;
         event EventHandler GameStateChanged;
 
@@ -29,6 +29,8 @@ namespace SpaceGame
                 OnGameStateChange();
             }
         }
+        Menu menu;
+        Game game;
 
 
         Ship BaseShipSprite;
@@ -46,7 +48,7 @@ namespace SpaceGame
         int Select;
         int Wall2Pos;
 
-        WALL Wall1; 
+        WALL Wall1;
         WALL Wall2;
         WALL Wall3;
         WALL Wall4;
@@ -83,6 +85,8 @@ namespace SpaceGame
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             content = Content;
+            GameStateChanged += NewGameState;
+            IsMouseVisible = true;
         }
 
         /// <summary>
@@ -144,6 +148,8 @@ namespace SpaceGame
             Wall6.LoadContent(this.Content);
             Wall6.Position = Pos2;
 
+            GameState = GameStates.MainMenu;
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
 
@@ -171,20 +177,35 @@ namespace SpaceGame
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            WallScroll();
+            switch (gameState)
+            {
+                case GameStates.MainMenu:
+                    menu.Update(gameTime);
+                    break;
+                case GameStates.GamePlaying:
+                    WallScroll();
 
-            WallMove(gameTime);
+                    WallMove(gameTime);
 
-            BaseShipSprite.Update(gameTime);
+                    BaseShipSprite.Update(gameTime);
 
-            CheckShipWallCollision();
+                    CheckShipWallCollision();
 
-            health = new Rectangle(100, 5, (int)(((float)BaseShipSprite.HP/100f) * 300), 20);
-             
-            score++;
-            angle += 0.02f;
+                    health = new Rectangle(100, 5, (int)(((float)BaseShipSprite.HP / 100f) * 300), 20);
 
-            base.Update(gameTime);
+                    score++;
+                    angle += 0.02f;
+
+                    base.Update(gameTime);
+
+                    break;
+                default:
+                    break;
+            }
+
+
+
+
         }
 
         /// <summary>
@@ -193,44 +214,67 @@ namespace SpaceGame
         /// <param name="gameTimeFunTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            switch (gameState)
+            {
+                case GameStates.MainMenu:
+                    spriteBatch.Begin();
+                    menu.Draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
+                case GameStates.GamePlaying:
+
+                    spriteBatch.Begin();
+
+                    Background1.Draw(this.spriteBatch);
+                    Background2.Draw(this.spriteBatch);
+                    Background3.Draw(this.spriteBatch);
+
+                    spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
+
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
 
 
-            spriteBatch.Begin();
+                    Wall1.Draw(this.spriteBatch);
+                    Wall2.Draw(this.spriteBatch);
+                    Wall3.Draw(this.spriteBatch);
+                    Wall4.Draw(this.spriteBatch);
+                    Wall5.Draw(this.spriteBatch);
+                    Wall6.Draw(this.spriteBatch);
 
-            Background1.Draw(this.spriteBatch);
-            Background2.Draw(this.spriteBatch);
-            Background3.Draw(this.spriteBatch);
+                    spriteBatch.Draw(healthBar, health, Color.White);
 
-            spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
+                    spriteBatch.End();
+                    spriteBatch.Begin();
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+                    BaseShipSprite.Draw(this.spriteBatch);
+                    spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
 
+                    Vector2 location = new Vector2(300, 400);
+                    Rectangle sourceRectangle = new Rectangle(0, 0, BaseShip.Width, BaseShip.Height);
+                    Vector2 origin = new Vector2(BaseShip.Width / 2, BaseShip.Height * 3);
 
-            Wall1.Draw(this.spriteBatch);
-            Wall2.Draw(this.spriteBatch);
-            Wall3.Draw(this.spriteBatch);
-            Wall4.Draw(this.spriteBatch);
-            Wall5.Draw(this.spriteBatch);
-            Wall6.Draw(this.spriteBatch);
+                    spriteBatch.Draw(BaseShip, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
 
-            spriteBatch.Draw(healthBar, health, Color.White);
+                    spriteBatch.End();
+                    break;
+                default:
+                    break;
+            }
 
-            spriteBatch.End();
-            spriteBatch.Begin();
-
-            BaseShipSprite.Draw(this.spriteBatch);
-            spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
-
-            Vector2 location = new Vector2(300, 400);
-            Rectangle sourceRectangle = new Rectangle(0, 0, BaseShip.Width, BaseShip.Height);
-            Vector2 origin = new Vector2(BaseShip.Width / 2, BaseShip.Height * 3);
-
-            spriteBatch.Draw(BaseShip, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
-
-            spriteBatch.End();
             base.Draw(gameTime);
+        }
+        private void NewGameState(object sender, EventArgs args)
+        {
+            switch (gameState)
+            {
+                case GameStates.MainMenu:
+                    if (menu == null) menu = new Menu(this);
+                    menu.LoadContent();
+                    break;
+            }
         }
         public void WallMove(GameTime gameTime)
         {
@@ -284,7 +328,7 @@ namespace SpaceGame
                     }
                 }
             }
-           if(!doneMoving)
+            if (!doneMoving)
             {
                 if (Select == 1)
                 {
@@ -404,5 +448,14 @@ namespace SpaceGame
             if (BaseShipSprite.ShipBoundingBox.Intersects(Wall6.WallBoundingBox))
                 BaseShipSprite.Position.Y = Wall6.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
         }
+        public void ButtonPressed(object sender, EventArgs args)
+        {
+            switch (((Button)sender).ButtonNum)
+            {
+                case 1:
+                    break;
+            }
+        }
     }
 }
+

@@ -37,6 +37,8 @@ namespace SpaceGame
             {
                 case MenuType.MainMenu:
                     start = new Button(new Vector2(650, 400), 100, 50, 1, mouse, StartUP, StartP, 800, 480);
+
+                    start.ButtonPressed += ButtonPressed;
                     break;
                 default:
                     break;
@@ -54,6 +56,8 @@ namespace SpaceGame
                 default:
                     break;
             }
+        }
+
         }
         public void Draw(SpriteBatch spriteBatch)
         {
