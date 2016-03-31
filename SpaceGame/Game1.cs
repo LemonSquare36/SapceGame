@@ -177,6 +177,8 @@ namespace SpaceGame
 
             BaseShipSprite.Update(gameTime);
 
+            CheckShipWallCollision();
+
             health = new Rectangle(100, 5, (int)(((float)BaseShipSprite.HP/100f) * 300), 20);
              
             score++;
@@ -204,6 +206,7 @@ namespace SpaceGame
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+
 
             Wall1.Draw(this.spriteBatch);
             Wall2.Draw(this.spriteBatch);
@@ -379,6 +382,27 @@ namespace SpaceGame
             {
                 GameStateChanged(this, EventArgs.Empty);
             }
+        }
+
+        private void CheckShipWallCollision()
+        {
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall1.WallBoundingBox))
+                BaseShipSprite.Position.Y = Wall1.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall2.WallBoundingBox))
+                BaseShipSprite.Position.Y = Wall2.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall3.WallBoundingBox))
+                BaseShipSprite.Position.Y = Wall3.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall4.WallBoundingBox))
+                BaseShipSprite.Position.Y = Wall4.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall5.WallBoundingBox))
+                BaseShipSprite.Position.Y = Wall5.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+
+            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall6.WallBoundingBox))
+                BaseShipSprite.Position.Y = Wall6.WallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
         }
     }
 }
