@@ -16,12 +16,26 @@ namespace SpaceGame
     /// </summary>
     public class Main : Game
     {
+        public enum GameStates{ Splash, MainMenu, GamePlaying, Pause, GameOver }
+        private GameStates gameState;
+        event EventHandler GameStateChanged;
+
+        public GameStates GameState
+        {
+            get { return gameState; }
+            set
+            {
+                gameState = value;
+                OnGameStateChange();
+            }
+        }
+
 
         Ship BaseShipSprite;
-
         Background Background1;
         Background Background2;
         Background Background3;
+        Rectangle health = new Rectangle();
 
 
         bool DoneMoving = true;
@@ -47,10 +61,16 @@ namespace SpaceGame
         private SpriteFont font;
         private int score = 0;
 
-        private Texture2D BaseShip;
+        private Texture2D BaseShip, healthBar;
         private float angle = 0;
 
         private static ContentManager content;
+
+
+        private void ShipWallCollision()
+        {
+
+        }
 
         public static ContentManager GameContent
         {
@@ -100,6 +120,7 @@ namespace SpaceGame
 
 
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
+            healthBar = Content.Load<Texture2D>("Sprites/HealthBar");
             font = Content.Load<SpriteFont>("myFont");
 
             Background1.LoadContent(this.Content);
@@ -156,9 +177,8 @@ namespace SpaceGame
 
             BaseShipSprite.Update(gameTime);
 
-            CheckShipWallCollision();
-            CheckWallShipCollision();
-
+            health = new Rectangle(100, 5, (int)(((float)BaseShipSprite.HP/100f) * 300), 20);
+             
             score++;
             angle += 0.02f;
 
@@ -191,6 +211,8 @@ namespace SpaceGame
             Wall4.Draw(this.spriteBatch);
             Wall5.Draw(this.spriteBatch);
             Wall6.Draw(this.spriteBatch);
+
+            spriteBatch.Draw(healthBar, health, Color.White);
 
             spriteBatch.End();
             spriteBatch.Begin();
@@ -351,69 +373,11 @@ namespace SpaceGame
                 Wall3.Position.X = Wall1.Position.X + 800;
             }
         }
-        private void CheckShipWallCollision()
+        private void OnGameStateChange()
         {
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall1.WallBoundingBox))
+            if (GameStateChanged != null)
             {
-                BaseShipSprite.Position.Y = Wall1.WallBoundingBox.Bottom;
-            }
-
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall2.WallBoundingBox)) 
-            {
-                BaseShipSprite.Position.Y = Wall2.WallBoundingBox.Bottom;
-            }
-
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall3.WallBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall3.WallBoundingBox.Bottom;
-            }
-
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall4.WallBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall4.WallBoundingBox.Bottom;
-            }
-
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall5.WallBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall5.WallBoundingBox.Bottom;
-            }
-
-            if (BaseShipSprite.ShipBoundingBox.Intersects(Wall6.WallBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall6.WallBoundingBox.Bottom;
-            }
-        }
-
-        private void CheckWallShipCollision()
-        {
-            if (Wall1.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall1.WallBoundingBox.Bottom;
-            }
-
-            if (Wall2.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall2.WallBoundingBox.Bottom;
-            }
-
-            if (Wall3.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall3.WallBoundingBox.Bottom;
-            }
-
-            if (Wall4.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall4.WallBoundingBox.Bottom;
-            }
-
-            if (Wall5.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall5.WallBoundingBox.Bottom;
-            }
-
-            if (Wall6.WallBoundingBox.Intersects(BaseShipSprite.ShipBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall6.WallBoundingBox.Bottom;
+                GameStateChanged(this, EventArgs.Empty);
             }
         }
     }

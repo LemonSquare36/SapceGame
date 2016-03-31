@@ -14,6 +14,7 @@ namespace SpaceGame
     {
         public Texture2D baseShip;
         // For Movement
+        int hp = 100;
         const string ShipAssetName = "Ship";
         const int StartPositionX = 125;
         const int StartPositionY = 245;
@@ -23,6 +24,11 @@ namespace SpaceGame
         const int MoveDown = 1;
         const int MoveLeft = -1;
         const int MoveRight = 1;
+
+        public int HP
+        {
+            get { return hp; }
+        }
 
         enum State
         {
@@ -34,6 +40,7 @@ namespace SpaceGame
         Vector2 mSpeed = Vector2.Zero;
 
         KeyboardState mPreviousKeyboardState;
+
 
         public override void LoadContent(ContentManager theContentManager)
         {
@@ -99,6 +106,8 @@ namespace SpaceGame
                 Position.X = 775;
                 Position.Y = 0;
             }
+
+            if (CurrentKeyBoardState.IsKeyDown(Keys.A)) hp--;
 
             base.Update(gameTime, mSpeed, mDirection);
 
