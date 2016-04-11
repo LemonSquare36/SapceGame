@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
-    class Sprite
+    public class Sprite
     {
         public string AssetName;
         private Texture2D baseShip, Starrybackground, Wall;
@@ -57,7 +57,7 @@ namespace SpaceGame
         public virtual void Update(GameTime gameTime, Vector2 theSpeed, Vector2 theDirection)
         {
             Position += theDirection * theSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            shipBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, baseShip.Width, baseShip.Height);
+            shipBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BaseShipSprite.Width, BaseShipSprite.Height);
             wallBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, Wall.Width, Wall.Height);
 
         }
