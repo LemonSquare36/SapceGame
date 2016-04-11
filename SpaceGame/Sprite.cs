@@ -59,6 +59,7 @@ namespace SpaceGame
             Position += theDirection * theSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             shipBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, baseShip.Width, baseShip.Height);
             wallBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, Wall.Width, Wall.Height);
+
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {

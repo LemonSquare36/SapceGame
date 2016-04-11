@@ -58,7 +58,7 @@ namespace SpaceGame
             }
         }
 
-        }
+        
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, Vector2.Zero, Color.White);
