@@ -57,7 +57,14 @@ namespace SpaceGame
                     break;
             }
         }
-
+        private void ButtonPressed(object sender, EventArgs e)
+        {
+            switch (((Button)sender).ButtonNum)
+            {
+                case 1:
+                    main.GameState = GameStates.GamePlaying;
+                        break;
+            }
         }
         public void Draw(SpriteBatch spriteBatch)
         {
