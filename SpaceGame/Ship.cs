@@ -109,6 +109,8 @@ namespace SpaceGame
 
             if (CurrentKeyBoardState.IsKeyDown(Keys.A)) hp--;
 
+
+
             base.Update(gameTime, mSpeed, mDirection);
 
         }

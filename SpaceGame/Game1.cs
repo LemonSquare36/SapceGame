@@ -34,7 +34,7 @@ namespace SpaceGame
         Game game;
 
 
-        Ship BaseShipSprite;
+        public Ship BaseShipSprite = new Ship();
         Background Background1;
         Background Background2;
         Background Background3;
@@ -93,7 +93,7 @@ namespace SpaceGame
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            BaseShipSprite = new Ship();
+            //BaseShipSprite = new Ship();
             Background1 = new Background();
             Background2 = new Background();
             Background3 = new Background();
@@ -181,6 +181,8 @@ namespace SpaceGame
                 case GameStates.GamePlaying:
                     WallMove(gameTime);
                     WallScroll();
+                    CheckShipWallCollision();
+                    //CheckWallShipCollision();
                     BaseShipSprite.Update(gameTime);
                     break;
                 default:
@@ -411,11 +413,9 @@ namespace SpaceGame
 
         private void CheckShipWallCollision()
         {
+
             if (BaseShipSprite.shipBoundingBox.Intersects(Wall1.wallBoundingBox))
-            {
-                BaseShipSprite.Position.Y = Wall1.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
-                Console.WriteLine("Working");
-            }
+                BaseShipSprite.Position.Y = Wall1.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height; 
 
             if (BaseShipSprite.shipBoundingBox.Intersects(Wall2.wallBoundingBox))
                 BaseShipSprite.Position.Y = Wall2.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
@@ -434,7 +434,7 @@ namespace SpaceGame
 
         }
 
-        private void CheckWallShipCollision()
+        /*private void CheckWallShipCollision()
         {
             if (Wall1.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
                 BaseShipSprite.Position.Y = Wall1.wallBoundingBox.Bottom;
@@ -453,6 +453,6 @@ namespace SpaceGame
 
             if (Wall6.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
                 BaseShipSprite.Position.Y = Wall6.wallBoundingBox.Top;
-        }
+        }*/
     }
 }
