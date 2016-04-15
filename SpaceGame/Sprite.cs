@@ -16,25 +16,21 @@ namespace SpaceGame
         public string AssetName;
         private Texture2D baseShip, Starrybackground, Wall;
         // Size of sprite
-        public Rectangle Size, shipBoundingBox, wallBoundingBox;
+        public Rectangle Size;
+       public Rectangle spriteBoundingBox;
         // Amount to increase/decrease size
         private float mScale = 1.0f;
         //For Updating under move
         public Vector2 Position = Vector2.Zero;
 
-        public Rectangle ShipBoundingBox
+        protected int spriteWidth;
+        protected int spriteHeight;
+
+        public Rectangle SpriteBoundingBox
         {
             get
             {
-                return shipBoundingBox;
-            }
-        }
-
-        public Rectangle WallBoundingBox
-        {
-            get
-           {
-               return wallBoundingBox;
+                return spriteBoundingBox;
             }
         }
 
@@ -57,8 +53,7 @@ namespace SpaceGame
         public virtual void Update(GameTime gameTime, Vector2 theSpeed, Vector2 theDirection)
         {
             Position += theDirection * theSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            shipBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BaseShipSprite.Width, BaseShipSprite.Height);
-            wallBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, Wall.Width, Wall.Height);
+            spriteBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, spriteWidth, spriteHeight);
 
         }
         public virtual void Draw(SpriteBatch spriteBatch)

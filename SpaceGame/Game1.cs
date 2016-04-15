@@ -55,6 +55,9 @@ namespace SpaceGame
         WALL Wall4;
         WALL Wall5;
         WALL Wall6;
+
+        //WALL Wall0;
+
         Vector2 Pos = new Vector2(800, 100);
         Vector2 Pos2 = new Vector2(800, 380);
 
@@ -105,6 +108,8 @@ namespace SpaceGame
             Wall5 = new WALL();
             Wall6 = new WALL();
 
+            //Wall0 = new WALL();
+
             menu = new Menu(this);
 
             base.Initialize();
@@ -146,6 +151,8 @@ namespace SpaceGame
             Wall6.LoadContent(this.Content);
             Wall6.Position = Pos2;
 
+            //Wall0.LoadContent(this.Content);
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
 
@@ -181,9 +188,16 @@ namespace SpaceGame
                 case GameStates.GamePlaying:
                     WallMove(gameTime);
                     WallScroll();
-                    CheckShipWallCollision();
-                    //CheckWallShipCollision();
                     BaseShipSprite.Update(gameTime);
+                    CheckShipWallCollision();
+                    //Wall0.Update(gameTime, Vector2.Zero, Vector2.Zero);
+                    Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
+                    Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
+                    Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
+                    Wall4.Update(gameTime, Vector2.Zero, Vector2.Zero);
+                    Wall5.Update(gameTime, Vector2.Zero, Vector2.Zero);
+                    Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
+                    //Console.WriteLine(Wall0.SpriteBoundingBox);
                     break;
                 default:
                     break;
@@ -206,7 +220,7 @@ namespace SpaceGame
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
-        /// <param name="gameTimeFunTime">Provides a snapshot of timing values.</param>
+        /// <param name="gameTimeFunTime">Provides a snapshot of timing values.</param>shipBoundingBox
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -239,6 +253,8 @@ namespace SpaceGame
                     Wall4.Draw(this.spriteBatch);
                     Wall5.Draw(this.spriteBatch);
                     Wall6.Draw(this.spriteBatch);
+
+                    //Wall0.Draw(this.spriteBatch);
 
                     spriteBatch.Draw(healthBar, health, Color.White);
 
@@ -414,45 +430,49 @@ namespace SpaceGame
         private void CheckShipWallCollision()
         {
 
-            if (BaseShipSprite.shipBoundingBox.Intersects(Wall1.wallBoundingBox))
-                BaseShipSprite.Position.Y = Wall1.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height; 
+            //if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall0.SpriteBoundingBox))
+              //  BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
+                //Console.WriteLine(Wall0.SpriteBoundingBox);
 
-            if (BaseShipSprite.shipBoundingBox.Intersects(Wall2.wallBoundingBox))
-                BaseShipSprite.Position.Y = Wall2.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.spriteBoundingBox.Intersects(Wall1.SpriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall1.spriteBoundingBox.Bottom; 
 
-            if (BaseShipSprite.shipBoundingBox.Intersects(Wall3.wallBoundingBox))
-                BaseShipSprite.Position.Y = Wall3.wallBoundingBox.Bottom;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.spriteBoundingBox.Intersects(Wall2.SpriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall2.spriteBoundingBox.Bottom;
 
-            if (BaseShipSprite.shipBoundingBox.Intersects(Wall4.wallBoundingBox))
-                BaseShipSprite.Position.Y = Wall4.wallBoundingBox.Top;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.spriteBoundingBox.Intersects(Wall3.SpriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall3.spriteBoundingBox.Bottom;
 
-            if (BaseShipSprite.shipBoundingBox.Intersects(Wall5.wallBoundingBox))
-                BaseShipSprite.Position.Y = Wall5.wallBoundingBox.Top;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.spriteBoundingBox.Intersects(Wall4.SpriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall4.spriteBoundingBox.Top;
 
-            if (BaseShipSprite.shipBoundingBox.Intersects(Wall6.wallBoundingBox))
-                BaseShipSprite.Position.Y = Wall6.wallBoundingBox.Top;//Y - BaseShipSprite.ShipBoundingBox.Height;
+            if (BaseShipSprite.spriteBoundingBox.Intersects(Wall5.SpriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall5.spriteBoundingBox.Top;
+
+            if (BaseShipSprite.spriteBoundingBox.Intersects(Wall6.SpriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall6.spriteBoundingBox.Top;
 
         }
 
-        /*private void CheckWallShipCollision()
+        private void CheckWallShipCollision()
         {
-            if (Wall1.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
-                BaseShipSprite.Position.Y = Wall1.wallBoundingBox.Bottom;
+            if (Wall1.spriteBoundingBox.Intersects(BaseShipSprite.spriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall1.spriteBoundingBox.Bottom;
 
-            if (Wall2.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
-                BaseShipSprite.Position.Y = Wall2.wallBoundingBox.Bottom;
+            if (Wall2.spriteBoundingBox.Intersects(BaseShipSprite.spriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall2.spriteBoundingBox.Bottom;
 
-            if (Wall3.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
-                BaseShipSprite.Position.Y = Wall3.wallBoundingBox.Bottom;
+            if (Wall3.spriteBoundingBox.Intersects(BaseShipSprite.spriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall3.spriteBoundingBox.Bottom;
 
-            if (Wall4.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
-                BaseShipSprite.Position.Y = Wall4.wallBoundingBox.Top;
+            if (Wall4.spriteBoundingBox.Intersects(BaseShipSprite.spriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall4.spriteBoundingBox.Top;
 
-            if (Wall5.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
-                BaseShipSprite.Position.Y = Wall5.wallBoundingBox.Top;
+            if (Wall5.spriteBoundingBox.Intersects(BaseShipSprite.spriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall5.spriteBoundingBox.Top;
 
-            if (Wall6.wallBoundingBox.Intersects(BaseShipSprite.shipBoundingBox))
-                BaseShipSprite.Position.Y = Wall6.wallBoundingBox.Top;
-        }*/
+            if (Wall6.spriteBoundingBox.Intersects(BaseShipSprite.spriteBoundingBox))
+                BaseShipSprite.Position.Y = Wall6.spriteBoundingBox.Top;
+        }
     }
 }

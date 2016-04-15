@@ -16,15 +16,23 @@ namespace SpaceGame
         public Texture2D Wall;
         const string WallAssetName = "Wall";
 
+        int theWidth = 800;
+        int theHeight = 30;
+
         public void LoadContent(ContentManager theContentManager)
         {
-           Wall = theContentManager.Load<Texture2D>("Sprites/Wall");
-           base.LoadContent(theContentManager, WallAssetName);
+            Wall = theContentManager.Load<Texture2D>("Sprites/Wall");
+            base.LoadContent(theContentManager, WallAssetName);
+
+
+            spriteWidth = Wall.Width;//theWidth;
+            spriteHeight = Wall.Height;//theHeight;
+
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Wall, Position, new Rectangle(200, 480, Wall.Width, Wall.Height), Color.White);
+            spriteBatch.Draw(Wall, Position, SpriteBoundingBox, Color.White);
         }
     }
 }

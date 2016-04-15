@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 namespace SpaceGame
 {
-    class Ship : Sprite
+    public class Ship : Sprite
     {
         public Texture2D baseShip;
         // For Movement
@@ -24,6 +24,10 @@ namespace SpaceGame
         const int MoveDown = 1;
         const int MoveLeft = -1;
         const int MoveRight = 1;
+
+        //int theWidth = 27;
+        //int theHeight = 23;
+
 
         public int HP
         {
@@ -46,7 +50,11 @@ namespace SpaceGame
         {
             Position = new Vector2(StartPositionX, StartPositionY);
             baseShip = Main.GameContent.Load<Texture2D>("Sprites/Base Ship");
-            Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
+            //Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
+
+            spriteWidth = baseShip.Width;//theWidth;
+            spriteHeight = baseShip.Height;//theHeight;
+
             base.LoadContent(theContentManager, ShipAssetName);
         }
         public void Update(GameTime gameTime)
@@ -63,10 +71,18 @@ namespace SpaceGame
             }
 
             //left wall
-            else if (Position.X <= 0)
+            if (Position.X <= 0)
             {
                 Position.X = 0;
             }
+
+
+            //right wall
+            else if (Position.X >= 775)
+            {
+                Position.X = 775;
+            }
+
 
             //lower right hand corner
             else if (Position.X >= 775 && Position.Y >= 460)
@@ -75,11 +91,6 @@ namespace SpaceGame
                 Position.Y = 460;
             }
 
-            //right wall
-            else if (Position.X >= 775)
-            {
-                Position.X = 775;
-            }
 
             //top wall
             else if (Position.Y <= 0)
