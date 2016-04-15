@@ -40,6 +40,8 @@ namespace SpaceGame
 
                     start.ButtonPressed += ButtonPressed;
                     break;
+                case MenuType.Options:
+                    break;
                 default:
                     break;
             }
