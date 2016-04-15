@@ -43,6 +43,14 @@ namespace SpaceGame
                 Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
             }
         }
+
+        public Sprite() { }
+
+        public Sprite(Vector2 pos)
+        {
+            Position = pos;
+        }
+
         public virtual void LoadContent(ContentManager cM) { }
         public virtual void LoadContent(ContentManager theContentManager, string theAssetName)
         {

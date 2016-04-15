@@ -55,9 +55,12 @@ namespace SpaceGame
         WALL Wall4;
         WALL Wall5;
         WALL Wall6;
-
-        Vector2 Pos = new Vector2(800, 100);
-        Vector2 Pos2 = new Vector2(800, 380);
+        Vector2 Pos1 = new Vector2(0, 100);
+        Vector2 Pos2 = new Vector2(800, 100);
+        Vector2 Pos3 = new Vector2(1600, 100);
+        Vector2 Pos4 = new Vector2(0, 380);
+        Vector2 Pos5 = new Vector2(800, 380);
+        Vector2 Pos6 = new Vector2(1600, 380);
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -99,12 +102,12 @@ namespace SpaceGame
             Background2 = new Background();
             Background3 = new Background();
 
-            Wall1 = new WALL();
-            Wall2 = new WALL();
-            Wall3 = new WALL();
-            Wall4 = new WALL();
-            Wall5 = new WALL();
-            Wall6 = new WALL();
+            Wall1 = new WALL(Pos1);
+            Wall2 = new WALL(Pos2);
+            Wall3 = new WALL(Pos3);
+            Wall4 = new WALL(Pos4);
+            Wall5 = new WALL(Pos5);
+            Wall6 = new WALL(Pos6);
 
             menu = new Menu(this);
 
@@ -134,18 +137,12 @@ namespace SpaceGame
             Background3.Position = new Vector2(Background3.Position.X + Background3.Size.Width, 0);
 
             Wall1.LoadContent(this.Content);
-            Wall1.Position = Pos;
             Wall2.LoadContent(this.Content);
-            Wall2.Position = Pos;
             Wall3.LoadContent(this.Content);
-            Wall3.Position = Pos;
 
             Wall4.LoadContent(this.Content);
-            Wall4.Position = Pos2;
             Wall5.LoadContent(this.Content);
-            Wall5.Position = Pos2;
             Wall6.LoadContent(this.Content);
-            Wall6.Position = Pos2;
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
