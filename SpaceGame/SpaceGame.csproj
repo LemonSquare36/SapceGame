@@ -62,6 +62,7 @@
     <Content Include="Content\Menu\PlayButtonP.png" />
     <Content Include="Content\Menu\PlayButtonUP.png" />
     <Content Include="Content\Sprites\Base Ship.png" />
+    <Content Include="Content\Sprites\BoxyBox.png" />
     <Content Include="Content\Sprites\HealthBar.png" />
     <Content Include="Content\Sprites\maxresdefault.png" />
     <Content Include="Content\Sprites\SmileyWalk.png" />
