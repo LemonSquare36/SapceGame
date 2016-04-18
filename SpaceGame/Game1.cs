@@ -38,7 +38,8 @@ namespace SpaceGame
         Background Background1;
         Background Background2;
         Background Background3;
-        Rectangle health = new Rectangle();
+        Rectangle health = new Rectangle(100, 10, 200, 20);
+
 
 
         bool DoneMoving = true;
@@ -110,6 +111,8 @@ namespace SpaceGame
             Wall6 = new WALL(Pos6);
 
             menu = new Menu(this);
+
+            health.Width = (int)(((float)BaseShipSprite.HP / 100f) * 250);
 
             base.Initialize();
         }
@@ -187,7 +190,7 @@ namespace SpaceGame
                     Wall4.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall5.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
-                    //score++;
+                    score++;
                     break;
                 default:
                     break;
@@ -426,19 +429,29 @@ namespace SpaceGame
             //top section of walls
 
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall1.SpriteBoundingBox))
-                BaseShipSprite.Position.Y = Wall1.SpriteBoundingBox.Bottom; 
+            {
+                BaseShipSprite.Position.Y = Wall1.SpriteBoundingBox.Bottom;
+                health.Width--;
+            }
 
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall2.SpriteBoundingBox))
+            {
                 BaseShipSprite.Position.Y = Wall2.SpriteBoundingBox.Bottom;
+                health.Width--;
+            }
 
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall3.SpriteBoundingBox))
+            {
                 BaseShipSprite.Position.Y = Wall3.SpriteBoundingBox.Bottom;
+                health.Width--;
+            }
 
             //bottom section of walls
 
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall4.SpriteBoundingBox) && BaseShipSprite.Position.Y <= Wall4.SpriteBoundingBox.Y)
             {
                 BaseShipSprite.Position.Y = Wall4.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Height;
+                health.Width--;
             }
 
 
@@ -446,6 +459,7 @@ namespace SpaceGame
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall5.SpriteBoundingBox) && BaseShipSprite.Position.Y <= Wall5.SpriteBoundingBox.Y)
             {
                 BaseShipSprite.Position.Y = Wall5.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Height;
+                health.Width--;
             }
 
 
@@ -453,6 +467,7 @@ namespace SpaceGame
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall6.SpriteBoundingBox) && BaseShipSprite.Position.Y <= Wall6.SpriteBoundingBox.Y)
             {
                 BaseShipSprite.Position.Y = Wall6.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Height;
+                health.Width--;
             }
          
         }
