@@ -16,8 +16,8 @@ namespace SpaceGame
         public Texture2D Wall;
         const string WallAssetName = "Wall";
 
-        int theWidth = 800;
-        int theHeight = 30;
+        //int theWidth = 800;
+        //int theHeight = 30;
 
         public void LoadContent(ContentManager theContentManager)
         {
