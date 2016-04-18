@@ -274,7 +274,7 @@ namespace SpaceGame
 
             if (DoneMoving && doneMoving)
             {
-                WallPos = Rand.Next(10, 160);
+                WallPos = Rand.Next(10, 155);
                 Wall2Pos = Rand.Next(220, 455);
                 Select = Rand.Next(1, 3);
 
