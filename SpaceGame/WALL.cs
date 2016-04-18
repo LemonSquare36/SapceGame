@@ -19,6 +19,11 @@ namespace SpaceGame
         //int theWidth = 800;
         //int theHeight = 30;
 
+        public WALL(Vector2 pos) : base(pos)
+        {
+            Position = pos;
+        }
+
         public void LoadContent(ContentManager theContentManager)
         {
             Wall = theContentManager.Load<Texture2D>("Sprites/Wall");
@@ -32,7 +37,7 @@ namespace SpaceGame
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Wall, Position, SpriteBoundingBox, Color.White);
+            spriteBatch.Draw(Wall, SpriteBoundingBox, Color.White);
         }
     }
 }
