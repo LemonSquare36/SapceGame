@@ -12,7 +12,7 @@ namespace SpaceGame
 {
     public class Ship : Sprite
     {
-        public Texture2D baseShip;
+        public Texture2D baseShip, bullet;
         // For Movement
         int hp = 100;
         const string ShipAssetName = "Ship";
@@ -24,6 +24,10 @@ namespace SpaceGame
         const int MoveDown = 1;
         const int MoveLeft = -1;
         const int MoveRight = 1;
+        Main world;
+
+        Vector2 BulletStart = new Vector2(10, 100);
+        Vector2 BulletMove = new Vector2(2, 0);
 
         //int theWidth = 27;
         //int theHeight = 23;
@@ -32,6 +36,11 @@ namespace SpaceGame
         public int HP
         {
             get { return hp; }
+        }
+
+        private Main World
+        {
+            get { return world; }
         }
 
         enum State
@@ -44,12 +53,17 @@ namespace SpaceGame
         Vector2 mSpeed = Vector2.Zero;
 
         KeyboardState mPreviousKeyboardState;
-
+    
+        public Ship(Main main)
+        {
+            world = main;
+        }
 
         public override void LoadContent(ContentManager theContentManager)
         {
             Position = new Vector2(StartPositionX, StartPositionY);
             baseShip = Main.GameContent.Load<Texture2D>("Sprites/Base Ship");
+            bullet = Main.GameContent.Load<Texture2D>("Sprites/Bullet");
             //Size = new Rectangle(0, 0, (int)(baseShip.Width * Scale), (int)(baseShip.Height * Scale));
 
             spriteWidth = baseShip.Width;//theWidth;
@@ -62,6 +76,7 @@ namespace SpaceGame
             KeyboardState CurrentKeyBoardState = Keyboard.GetState();
             UpdateMovement(CurrentKeyBoardState);
             mPreviousKeyboardState = CurrentKeyBoardState;
+            Shoot();
 
             //upper left hand corner
             if (Position.X <= 0 && Position.Y <= 0)
@@ -159,6 +174,12 @@ namespace SpaceGame
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(baseShip, Position, new Rectangle(0, 0, baseShip.Width, baseShip.Height), Color.White);
+            spriteBatch.Draw(bullet, BulletStart, new Rectangle(0, 0, bullet.Width, bullet.Height), Color.White);
+        }
+        public void Shoot()
+        {
+            //BulletStart
+            BulletStart += BulletMove;
         }
     }
 
