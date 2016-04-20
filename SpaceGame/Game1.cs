@@ -153,6 +153,8 @@ namespace SpaceGame
             Wall5.LoadContent(this.Content);
             Wall6.LoadContent(this.Content);
 
+            box1.LoadContent(this.Content);
+
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -260,6 +262,8 @@ namespace SpaceGame
                     Wall4.Draw(this.spriteBatch);
                     Wall5.Draw(this.spriteBatch);
                     Wall6.Draw(this.spriteBatch);
+
+                    box1.Draw(this.spriteBatch);
 
                     //Wall0.Draw(this.spriteBatch);
 
