@@ -59,8 +59,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Menu\MainMenuP.png" />
+    <Content Include="Content\Menu\MainMenuUP.png" />
+    <Content Include="Content\Menu\OptionsP.png" />
+    <Content Include="Content\Menu\OptionsUP.png" />
     <Content Include="Content\Menu\PlayButtonP.png" />
     <Content Include="Content\Menu\PlayButtonUP.png" />
+    <Content Include="Content\Menu\YouDied.png" />
     <Content Include="Content\Sprites\Base Ship.png" />
     <Content Include="Content\Sprites\BoxyBox.png" />
     <Content Include="Content\Sprites\HealthBar.png" />

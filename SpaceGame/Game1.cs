@@ -21,6 +21,7 @@ namespace SpaceGame
         private GameStates gameState;
         event EventHandler GameStateChanged;
 
+        private Texture2D YOUDIED;
         public GameStates GameState
         {
             get { return gameState; }
@@ -31,7 +32,6 @@ namespace SpaceGame
             }
         }
         Menu menu;
-        Game game;
 
 
         public Ship BaseShipSprite = new Ship();
@@ -40,7 +40,9 @@ namespace SpaceGame
         Background Background3;
         Rectangle health = new Rectangle(100, 10, 200, 20);
 
-
+        int AlphaValue = 1;
+        double FadeInc = 3;
+        double FadeDelay = 3;
 
         bool DoneMoving = true;
         bool doneMoving = true;
@@ -147,6 +149,8 @@ namespace SpaceGame
             Wall5.LoadContent(this.Content);
             Wall6.LoadContent(this.Content);
 
+            YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
 
@@ -190,7 +194,13 @@ namespace SpaceGame
                     Wall4.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall5.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
-                    score++;
+                    if (health.Width > 0) score++;
+
+                    if (health.Width <= 0)
+                    {
+                        FadeDelay -= gameTime.ElapsedGameTime.TotalSeconds;
+                    }
+                    FadeIn();
                     break;
                 default:
                     break;
@@ -260,6 +270,8 @@ namespace SpaceGame
                     Vector2 location = new Vector2(300, 400);
                     Rectangle sourceRectangle = new Rectangle(0, 0, BaseShip.Width, BaseShip.Height);
                     Vector2 origin = new Vector2(BaseShip.Width / 2, BaseShip.Height * 3);
+
+                    if (health.Width <= 0) spriteBatch.Draw(YOUDIED, new Vector2(25, 100), new Color(255, 255, 255, (byte)MathHelper.Clamp(AlphaValue, 0, 255)));
 
                     //spriteBatch.Draw(BaseShip, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
 
@@ -470,6 +482,18 @@ namespace SpaceGame
                 health.Width--;
             }
          
+        }
+        private void FadeIn()
+        {
+            if (FadeDelay <= 0)
+            {
+                FadeDelay = .035;
+                AlphaValue += (int)FadeInc;
+                if (AlphaValue >= 255 || AlphaValue <= 0)
+                {
+                    FadeInc *= 1;
+                }
+            }
         }
          
 
