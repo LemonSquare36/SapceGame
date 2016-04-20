@@ -240,7 +240,7 @@ namespace SpaceGame
                     spriteBatch.Begin();
                     menu.Draw(spriteBatch);
                     spriteBatch.End();
-                
+
                     break;
                 case GameStates.GamePlaying:
 
@@ -444,8 +444,8 @@ namespace SpaceGame
         {
 
             //if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall0.SpriteBoundingBox))
-              //  BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
-                //Console.WriteLine(Wall0.SpriteBoundingBox);
+            //  BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
+            //Console.WriteLine(Wall0.SpriteBoundingBox);
             //top section of walls
 
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall1.SpriteBoundingBox))
@@ -459,7 +459,7 @@ namespace SpaceGame
                 BaseShipSprite.Position.Y = Wall2.SpriteBoundingBox.Bottom;
                 health.Width--;
             }
-              
+
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall3.SpriteBoundingBox))
             {
                 BaseShipSprite.Position.Y = Wall3.SpriteBoundingBox.Bottom;
@@ -472,7 +472,7 @@ namespace SpaceGame
             {
                 BaseShipSprite.Position.Y = Wall4.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Height;
                 health.Width--;
-            } 
+            }
 
 
 
@@ -489,7 +489,7 @@ namespace SpaceGame
                 BaseShipSprite.Position.Y = Wall6.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Height;
                 health.Width--;
             }
-         
+
         }
         private void FadeIn()
         {
@@ -503,7 +503,7 @@ namespace SpaceGame
                 }
             }
         }
-         
+
         private void CheckShipGameObjectCollision()
         {
             if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.SpriteBoundingBox))
