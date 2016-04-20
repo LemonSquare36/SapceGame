@@ -118,8 +118,6 @@ namespace SpaceGame
 
             menu = new Menu(this);
 
-            health.Width = (int)(((float)BaseShipSprite.HP / 100f) * 250);
-
             base.Initialize();
         }
 
@@ -133,6 +131,8 @@ namespace SpaceGame
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             BaseShipSprite = new Ship(this);
+
+            health.Width = (int)(((float)BaseShipSprite.HP / 100f) * 250);
 
             menu.LoadContent();
 
