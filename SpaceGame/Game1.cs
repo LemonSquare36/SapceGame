@@ -52,6 +52,8 @@ namespace SpaceGame
         int Select;
         int Wall2Pos;
 
+        GameObject box1;
+
         WALL Wall1;
         WALL Wall2;
         WALL Wall3;
@@ -104,6 +106,8 @@ namespace SpaceGame
             Background1 = new Background();
             Background2 = new Background();
             Background3 = new Background();
+
+            box1 = new GameObject();
 
             Wall1 = new WALL(Pos1);
             Wall2 = new WALL(Pos2);
