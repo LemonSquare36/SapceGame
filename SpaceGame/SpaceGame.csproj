@@ -44,6 +44,7 @@
     <Compile Include="Background.cs" />
     <Compile Include="Duality.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,7 +68,7 @@
     <Content Include="Content\Menu\PlayButtonUP.png" />
     <Content Include="Content\Menu\YouDied.png" />
     <Content Include="Content\Sprites\Base Ship.png" />
-    <Content Include="Content\Sprites\Bullet.png" />
+    <Content Include="Content\Sprites\BoxyBox.png" />
     <Content Include="Content\Sprites\HealthBar.png" />
     <Content Include="Content\Sprites\maxresdefault.png" />
     <Content Include="Content\Sprites\Untitled.png" />

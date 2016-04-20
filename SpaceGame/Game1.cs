@@ -34,7 +34,7 @@ namespace SpaceGame
         Menu menu;
 
 
-        public Ship BaseShipSprite = new Ship();
+        public Ship BaseShipSprite;
         Background Background1;
         Background Background2;
         Background Background3;
@@ -51,6 +51,8 @@ namespace SpaceGame
         int WallPos;
         int Select;
         int Wall2Pos;
+
+        GameObject box1;
 
         WALL Wall1;
         WALL Wall2;
@@ -105,6 +107,8 @@ namespace SpaceGame
             Background2 = new Background();
             Background3 = new Background();
 
+            box1 = new GameObject();
+
             Wall1 = new WALL(Pos1);
             Wall2 = new WALL(Pos2);
             Wall3 = new WALL(Pos3);
@@ -127,6 +131,8 @@ namespace SpaceGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            BaseShipSprite = new Ship(this);
 
             menu.LoadContent();
 

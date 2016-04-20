@@ -15,8 +15,8 @@ namespace SpaceGame
     {
         public Texture2D boxyBox;
         const string ObjectAssetName = "Object";
-        const int StartPositionX = 300;
-        const int StartPositionY = 300;
+        const int StartPositionX = 150;
+        const int StartPositionY = 225;
         //int health = 10;
 
         public override void LoadContent(ContentManager theContentManager)

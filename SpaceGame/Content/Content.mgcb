@@ -163,7 +163,7 @@
 /processorParam:TextureFormat=Compressed
 /build:myFont.spritefont
 
-#begin Sprites/Bullet.png
+#begin Sprites/BoxyBox.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -173,5 +173,5 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Sprites/Bullet.png
+/build:Sprites/BoxyBox.png
 
