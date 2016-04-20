@@ -34,7 +34,7 @@ namespace SpaceGame
         Menu menu;
 
 
-        public Ship BaseShipSprite = new Ship();
+        public Ship BaseShipSprite;
         Background Background1;
         Background Background2;
         Background Background3;
@@ -131,6 +131,8 @@ namespace SpaceGame
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            BaseShipSprite = new Ship(this);
 
             menu.LoadContent();
 
