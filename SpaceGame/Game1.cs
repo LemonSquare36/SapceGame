@@ -464,7 +464,7 @@ namespace SpaceGame
             {
                 BaseShipSprite.Position.Y = Wall4.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Height;
                 health.Width--;
-            }
+            } 
 
 
 
