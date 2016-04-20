@@ -451,7 +451,7 @@ namespace SpaceGame
                 BaseShipSprite.Position.Y = Wall2.SpriteBoundingBox.Bottom;
                 health.Width--;
             }
-
+              
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall3.SpriteBoundingBox))
             {
                 BaseShipSprite.Position.Y = Wall3.SpriteBoundingBox.Bottom;
