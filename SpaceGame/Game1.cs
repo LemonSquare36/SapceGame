@@ -50,6 +50,8 @@ namespace SpaceGame
         int Select;
         int Wall2Pos;
 
+        GameObject box1;
+
         WALL Wall1;
         WALL Wall2;
         WALL Wall3;
@@ -103,6 +105,8 @@ namespace SpaceGame
             Background2 = new Background();
             Background3 = new Background();
 
+            box1 = new GameObject();
+
             Wall1 = new WALL(Pos1);
             Wall2 = new WALL(Pos2);
             Wall3 = new WALL(Pos3);
@@ -138,6 +142,8 @@ namespace SpaceGame
             Background2.Position = new Vector2(Background2.Position.X + Background2.Size.Width, 0);
             Background3.LoadContent(this.Content);
             Background3.Position = new Vector2(Background3.Position.X + Background3.Size.Width, 0);
+
+            box1.LoadContent(this.Content);
 
             Wall1.LoadContent(this.Content);
             Wall2.LoadContent(this.Content);
@@ -238,6 +244,8 @@ namespace SpaceGame
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+
+                    box1.Draw(this.spriteBatch);
 
 
                     Wall1.Draw(this.spriteBatch);
@@ -472,6 +480,13 @@ namespace SpaceGame
          
         }
          
-
+        private void CheckShipGameObjectCollision()
+        {
+            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.SpriteBoundingBox))
+            {
+                BaseShipSprite.Position.X = box1.SpriteBoundingBox.Left;
+                health.Width--;
+            }
+        }
     }
 }
