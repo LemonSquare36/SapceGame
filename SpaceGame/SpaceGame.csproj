@@ -44,7 +44,6 @@
     <Compile Include="Background.cs" />
     <Compile Include="Duality.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -60,20 +59,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\Content\Menu\PlayButtonP.png" />
-    <Content Include="Properties\Content\Menu\PlayButtonUP.png" />
-    <Content Include="Properties\Content\Sprites\Base Ship.png" />
-    <Content Include="Properties\Content\Sprites\HealthBar.png" />
-    <Content Include="Properties\Content\Sprites\maxresdefault.png" />
-    <Content Include="Properties\Content\Sprites\SmileyWalk.png" />
-    <Content Include="Properties\Content\Sprites\Wall.png" />
+    <Content Include="Content\Menu\MainMenuP.png" />
+    <Content Include="Content\Menu\MainMenuUP.png" />
+    <Content Include="Content\Menu\OptionsP.png" />
+    <Content Include="Content\Menu\OptionsUP.png" />
+    <Content Include="Content\Menu\PlayButtonP.png" />
+    <Content Include="Content\Menu\PlayButtonUP.png" />
+    <Content Include="Content\Menu\YouDied.png" />
+    <Content Include="Content\Sprites\Base Ship.png" />
+    <Content Include="Content\Sprites\BoxyBox.png" />
+    <Content Include="Content\Sprites\HealthBar.png" />
+    <Content Include="Content\Sprites\maxresdefault.png" />
+    <Content Include="Content\Sprites\SmileyWalk.png" />
+    <Content Include="Content\Sprites\Wall.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="Properties\Content\Content.mgcb" />
+    <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\Content\myFont.spritefont">
+    <None Include="Content\myFont.spritefont">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
