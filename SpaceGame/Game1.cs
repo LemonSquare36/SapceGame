@@ -192,8 +192,8 @@ namespace SpaceGame
                     spriteBatch.End();
                     break;
                 case GameStates.GamePlaying:
-                    WallMove(gameTime);
-                    WallScroll();
+                    //WallMove(gameTime);
+                    //WallScroll();
                     BaseShipSprite.Update(gameTime);
                     CheckGameObjectCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -273,7 +273,7 @@ namespace SpaceGame
                     spriteBatch.End();
                     spriteBatch.Begin();
 
-                    box1.Draw(this.spriteBatch);
+                    box1.Draw(spriteBatch);
 
                     BaseShipSprite.Draw(this.spriteBatch);
                     spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
@@ -450,28 +450,50 @@ namespace SpaceGame
             //BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
             //Console.WriteLine(Wall0.SpriteBoundingBox);
 
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.SpriteBoundingBox))
+            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X <= box1.spriteBoundingBox.X)
             {
-                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Bottom;
-                health.Width--;
+                BaseShipSprite.Position.X = box1.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
+                //health.Width--;
             }
+
+            else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
+            {
+                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Width;
+                //health.Width--;
+            }
+
+            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X >= box1.spriteBoundingBox.X)
+            {
+                BaseShipSprite.Position.X = box1.SpriteBoundingBox.Right + BaseShipSprite.SpriteBoundingBox.Width;
+                Console.WriteLine("Colliding");
+                //health.Width--;
+            }
+
+            else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
+            {
+                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Bottom - BaseShipSprite.SpriteBoundingBox.Height;
+                //health.Width--;
+            }
+
+
+            ///walls
             //top section of walls
 
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall1.SpriteBoundingBox))
+            if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall1.SpriteBoundingBox)) //&& BaseShipSprite.Position.Y >= Wall4.SpriteBoundingBox.Y)
             {
-                BaseShipSprite.Position.Y = Wall1.SpriteBoundingBox.Bottom;
+                BaseShipSprite.Position.Y = Wall1.SpriteBoundingBox.Bottom; //- BaseShipSprite.SpriteBoundingBox.Height;
                 health.Width--;
             }
 
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall2.SpriteBoundingBox))
+            if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall2.SpriteBoundingBox))// && BaseShipSprite.Position.Y >= Wall4.SpriteBoundingBox.Y)
             {
-                BaseShipSprite.Position.Y = Wall2.SpriteBoundingBox.Bottom;
+                BaseShipSprite.Position.Y = Wall2.SpriteBoundingBox.Bottom; //- BaseShipSprite.SpriteBoundingBox.Height;
                 health.Width--;
             }
 
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall3.SpriteBoundingBox))
+            if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall3.SpriteBoundingBox))// && BaseShipSprite.Position.Y >= Wall4.SpriteBoundingBox.Y)
             {
-                BaseShipSprite.Position.Y = Wall3.SpriteBoundingBox.Bottom;
+                BaseShipSprite.Position.Y = Wall3.SpriteBoundingBox.Bottom; //- BaseShipSprite.SpriteBoundingBox.Height;
                 health.Width--;
             }
 

@@ -15,8 +15,8 @@ namespace SpaceGame
     {
         public Texture2D boxyBox;
         const string ObjectAssetName = "Object";
-        const int StartPositionX = 150;
-        const int StartPositionY = 225;
+        const int StartPositionX = 100;
+        const int StartPositionY = 250;
         //int health = 10;
 
         public override void LoadContent(ContentManager theContentManager)
@@ -27,12 +27,14 @@ namespace SpaceGame
             spriteWidth = boxyBox.Width;
             spriteHeight = boxyBox.Height;
 
+            spriteBoundingBox = new Rectangle(StartPositionX, StartPositionY, spriteWidth, spriteHeight);
+
             base.LoadContent(theContentManager, ObjectAssetName);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(boxyBox, Position, new Rectangle(0, 0, boxyBox.Width, boxyBox.Height), Color.White);
+            spriteBatch.Draw(boxyBox, SpriteBoundingBox, Color.White);
         }
     }
 }
