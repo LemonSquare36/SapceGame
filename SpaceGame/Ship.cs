@@ -26,7 +26,7 @@ namespace SpaceGame
         const int MoveRight = 1;
         Main world;
 
-        public List<Bullet> bullets = new List<Bullet>();
+        //public List<Bullet> bullets = new List<Bullet>();
         //int theWidth = 27;
         //int theHeight = 23;
 
@@ -178,9 +178,9 @@ namespace SpaceGame
         }
         public void Shoot(KeyboardState CurrentKeyBoardState)
         {
-            if (CurrentKeyBoardState.IsKeyDown(Keys.Z) == true)
-                bullets.Add(new Bullet(Position));
-                bullet.Draw()
+           // if (CurrentKeyBoardState.IsKeyDown(Keys.Z) == true)
+               // bullets.Add(new Bullet(Position));
+            
                
         }
     }
