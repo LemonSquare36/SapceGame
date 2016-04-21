@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
@@ -13,6 +14,7 @@ namespace SpaceGame
     public class Ship : Sprite
     {
         public Texture2D baseShip;
+        bool elapsed = true;
         // For Movement
         int hp = 100;
         const string ShipAssetName = "Ship";
@@ -25,6 +27,7 @@ namespace SpaceGame
         const int MoveLeft = -1;
         const int MoveRight = 1;
         Main world;
+        Timer timer = new Timer(300);
 
         public List<Bullet> bullets = new List<Bullet>();
         //int theWidth = 27;
@@ -66,6 +69,8 @@ namespace SpaceGame
 
             spriteWidth = baseShip.Width;//theWidth;
             spriteHeight = baseShip.Height;//theHeight;
+
+            timer.Elapsed += TimerElapsed;
 
             base.LoadContent(theContentManager, ShipAssetName);
         }
@@ -187,10 +192,20 @@ namespace SpaceGame
         }
         public void Shoot(KeyboardState CurrentKeyBoardState)
         {
-           if (CurrentKeyBoardState.IsKeyDown(Keys.Z) == true)
+            if (CurrentKeyBoardState.IsKeyDown(Keys.Z) == true && elapsed)
+            {
                 bullets.Add(new Bullet(Position));
+                elapsed = false;
+                timer.Stop();
+                timer.Start();
+            }
             
                
+        }
+
+        private void TimerElapsed(object sender, EventArgs e)
+        {
+            elapsed = true;
         }
     }
 

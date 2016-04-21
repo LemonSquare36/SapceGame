@@ -21,17 +21,17 @@ namespace SpaceGame
         public Bullet(Vector2 pos)
         {
             BulletStart = pos;
+            BulletStart -= new Vector2(-16, -10);
             LoadContent();
         }
 
         Texture2D bullet;
 
         Vector2 BulletStart;
-        Vector2 BulletMove = new Vector2(2, 0);
+        Vector2 BulletMove = new Vector2(5, 0);
         KeyboardState mPreviousKeyboardState;
         public void LoadContent()
         {
-            BulletStart = Position;
             bullet = Main.GameContent.Load<Texture2D>("Sprites/Bullet");
 
         }
