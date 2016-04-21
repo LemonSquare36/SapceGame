@@ -195,7 +195,7 @@ namespace SpaceGame
                     WallMove(gameTime);
                     WallScroll();
                     BaseShipSprite.Update(gameTime);
-                    CheckShipWallCollision();
+                    CheckGameObjectCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -265,7 +265,6 @@ namespace SpaceGame
                     Wall5.Draw(this.spriteBatch);
                     Wall6.Draw(this.spriteBatch);
 
-                    box1.Draw(this.spriteBatch);
 
                     //Wall0.Draw(this.spriteBatch);
 
@@ -273,6 +272,8 @@ namespace SpaceGame
 
                     spriteBatch.End();
                     spriteBatch.Begin();
+
+                    box1.Draw(this.spriteBatch);
 
                     BaseShipSprite.Draw(this.spriteBatch);
                     spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
@@ -442,12 +443,18 @@ namespace SpaceGame
             }
         }
 
-        private void CheckShipWallCollision()
+        private void CheckGameObjectCollision()
         {
 
             //if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall0.SpriteBoundingBox))
-            //  BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
+            //BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
             //Console.WriteLine(Wall0.SpriteBoundingBox);
+
+            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.SpriteBoundingBox))
+            {
+                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Bottom;
+                health.Width--;
+            }
             //top section of walls
 
             if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall1.SpriteBoundingBox))
@@ -493,6 +500,7 @@ namespace SpaceGame
             }
 
         }
+
         private void FadeIn()
         {
             if (FadeDelay <= 0)
