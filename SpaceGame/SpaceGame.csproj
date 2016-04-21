@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
+    <Compile Include="bullet.cs" />
     <Compile Include="Duality.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameObject.cs" />
