@@ -26,15 +26,11 @@ namespace SpaceGame
         const int MoveRight = 1;
         Main world;
 
-        //public List<Bullet> bullets = new List<Bullet>();
+        public List<Bullet> bullets = new List<Bullet>();
         //int theWidth = 27;
         //int theHeight = 23;
+       
 
-        /// <summary>
-        ///  for (int i = 0; i < BaseShipSprite.bullets.Count; i++)
-        ///       BaseShipSprite.bullets[i].Draw(this.spriteBatch);
-        ///       
-        /// </summary>
 
         public int HP
         {
@@ -78,6 +74,13 @@ namespace SpaceGame
             KeyboardState CurrentKeyBoardState = Keyboard.GetState();
             UpdateMovement(CurrentKeyBoardState);
             mPreviousKeyboardState = CurrentKeyBoardState;
+
+            Shoot(CurrentKeyBoardState);
+
+            foreach (Bullet i in bullets)
+            {
+                i.Update();
+            }
 
             //upper left hand corner
             if (Position.X <= 0 && Position.Y <= 0)
@@ -175,11 +178,17 @@ namespace SpaceGame
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(baseShip, Position, new Rectangle(0, 0, baseShip.Width, baseShip.Height), Color.White);
+
+                foreach (Bullet i in bullets)
+                {
+                    i.Draw(spriteBatch);
+                }
+
         }
         public void Shoot(KeyboardState CurrentKeyBoardState)
         {
-           // if (CurrentKeyBoardState.IsKeyDown(Keys.Z) == true)
-               // bullets.Add(new Bullet(Position));
+           if (CurrentKeyBoardState.IsKeyDown(Keys.Z) == true)
+                bullets.Add(new Bullet(Position));
             
                
         }

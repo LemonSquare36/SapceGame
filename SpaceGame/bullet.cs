@@ -11,17 +11,18 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
-    class Bullet : Sprite
+    public class Bullet : Sprite
     {
-         public Vector2 position
+        public Vector2 position
         {
             get { return Position; }
         }
 
         public Bullet(Vector2 pos)
-         {
-             BulletStart = pos;
-         }
+        {
+            BulletStart = pos;
+            LoadContent();
+        }
 
         Texture2D bullet;
 
@@ -31,6 +32,8 @@ namespace SpaceGame
         public void LoadContent()
         {
             BulletStart = Position;
+            bullet = Main.GameContent.Load<Texture2D>("Sprites/Bullet");
+
         }
         public void Update()
         {
