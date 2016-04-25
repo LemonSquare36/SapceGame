@@ -13,6 +13,7 @@ namespace SpaceGame
 {
     public class Bullet : Sprite
     {
+
         public Vector2 position
         {
             get { return Position; }

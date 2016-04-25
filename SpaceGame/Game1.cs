@@ -536,6 +536,10 @@ namespace SpaceGame
             }
         }
 
+        private void CheckBulletCollision()
+        {
+            if ()
+        }
 
     }
 }
