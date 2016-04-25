@@ -204,6 +204,8 @@ namespace SpaceGame
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     if (health.Width > 0) score++;
 
+                    Console.WriteLine(CheckBulletCollision());
+
                     if (health.Width <= 0)
                     {
                         FadeDelay -= gameTime.ElapsedGameTime.TotalSeconds;
@@ -536,9 +538,16 @@ namespace SpaceGame
             }
         }
 
-        private void CheckBulletCollision()
+        private bool CheckBulletCollision()
         {
-            if ()
+            foreach (Bullet i in BaseShipSprite.bullets)
+            {
+                foreach (GameObject l in objects)
+                {
+                    if (i.SpriteBoundingBox.Intersects(l.SpriteBoundingBox)) return true; 
+                }
+            }
+            return false;
         }
 
     }
