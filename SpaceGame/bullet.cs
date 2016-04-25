@@ -39,11 +39,13 @@ namespace SpaceGame
         public void Update()
         {
             BulletStart += BulletMove;
+            spriteBoundingBox = new Rectangle((int)BulletStart.X, (int)BulletStart.Y, bullet.Width, bullet.Height);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(bullet, BulletStart, new Rectangle(0, 0, bullet.Width, bullet.Height), Color.White);
+            spriteBatch.Draw(bullet, SpriteBoundingBox, Color.White);
         }
+
     }
 }
 
