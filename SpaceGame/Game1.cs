@@ -375,7 +375,7 @@ namespace SpaceGame
                 }
             }
             Vector2 aDirection = new Vector2(-1, 0);
-            Vector2 aSpeed = new Vector2(50, 0);
+            Vector2 aSpeed = new Vector2(100, 0);
 
             Vector2 bSpeed = new Vector2(200, 0);
 
