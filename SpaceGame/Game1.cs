@@ -161,7 +161,7 @@ namespace SpaceGame
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
-
+            graphics.IsFullScreen = true;
         }
 
         /// <summary>
