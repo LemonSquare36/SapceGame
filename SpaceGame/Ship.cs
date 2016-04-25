@@ -34,7 +34,6 @@ namespace SpaceGame
         //int theHeight = 23;
        
 
-
         public int HP
         {
             get { return hp; }
@@ -202,6 +201,7 @@ namespace SpaceGame
             
                
         }
+
 
         private void TimerElapsed(object sender, EventArgs e)
         {
