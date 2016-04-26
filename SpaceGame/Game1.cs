@@ -176,6 +176,7 @@ namespace SpaceGame
         private void TimeElapsed(object sender, EventArgs e)
         {
             objects.Add(new GameObject(Content));
+            Console.WriteLine("Woobitty woo");
             timer.Stop();
             timer.Start();
         }
@@ -462,32 +463,18 @@ namespace SpaceGame
             //BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
             //Console.WriteLine(Wall0.SpriteBoundingBox);
 
-            foreach (GameObject i in objects)
+            for (int i = 0; i < objects.Count; i++)
             {
-                if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.X <= i.spriteBoundingBox.X)
+                bool a = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.X <= objects[i].spriteBoundingBox.X;
+                bool b = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.Y <= objects[i].spriteBoundingBox.Y;
+                bool c = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.X >= objects[i].spriteBoundingBox.X;
+                bool d = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.Y <= objects[i].spriteBoundingBox.Y;
+                if (a || b || c || d)//left
                 {
-                    BaseShipSprite.Position.X = i.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
-                    //health.Width--;
+                    //BaseShipSprite.Position.X = i.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
+                    health.Width -= 5;
+                    objects.Remove(objects[i]);
                 }
-
-                else if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.Y <= i.spriteBoundingBox.Y)
-                {
-                    BaseShipSprite.Position.Y = i.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Width;
-                    //health.Width--;
-                }
-
-                if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.X >= i.spriteBoundingBox.X)
-                {
-                    BaseShipSprite.Position.X = i.SpriteBoundingBox.Right + BaseShipSprite.SpriteBoundingBox.Width;
-                    Console.WriteLine("Colliding");
-                    //health.Width--;
-                }
-
-                else if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.Y <= i.spriteBoundingBox.Y)
-                {
-                    BaseShipSprite.Position.Y = i.SpriteBoundingBox.Bottom - BaseShipSprite.SpriteBoundingBox.Height;
-                    //health.Width--;
-                } 
             }
 
 
