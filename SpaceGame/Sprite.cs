@@ -17,7 +17,7 @@ namespace SpaceGame
         private Texture2D baseShip, Starrybackground, Wall;
         // Size of sprite
         public Rectangle Size;
-       public Rectangle spriteBoundingBox;
+       public Rectangle spriteBoundingBox, AsteroidBoundingBox;
         // Amount to increase/decrease size
         private float mScale = 1.0f;
         //For Updating under move
