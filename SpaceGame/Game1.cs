@@ -176,7 +176,7 @@ namespace SpaceGame
         private void TimeElapsed(object sender, EventArgs e)
         {
             objects.Add(new GameObject(Content));
-            Console.WriteLine("Woobitty woo");
+            Console.WriteLine("Colliding");
             timer.Stop();
             timer.Start();
         }
@@ -540,11 +540,16 @@ namespace SpaceGame
 
         private bool CheckBulletCollision()
         {
-            foreach (Bullet i in BaseShipSprite.bullets)
+            for (int i = 0; i < BaseShipSprite.bullets.Count; i++)
             {
-                foreach (GameObject l in objects)
+                for (int l = 0; l < objects.Count; l++)
                 {
-                    if (i.SpriteBoundingBox.Intersects(l.SpriteBoundingBox)) return true; 
+                    if (BaseShipSprite.bullets[i].SpriteBoundingBox.Intersects(objects[l].SpriteBoundingBox))
+                    {
+                        objects.Remove(objects[l]);
+                        BaseShipSprite.bullets.Remove(BaseShipSprite.bullets[i]);
+                        return true;
+                    }
                 }
             }
             return false;

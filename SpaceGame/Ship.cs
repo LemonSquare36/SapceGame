@@ -20,8 +20,8 @@ namespace SpaceGame
         const string ShipAssetName = "Ship";
         const int StartPositionX = 125;
         const int StartPositionY = 245;
-        const int SpeedLR = 400;//100
-        const int SpeedUD = 400;//160
+        const int SpeedLR = 250;
+        const int SpeedUD = 250;//160
         const int MoveUp = -1;
         const int MoveDown = 1;
         const int MoveLeft = -1;

@@ -14,6 +14,11 @@ namespace SpaceGame
     class GameObject : Sprite
     {
         public Texture2D boxyBox;
+        public Texture2D asteroid;
+
+        //int AsteroidPosX = 480;
+        //int AsteroidPosY = 400;
+
         const string ObjectAssetName = "Object";
         const int StartPositionX = 100;
         const int StartPositionY = 250;
@@ -29,10 +34,13 @@ namespace SpaceGame
             Position = new Vector2(StartPositionX, StartPositionY);
             boxyBox = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
 
+            asteroid = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
+
             spriteWidth = boxyBox.Width;
             spriteHeight = boxyBox.Height;
 
             spriteBoundingBox = new Rectangle(StartPositionX, StartPositionY, spriteWidth, spriteHeight);
+            AsteroidBoundingBox = new Rectangle()
 
             base.LoadContent(theContentManager, ObjectAssetName);
         }
@@ -40,6 +48,7 @@ namespace SpaceGame
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(boxyBox, SpriteBoundingBox, Color.White);
+            spriteBatch.Draw(asteroid, SpriteBoundingBox, Color.White);
         }
     }
 }
