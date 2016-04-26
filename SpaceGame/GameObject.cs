@@ -19,6 +19,11 @@ namespace SpaceGame
         const int StartPositionY = 250;
         //int health = 10;
 
+        public GameObject(ContentManager theContentManager)
+        {
+            LoadContent(theContentManager);
+        }
+
         public override void LoadContent(ContentManager theContentManager)
         {
             Position = new Vector2(StartPositionX, StartPositionY);

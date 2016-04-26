@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
@@ -52,7 +53,8 @@ namespace SpaceGame
         int Select;
         int Wall2Pos;
 
-        GameObject box1;
+        List<GameObject> objects = new List<GameObject>();
+        Timer timer = new Timer(2000);
 
         WALL Wall1;
         WALL Wall2;
@@ -107,8 +109,6 @@ namespace SpaceGame
             Background2 = new Background();
             Background3 = new Background();
 
-            box1 = new GameObject();
-
             Wall1 = new WALL(Pos1);
             Wall2 = new WALL(Pos2);
             Wall3 = new WALL(Pos3);
@@ -155,9 +155,9 @@ namespace SpaceGame
             Wall5.LoadContent(this.Content);
             Wall6.LoadContent(this.Content);
 
-            box1.LoadContent(this.Content);
-
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
+            timer.Elapsed += TimeElapsed;
+            timer.Start();
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -171,6 +171,13 @@ namespace SpaceGame
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+        }
+
+        private void TimeElapsed(object sender, EventArgs e)
+        {
+            objects.Add(new GameObject(Content));
+            timer.Stop();
+            timer.Start();
         }
 
         /// <summary>
@@ -275,7 +282,10 @@ namespace SpaceGame
                     spriteBatch.End();
                     spriteBatch.Begin();
 
-                    box1.Draw(spriteBatch);
+                    foreach (GameObject i in objects)
+                    {
+                        i.Draw(spriteBatch);
+                    }
 
                     BaseShipSprite.Draw(this.spriteBatch);
                     spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
@@ -452,29 +462,32 @@ namespace SpaceGame
             //BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
             //Console.WriteLine(Wall0.SpriteBoundingBox);
 
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X <= box1.spriteBoundingBox.X)
+            foreach (GameObject i in objects)
             {
-                BaseShipSprite.Position.X = box1.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
-                //health.Width--;
-            }
+                if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.X <= i.spriteBoundingBox.X)
+                {
+                    BaseShipSprite.Position.X = i.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
+                    //health.Width--;
+                }
 
-            else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
-            {
-                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Width;
-                //health.Width--;
-            }
+                else if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.Y <= i.spriteBoundingBox.Y)
+                {
+                    BaseShipSprite.Position.Y = i.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Width;
+                    //health.Width--;
+                }
 
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X >= box1.spriteBoundingBox.X)
-            {
-                BaseShipSprite.Position.X = box1.SpriteBoundingBox.Right + BaseShipSprite.SpriteBoundingBox.Width;
-                Console.WriteLine("Colliding");
-                //health.Width--;
-            }
+                if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.X >= i.spriteBoundingBox.X)
+                {
+                    BaseShipSprite.Position.X = i.SpriteBoundingBox.Right + BaseShipSprite.SpriteBoundingBox.Width;
+                    Console.WriteLine("Colliding");
+                    //health.Width--;
+                }
 
-            else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
-            {
-                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Bottom - BaseShipSprite.SpriteBoundingBox.Height;
-                //health.Width--;
+                else if (BaseShipSprite.SpriteBoundingBox.Intersects(i.spriteBoundingBox) && BaseShipSprite.Position.Y <= i.spriteBoundingBox.Y)
+                {
+                    BaseShipSprite.Position.Y = i.SpriteBoundingBox.Bottom - BaseShipSprite.SpriteBoundingBox.Height;
+                    //health.Width--;
+                } 
             }
 
 
