@@ -68,6 +68,7 @@
     <Content Include="Content\Menu\PlayButtonP.png" />
     <Content Include="Content\Menu\PlayButtonUP.png" />
     <Content Include="Content\Menu\YouDied.png" />
+    <Content Include="Content\Sprites\Asteriod.png" />
     <Content Include="Content\Sprites\Base Ship.png" />
     <Content Include="Content\Sprites\BoxyBox.png" />
     <Content Include="Content\Sprites\Bullet.png" />
