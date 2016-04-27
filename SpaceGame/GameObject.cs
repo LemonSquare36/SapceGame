@@ -27,18 +27,18 @@ namespace SpaceGame
         Point movement, start;
         //int health = 10;
 
-        public GameObject(ContentManager theContentManager, ObjectType type, int seed)
+        public GameObject(ContentManager theContentManager, ObjectType type, int rand)
         {
             this.type = type;
-            rand = new Random(seed);
             switch (type)
             {
                 case ObjectType.Asteroid:
                     movement = new Point(5, 0);
+                    start = new Point(900, rand);
                     break;
 
                 case ObjectType.Box:
-                    start = new Point(300, rand.Next(150, 350));
+                    start = new Point(300, rand);
                     movement = Point.Zero;
                     break;
 
@@ -68,8 +68,6 @@ namespace SpaceGame
             {
                 case ObjectType.Asteroid:
                     texture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
-                    pix = Main.GameContent.Load<Texture2D>("Sprites/pix");
-                    start = new Point(900, rand.Next(150, 350));
                     break;
                 
                 case ObjectType.Box:
