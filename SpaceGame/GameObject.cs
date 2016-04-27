@@ -15,7 +15,7 @@ namespace SpaceGame
 
     class GameObject : Sprite
     {
-        public Texture2D texture;
+        public Texture2D texture, pix;
         Random rand;
         ObjectType type;
         float rotation = 0;
@@ -55,7 +55,7 @@ namespace SpaceGame
 
             if (type == ObjectType.Asteroid)
             {
-                rotation += MathHelper.ToRadians(0);
+                rotation += MathHelper.ToRadians(-3);
                 if (MathHelper.ToDegrees(rotation) >= 360 || MathHelper.ToDegrees(rotation) <= -360) rotation = 0;
             }
         }
@@ -68,6 +68,7 @@ namespace SpaceGame
             {
                 case ObjectType.Asteroid:
                     texture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
+                    pix = Main.GameContent.Load<Texture2D>("Sprites/pix");
                     start = new Point(900, rand.Next(150, 350));
                     break;
                 
@@ -87,7 +88,7 @@ namespace SpaceGame
             switch (type)
             {
                 case ObjectType.Asteroid:
-                    spriteBatch.Draw(texture, SpriteBoundingBox, null, Color.White, rotation, new Vector2(texture.Width/2, texture.Height/2), SpriteEffects.None, 0);
+                    spriteBatch.Draw(texture, new Vector2(SpriteBoundingBox.Location.X+25, SpriteBoundingBox.Location.Y+25), null, Color.White, rotation, new Vector2(25, 25), 1, SpriteEffects.None, 0);
                     break;
 
                 case ObjectType.Box:
