@@ -35,13 +35,6 @@ namespace SpaceGame
                 return spriteBoundingBox;
             }
         }
-        public Rectangle AsteroidBoundingBox
-        {
-            get
-            {
-                return asteroidBoundingBox;
-            }
-        }
 
         public float Scale
         {

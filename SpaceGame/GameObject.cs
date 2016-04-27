@@ -18,6 +18,7 @@ namespace SpaceGame
         public Texture2D texture;
         Random rand;
         ObjectType type;
+        float rotation = 0;
 
         const string ObjectAssetName = "Object";
         const int StartPositionX = 100;
@@ -51,6 +52,12 @@ namespace SpaceGame
         {
             spriteBoundingBox = new Rectangle(start.X, start.Y, texture.Width, texture.Height);
             start -= movement;
+
+            if (type == ObjectType.Asteroid)
+            {
+                rotation += MathHelper.ToRadians(0);
+                if (MathHelper.ToDegrees(rotation) >= 360 || MathHelper.ToDegrees(rotation) <= -360) rotation = 0;
+            }
         }
 
         public override void LoadContent(ContentManager theContentManager)
@@ -77,7 +84,19 @@ namespace SpaceGame
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
+            switch (type)
+            {
+                case ObjectType.Asteroid:
+                    spriteBatch.Draw(texture, SpriteBoundingBox, null, Color.White, rotation, new Vector2(texture.Width/2, texture.Height/2), SpriteEffects.None, 0);
+                    break;
+
+                case ObjectType.Box:
+                    spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
+                    break;
+                
+                default:
+                    break;
+            }
         }
     }
 }

@@ -489,7 +489,7 @@ namespace SpaceGame
                 if (a || b || c || d)//left
                 {
                     //BaseShipSprite.Position.X = i.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
-                    health.Width -= 5;
+                    health.Width -= 10;
                     objects.Remove(objects[i]);
                 }
             }
