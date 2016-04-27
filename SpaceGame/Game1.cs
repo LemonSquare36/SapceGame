@@ -212,8 +212,8 @@ namespace SpaceGame
                     spriteBatch.End();
                     break;
                 case GameStates.GamePlaying:
-                    //WallMove(gameTime);
-                    //WallScroll();
+                    WallMove(gameTime);
+                    WallScroll();
                     BaseShipSprite.Update(gameTime);
                     CheckGameObjectCollision();
                     CheckBulletCollision();
