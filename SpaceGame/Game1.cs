@@ -215,7 +215,8 @@ namespace SpaceGame
                     //WallMove(gameTime);
                     //WallScroll();
                     BaseShipSprite.Update(gameTime);
-                    CheckGameObjectCollision();          
+                    CheckGameObjectCollision();
+                    CheckBulletCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -229,7 +230,7 @@ namespace SpaceGame
                         i.Update(gameTime);
                     }
 
-                    Console.WriteLine(CheckBulletCollision());
+                    //Console.WriteLine(CheckBulletCollision());
 
                     if (health.Width <= 0)
                     {

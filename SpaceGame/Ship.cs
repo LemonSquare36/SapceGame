@@ -200,12 +200,7 @@ namespace SpaceGame
             }
             
                
-        }
-
-        private void CheckBulletCollision()
-        {
-
-        }
+        } 
 
         private void TimerElapsed(object sender, EventArgs e)
         {
