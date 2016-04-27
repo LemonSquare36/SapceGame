@@ -55,6 +55,7 @@ namespace SpaceGame
 
         List<GameObject> objects = new List<GameObject>();
         Timer timer = new Timer(2000);
+        Timer RandTimer = new Timer();
 
         WALL Wall1;
         WALL Wall2;
@@ -116,6 +117,8 @@ namespace SpaceGame
             Wall5 = new WALL(Pos5);
             Wall6 = new WALL(Pos6);
 
+            RandTimer.Interval = Rand.Next(1000, 2000);
+
             menu = new Menu(this);
 
             base.Initialize();
@@ -157,7 +160,9 @@ namespace SpaceGame
 
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
             timer.Elapsed += TimeElapsed;
+            RandTimer.Elapsed += RandTimeElapsed;
             timer.Start();
+            RandTimer.Start();
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -175,9 +180,16 @@ namespace SpaceGame
 
         private void TimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new GameObject(Content));
+            objects.Add(new GameObject(Content, ObjectType.Box, Rand.Next()));
             Console.WriteLine("Colliding");
             timer.Stop();
+            timer.Start();
+        }
+        private void RandTimeElapsed(object sender, EventArgs e)
+        {
+            objects.Add(new GameObject(Content, ObjectType.Asteroid, Rand.Next()));
+            timer.Stop();
+            RandTimer.Interval = Rand.Next(1000, 2000);
             timer.Start();
         }
 
@@ -203,7 +215,7 @@ namespace SpaceGame
                     //WallMove(gameTime);
                     //WallScroll();
                     BaseShipSprite.Update(gameTime);
-                    CheckGameObjectCollision();
+                    CheckGameObjectCollision();          
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -211,6 +223,11 @@ namespace SpaceGame
                     Wall5.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     if (health.Width > 0) score++;
+
+                    foreach (GameObject i in objects)
+                    {
+                        i.Update(gameTime);
+                    }
 
                     Console.WriteLine(CheckBulletCollision());
 
