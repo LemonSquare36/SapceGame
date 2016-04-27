@@ -15,7 +15,7 @@ namespace SpaceGame
 
     class GameObject : Sprite
     {
-        public Texture2D texture, pix;
+        public Texture2D texture;
         Random rand;
         ObjectType type;
         float rotation = 0;
