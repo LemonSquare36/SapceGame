@@ -39,12 +39,6 @@ namespace SpaceGame
         {
             BulletStart += BulletMove;
             spriteBoundingBox = new Rectangle((int)BulletStart.X, (int)BulletStart.Y, bullet.Width, bullet.Height);
-
-            //right wall
-            if (BulletStart.X >= 775)
-            {
-                bullet.Remove();
-            }
         }
         public override void Draw(SpriteBatch spriteBatch)
         {

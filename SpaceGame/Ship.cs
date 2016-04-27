@@ -81,9 +81,10 @@ namespace SpaceGame
 
             Shoot(CurrentKeyBoardState);
 
-            foreach (Bullet i in bullets)
+            for (int i = 0; i < bullets.Count; i++)
             {
-                i.Update();
+                bullets[i].Update();
+                if (bullets[i].SpriteBoundingBox.X > 800) bullets.Remove(bullets[i]);
             }
 
             //upper left hand corner
