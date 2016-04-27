@@ -176,7 +176,6 @@ namespace SpaceGame
         private void TimeElapsed(object sender, EventArgs e)
         {
             objects.Add(new GameObject(Content));
-            Console.WriteLine("Colliding");
             timer.Stop();
             timer.Start();
         }
@@ -204,6 +203,7 @@ namespace SpaceGame
                     //WallScroll();
                     BaseShipSprite.Update(gameTime);
                     CheckGameObjectCollision();
+                    CheckBulletCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -211,8 +211,6 @@ namespace SpaceGame
                     Wall5.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     if (health.Width > 0) score++;
-
-                    Console.WriteLine(CheckBulletCollision());
 
                     if (health.Width <= 0)
                     {

@@ -40,14 +40,14 @@ namespace SpaceGame
             spriteHeight = boxyBox.Height;
 
             spriteBoundingBox = new Rectangle(StartPositionX, StartPositionY, spriteWidth, spriteHeight);
-            AsteroidBoundingBox = new Rectangle()
+            AsteroidBoundingBox = new Rectangle();
 
             base.LoadContent(theContentManager, ObjectAssetName);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(boxyBox, SpriteBoundingBox, Color.White);
+            //spriteBatch.Draw(boxyBox, SpriteBoundingBox, Color.White);
             spriteBatch.Draw(asteroid, SpriteBoundingBox, Color.White);
         }
     }
