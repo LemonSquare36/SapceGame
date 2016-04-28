@@ -64,19 +64,23 @@ namespace SpaceGame
         {
             Position = new Vector2(StartPositionX, StartPositionY);
 
-            switch (type)
+            try
             {
-                case ObjectType.Asteroid:
-                    texture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
-                    break;
-                
-                case ObjectType.Box:
-                    texture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
-                    break;
+                switch (type)
+                {
+                    case ObjectType.Asteroid:
+                        texture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
+                        break;
 
-                default:
-                    break;
+                    case ObjectType.Box:
+                        texture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
+                        break;
+
+                    default:
+                        break;
+                }
             }
+            catch { }
 
             base.LoadContent(theContentManager, ObjectAssetName);
         }
