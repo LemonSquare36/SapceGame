@@ -159,6 +159,7 @@ namespace SpaceGame
             Wall6.LoadContent(this.Content);
 
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
+
             timer.Elapsed += TimeElapsed;
             RandTimer.Elapsed += RandTimeElapsed;
             timer.Start();
@@ -225,9 +226,9 @@ namespace SpaceGame
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     if (health.Width > 0) score++;
 
-                    foreach (GameObject i in objects)
+                    for (int i = 0; i < objects.Count; i++ )
                     {
-                        i.Update(gameTime);
+                        objects[i].Update(gameTime);
                     }
 
                     //Console.WriteLine(CheckBulletCollision());
@@ -275,7 +276,7 @@ namespace SpaceGame
                 case GameStates.GamePlaying:
 
                     spriteBatch.Begin();
-
+                    //background
                     Background1.Draw(this.spriteBatch);
                     Background2.Draw(this.spriteBatch);
                     Background3.Draw(this.spriteBatch);
@@ -283,6 +284,7 @@ namespace SpaceGame
                     //spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
 
                     spriteBatch.End();
+                    //walls
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
 
 
@@ -299,11 +301,12 @@ namespace SpaceGame
                     spriteBatch.Draw(healthBar, health, Color.White);
 
                     spriteBatch.End();
+                    //everything else
                     spriteBatch.Begin();
 
-                    foreach (GameObject i in objects)
+                    for (int i = 0; i < objects.Count; i++)
                     {
-                        i.Draw(spriteBatch);
+                        objects[i].Draw(spriteBatch);
                     }
 
                     BaseShipSprite.Draw(this.spriteBatch);
