@@ -180,14 +180,14 @@ namespace SpaceGame
 
         private void TimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new GameObject(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y -10, (int)Wall4.Position.Y +10)));
+            objects.Add(new GameObject(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y +10, (int)Wall4.Position.Y -10)));
             Console.WriteLine("Colliding");
             timer.Stop();
             timer.Start();
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new GameObject(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y - 10, (int)Wall4.Position.Y +10)));
+            objects.Add(new GameObject(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
             timer.Stop();
             RandTimer.Interval = Rand.Next(1000, 2000);
             timer.Start();
