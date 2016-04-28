@@ -51,10 +51,10 @@ namespace SpaceGame
         public void Update(GameTime gameTime)
         {
             spriteBoundingBox = new Rectangle(start.X, start.Y, texture.Width, texture.Height);
-            start -= movement;
 
             if (type == ObjectType.Asteroid)
             {
+                start -= movement;
                 rotation += MathHelper.ToRadians(-3);
                 if (MathHelper.ToDegrees(rotation) >= 360 || MathHelper.ToDegrees(rotation) <= -360) rotation = 0;
             }
