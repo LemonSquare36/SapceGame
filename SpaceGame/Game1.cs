@@ -162,8 +162,7 @@ namespace SpaceGame
 
             timer.Elapsed += TimeElapsed;
             RandTimer.Elapsed += RandTimeElapsed;
-            timer.Start();
-            RandTimer.Start();
+            Parallel.Invoke(() => timer.Start(), () => RandTimer.Start());
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -181,17 +180,24 @@ namespace SpaceGame
 
         private void TimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new GameObject(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y +10, (int)Wall4.Position.Y -10)));
-            Console.WriteLine("Colliding");
-            timer.Stop();
-            timer.Start();
+            try
+            {
+                objects.Add(new GameObject(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y + 30, (int)Wall4.Position.Y - 10)));
+                Console.WriteLine("Colliding");
+                timer.Stop();
+                timer.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
             objects.Add(new GameObject(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
-            timer.Stop();
+            RandTimer.Stop();
             RandTimer.Interval = Rand.Next(1000, 2000);
-            timer.Start();
+            RandTimer.Start();
         }
 
         /// <summary>
@@ -338,10 +344,10 @@ namespace SpaceGame
                 Wall2Pos = Rand.Next(220, 455);
                 Select = Rand.Next(1, 3);
 
-                Console.WriteLine("WallPos " + WallPos);
+                /*Console.WriteLine("WallPos " + WallPos);
                 Console.WriteLine("Wall2Pos " + Wall2Pos);
                 Console.WriteLine("Wall2real " + Wall4.Position.Y);
-                Console.WriteLine(Select);
+                Console.WriteLine(Select);*/
                 DoneMoving = false;
                 doneMoving = false;
             }
