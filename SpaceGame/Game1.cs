@@ -243,6 +243,10 @@ namespace SpaceGame
                     {
                         FadeDelay -= gameTime.ElapsedGameTime.TotalSeconds;
                     }
+                    if (health.Width >= 250)
+                    {
+                        health.Width = 250;
+                    }
                     FadeIn();
                     break;
                 default:
