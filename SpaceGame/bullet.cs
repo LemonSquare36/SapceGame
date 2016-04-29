@@ -30,7 +30,7 @@ namespace SpaceGame
 
         Vector2 BulletStart;
         Vector2 BulletMove = new Vector2(5, 0);
-        public void LoadContent()
+        public void LoadContent() 
         {
             bullet = Main.GameContent.Load<Texture2D>("Sprites/Bullet");
 
