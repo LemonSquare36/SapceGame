@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceGame
 {
-    class PowerUp : Sprite
+    class Enemy : Sprite
     {
 
     }

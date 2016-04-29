@@ -46,7 +46,6 @@
     <Compile Include="Content\Sprites\Class1.cs" />
     <Compile Include="Duality.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Enemy.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="PowerUp.cs" />
     <Compile Include="Program.cs" />
