@@ -74,6 +74,7 @@
     <Content Include="Content\Sprites\Base Ship.png" />
     <Content Include="Content\Sprites\BoxyBox.png" />
     <Content Include="Content\Sprites\Bullet.png" />
+    <Content Include="Content\Sprites\Cannon.png" />
     <Content Include="Content\Sprites\HealthBar.png" />
     <Content Include="Content\Sprites\maxresdefault.png" />
     <Content Include="Content\Sprites\pix.png" />
