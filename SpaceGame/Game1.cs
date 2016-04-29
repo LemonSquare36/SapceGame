@@ -53,10 +53,9 @@ namespace SpaceGame
         int Select;
         int Wall2Pos;
 
-        List<GameObject> objects = new List<GameObject>();
+        List<Enemy> objects = new List<Enemy>();
         Timer timer = new Timer(2000);
         Timer RandTimer = new Timer();
-        Timer CTimer = new Timer();
 
         WALL Wall1;
         WALL Wall2;
@@ -119,7 +118,6 @@ namespace SpaceGame
             Wall6 = new WALL(Pos6);
 
             RandTimer.Interval = Rand.Next(1000, 2000);
-            CTimer.Interval = Rand.Next(4000, 6000);
 
             menu = new Menu(this);
 
@@ -164,8 +162,7 @@ namespace SpaceGame
 
             timer.Elapsed += TimeElapsed;
             RandTimer.Elapsed += RandTimeElapsed;
-            CTimer.Elapsed += CTimeElapsed;
-            Parallel.Invoke(() => timer.Start(), () => RandTimer.Start(), () => CTimer.Start());
+            Parallel.Invoke(() => timer.Start(), () => RandTimer.Start());
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -183,24 +180,24 @@ namespace SpaceGame
 
         private void TimeElapsed(object sender, EventArgs e)
         {
-                objects.Add(new GameObject(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y + 30, (int)Wall4.Position.Y - 10)));
+            try
+            {
+                objects.Add(new Enemy(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y + 30, (int)Wall4.Position.Y - 10)));
                 Console.WriteLine("Colliding");
                 timer.Stop();
                 timer.Start();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new GameObject(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
+            objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
             RandTimer.Stop();
             RandTimer.Interval = Rand.Next(1000, 2000);
             RandTimer.Start();
-        }
-        private void CTimeElapsed(object sender, EventArgs e)
-        {
-            objects.Add(new GameObject(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
-            CTimer.Stop();
-            CTimer.Interval = Rand.Next(4000, 6000);
-            CTimer.Start();
         }
 
         /// <summary>
