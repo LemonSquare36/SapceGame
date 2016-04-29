@@ -11,13 +11,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
-    enum ObjectType { Box, Asteroid }
+    enum pObjectType { Asteroid }
 
-    class GameObject : Sprite
+    class PowerUp : Sprite
     {
         public Texture2D texture;
         Random rand;
-        ObjectType type;
+        pObjectType type;
         float rotation = 0;
 
         const string ObjectAssetName = "Object";
@@ -27,18 +27,18 @@ namespace SpaceGame
         Point movement, start;
         //int health = 10;
 
-        public GameObject(ContentManager theContentManager, ObjectType type, int rand)
+        public PowerUp(ContentManager theContentManager, pObjectType type, int rand)
         {
             this.type = type;
             switch (type)
             {
-                case ObjectType.Asteroid:
+                case pObjectType.Asteroid:
                     movement = new Point(5, 0);
-                    start = new Point(900, rand);
+                    pStart = new Point(900, rand);
                     break;
 
-                case ObjectType.Box:
-                    start = new Point(300, rand);
+                case pObjectType.Box:
+                    pStart = new Point(300, rand);
                     movement = Point.Zero;
                     break;
 
@@ -50,11 +50,11 @@ namespace SpaceGame
 
         public void Update(GameTime gameTime)
         {
-            spriteBoundingBox = new Rectangle(start.X, start.Y, texture.Width, texture.Height);
+            spriteBoundingBox = new Rectangle(pStart.X, pStart.Y, pTexture.Width, pTexture.Height);
 
-            if (type == ObjectType.Asteroid)
+            if (type == pObjectType.Asteroid)
             {
-                start -= movement;
+                pStart -= movement;
                 rotation += MathHelper.ToRadians(-3);
                 if (MathHelper.ToDegrees(rotation) >= 360 || MathHelper.ToDegrees(rotation) <= -360) rotation = 0;
             }
@@ -62,18 +62,18 @@ namespace SpaceGame
 
         public override void LoadContent(ContentManager theContentManager)
         {
-            Position = new Vector2(StartPositionX, StartPositionY);
+            Position = new Vector2(StartPositionX, pStartPositionY);
 
             try
             {
                 switch (type)
                 {
-                    case ObjectType.Asteroid:
-                        texture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
+                    case pObjectType.Asteroid:
+                        pTexture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
                         break;
 
-                    case ObjectType.Box:
-                        texture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
+                    case pObjectType.Box:
+                        pTexture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
                         break;
 
                     default:
@@ -82,19 +82,19 @@ namespace SpaceGame
             }
             catch { }
 
-            base.LoadContent(theContentManager, ObjectAssetName);
+            base.LoadContent(theContentManager, pObjectAssetName);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             switch (type)
             {
-                case ObjectType.Asteroid:
-                    spriteBatch.Draw(texture, new Vector2(SpriteBoundingBox.Location.X+25, SpriteBoundingBox.Location.Y+25), null, Color.White, rotation, new Vector2(25, 25), 1, SpriteEffects.None, 0);
+                case pObjectType.Asteroid:
+                    spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X+25, SpriteBoundingBox.Location.Y+25), null, Color.White, rotation, new Vector2(25, 25), 1, SpriteEffects.None, 0);
                     break;
 
-                case ObjectType.Box:
-                    spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
+                case pObjectType.Box:
+                    spriteBatch.Draw(pTexture, SpriteBoundingBox, Color.White);
                     break;
                 
                 default:
