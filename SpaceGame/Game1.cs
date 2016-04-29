@@ -180,17 +180,10 @@ namespace SpaceGame
 
         private void TimeElapsed(object sender, EventArgs e)
         {
-            try
-            {
                 objects.Add(new Enemy(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y + 30, (int)Wall4.Position.Y - 10)));
                 Console.WriteLine("Colliding");
                 timer.Stop();
                 timer.Start();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
