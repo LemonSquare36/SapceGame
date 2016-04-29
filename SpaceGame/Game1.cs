@@ -160,7 +160,6 @@ namespace SpaceGame
 
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
 
-            timer.Elapsed += TimeElapsed;
             RandTimer.Elapsed += RandTimeElapsed;
             Parallel.Invoke(() => timer.Start(), () => RandTimer.Start());
 
@@ -176,14 +175,6 @@ namespace SpaceGame
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-        }
-
-        private void TimeElapsed(object sender, EventArgs e)
-        {
-                objects.Add(new Enemy(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y + 30, (int)Wall4.Position.Y - 10)));
-                Console.WriteLine("Colliding");
-                timer.Stop();
-                timer.Start();
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
