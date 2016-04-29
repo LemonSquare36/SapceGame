@@ -56,6 +56,7 @@ namespace SpaceGame
         List<Enemy> objects = new List<Enemy>();
         Timer timer = new Timer(2000);
         Timer RandTimer = new Timer();
+        Timer CTimer = new Timer();
 
         WALL Wall1;
         WALL Wall2;
@@ -118,6 +119,7 @@ namespace SpaceGame
             Wall6 = new WALL(Pos6);
 
             RandTimer.Interval = Rand.Next(1000, 2000);
+            CTimer.Interval = Rand.Next(4000, 6000);
 
             menu = new Menu(this);
 
@@ -161,7 +163,8 @@ namespace SpaceGame
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
 
             RandTimer.Elapsed += RandTimeElapsed;
-            Parallel.Invoke(() => timer.Start(), () => RandTimer.Start());
+            CTimer.Elapsed += CTimeElapsed;
+            Parallel.Invoke(() => CTimer.Start(), () => RandTimer.Start());
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -183,7 +186,13 @@ namespace SpaceGame
             RandTimer.Interval = Rand.Next(1000, 2000);
             RandTimer.Start();
         }
-
+        private void CTimeElapsed(object sender, EventArgs e)
+        {
+            objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+            CTimer.Stop();
+            CTimer.Interval = Rand.Next(4000, 6000);
+            CTimer.Start();
+        }
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
