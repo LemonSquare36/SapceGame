@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
-    enum ObjectType { Box, Asteroid, Cannon }
+    enum ObjectType { Box, Asteroid }
 
     class GameObject : Sprite
     {
@@ -42,11 +42,6 @@ namespace SpaceGame
                     movement = Point.Zero;
                     break;
 
-                case ObjectType.Cannon:
-                    start = new Point(900, rand);
-                    movement = new Point(3, 0);
-                    break;
-
                 default:
                     break;
             }
@@ -62,14 +57,6 @@ namespace SpaceGame
                 start -= movement;
                 rotation += MathHelper.ToRadians(-3);
                 if (MathHelper.ToDegrees(rotation) >= 360 || MathHelper.ToDegrees(rotation) <= -360) rotation = 0;
-            }
-            if (type == ObjectType.Cannon)
-            {
-                start -= movement;
-                if(spriteBoundingBox.X >= 500)
-                {
-                    spriteBoundingBox.X = 500;
-                }
             }
         }
 
@@ -87,10 +74,6 @@ namespace SpaceGame
 
                     case ObjectType.Box:
                         texture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
-                        break;
-
-                    case ObjectType.Cannon:
-                        texture = Main.GameContent.Load<Texture2D>("Sprites/Cannon");
                         break;
 
                     default:
@@ -113,10 +96,7 @@ namespace SpaceGame
                 case ObjectType.Box:
                     spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
                     break;
-
-                case ObjectType.Cannon:
-                    spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
-                        break;
+                
                 default:
                     break;
             }
