@@ -31,7 +31,7 @@ namespace SpaceGame
             switch (pType)
             {
                 case PowerUpType.HealthPack:
-                    startPoint = new Point(100, 250);
+                    startPoint = new Point(rand, rand);
                     break;
 
                 default:
@@ -46,7 +46,7 @@ namespace SpaceGame
 
             if (pType == PowerUpType.HealthPack)
             {
-
+                
             }
         }
 
@@ -73,7 +73,15 @@ namespace SpaceGame
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            switch pType
+            switch (pType)
+            {
+                case PowerUpType.HealthPack:
+                    spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X, SpriteBoundingBox.Y), null, Color.White);
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }
