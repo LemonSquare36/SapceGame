@@ -53,7 +53,7 @@ namespace SpaceGame
         int Select;
         int Wall2Pos;
 
-        List<GameObject> objects = new List<GameObject>();
+        List<Enemy> objects = new List<Enemy>();
         Timer timer = new Timer(2000);
         Timer RandTimer = new Timer();
 
@@ -182,7 +182,7 @@ namespace SpaceGame
         {
             try
             {
-                objects.Add(new GameObject(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y + 30, (int)Wall4.Position.Y - 10)));
+                objects.Add(new Enemy(Content, ObjectType.Box, Rand.Next((int)Wall1.Position.Y + 30, (int)Wall4.Position.Y - 10)));
                 Console.WriteLine("Colliding");
                 timer.Stop();
                 timer.Start();
@@ -194,7 +194,7 @@ namespace SpaceGame
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new GameObject(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
+            objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
             RandTimer.Stop();
             RandTimer.Interval = Rand.Next(1000, 2000);
             RandTimer.Start();
