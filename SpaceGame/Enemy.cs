@@ -26,7 +26,7 @@ namespace SpaceGame
         const int StartPositionX = 100;
         const int StartPositionY = 250;
 
-        Point movement, start;
+        Point movement, start; 
         //int health = 10;
 
         public Enemy(ContentManager theContentManager, ObjectType type, int rand)

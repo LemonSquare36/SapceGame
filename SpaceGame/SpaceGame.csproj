@@ -43,11 +43,11 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="bullet.cs" />
-    <Compile Include="Content\Sprites\Class1.cs" />
     <Compile Include="Duality.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Menu.cs" />
+    <Compile Include="PowerUp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
