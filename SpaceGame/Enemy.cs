@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
-    enum ObjectType { Box, Asteroid, Cannon }
+    enum ObjectType { Asteroid, Cannon }
 
     class Enemy : Sprite
     {
@@ -37,10 +37,6 @@ namespace SpaceGame
                     start = new Point(900, rand);
                     break;
 
-                case ObjectType.Box:
-                    start = new Point(300, rand);
-                    movement = Point.Zero;
-                    break;
 
                 case ObjectType.Cannon:
                     start = new Point(900, rand);
@@ -85,10 +81,6 @@ namespace SpaceGame
                         texture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
                         break;
 
-                    case ObjectType.Box:
-                        texture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
-                        break;
-
                     case ObjectType.Cannon:
                         texture = Main.GameContent.Load<Texture2D>("Sprites/Cannon");
                         break;
@@ -108,10 +100,6 @@ namespace SpaceGame
             {
                 case ObjectType.Asteroid:
                     spriteBatch.Draw(texture, new Vector2(SpriteBoundingBox.Location.X + 25, SpriteBoundingBox.Location.Y + 25), null, Color.White, rotation, new Vector2(25, 25), 1, SpriteEffects.None, 0);
-                    break;
-
-                case ObjectType.Box:
-                    spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
                     break;
 
                 case ObjectType.Cannon:
