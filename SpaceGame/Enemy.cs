@@ -62,9 +62,9 @@ namespace SpaceGame
             if (type == ObjectType.Cannon)
             {
                 start -= movement;
-                if (spriteBoundingBox.X >= 500)
+                if (start.X <= 500)
                 {
-                    spriteBoundingBox.X = 500;
+                    start.X = 500;
                 }
             }
         }
