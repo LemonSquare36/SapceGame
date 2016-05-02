@@ -31,6 +31,7 @@ namespace SpaceGame
         public int BulletStart
         {
             get { return bulletStart; }
+            set { bulletStart = value; }
         }
 
         const string ObjectAssetName = "Object";

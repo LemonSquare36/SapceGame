@@ -169,7 +169,8 @@ namespace SpaceGame
 
             RandTimer.Elapsed += RandTimeElapsed;
             CTimer.Elapsed += CTimeElapsed;
-            Parallel.Invoke(() => CTimer.Start(), () => RandTimer.Start());
+            RandTimer2.Elapsed += RandTime2Elasped;
+            Parallel.Invoke(() => CTimer.Start(), () => RandTimer.Start(), () => RandTimer2.Start());
 
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
@@ -187,7 +188,6 @@ namespace SpaceGame
         private void RandTimeElapsed(object sender, EventArgs e)
         {
             objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
-            healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
             RandTimer.Stop();
             RandTimer.Interval = Rand.Next(1000, 2000);
             RandTimer.Start();
@@ -199,7 +199,13 @@ namespace SpaceGame
             CTimer.Interval = Rand.Next(4000, 6000);
             CTimer.Start();
         }
-        //private void RandTimer2
+        private void RandTime2Elasped(object sender, EventArgs e)
+        {
+            healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+            RandTimer2.Stop();
+            RandTimer2.Interval = Rand.Next(10000 , 20000);
+            RandTimer2.Start();
+        }
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -242,6 +248,11 @@ namespace SpaceGame
                     for (int p = 0; p < powerUps.Count; p++)
                     {
                         powerUps[p].Update(gameTime);
+                    }
+
+                    for (int h = 0; h < healthPacks.Count; h++)
+                    {
+                        healthPacks[h].Update(gameTime);
                     }
 
                     //Console.WriteLine(CheckBulletCollision());
@@ -329,6 +340,10 @@ namespace SpaceGame
                     for (int p = 0; p < powerUps.Count; p++)
                     {
                         powerUps[p].Draw(spriteBatch);
+                    }
+                    for (int h = 0; h < healthPacks.Count; h++)
+                    {
+                        healthPacks[h].Draw(spriteBatch);
                     }
 
                     BaseShipSprite.Draw(this.spriteBatch);
@@ -623,12 +638,11 @@ namespace SpaceGame
                 {
                     if (BaseShipSprite.bullets[i].SpriteBoundingBox.Intersects(objects[l].SpriteBoundingBox))
                     {
-                        BulletStart++;
+                        objects[l].BulletStart = objects[l].BulletStart + 1;
                         BaseShipSprite.bullets.Remove(BaseShipSprite.bullets[i]);
-                        if (BulletStart >= objects[l].BulletValue)
+                        if (objects[l].BulletStart >= objects[l].BulletValue)
                         {
                             objects.Remove(objects[l]);
-                            BulletStart = 0;
                             return true;
                         }
 
