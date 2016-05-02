@@ -20,13 +20,18 @@ namespace SpaceGame
         ObjectType type;
         float rotation = 0;
 
-        int BulletValue;
+        private int bulletValue;
+
+        public int BulletValue
+        {
+            get { return bulletValue; }
+        }
 
         const string ObjectAssetName = "Object";
         const int StartPositionX = 100;
         const int StartPositionY = 250;
 
-        Point movement, start; 
+        Point movement, start;
         //int health = 10;
 
         public Enemy(ContentManager theContentManager, ObjectType type, int rand)
@@ -37,14 +42,14 @@ namespace SpaceGame
                 case ObjectType.Asteroid:
                     movement = new Point(5, 0);
                     start = new Point(900, rand);
-                    BulletValue = 1;
+                    bulletValue = 1;
                     break;
 
 
                 case ObjectType.Cannon:
                     start = new Point(900, rand);
                     movement = new Point(3, 0);
-                    BulletValue = 2;
+                    bulletValue = 2;
                     break;
 
                 default:
