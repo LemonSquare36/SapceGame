@@ -27,6 +27,11 @@ namespace SpaceGame
         {
             get { return bulletValue; }
         }
+        
+        public int BulletStart
+        {
+            get { return bulletStart; }
+        }
 
         const string ObjectAssetName = "Object";
         const int StartPositionX = 100;
