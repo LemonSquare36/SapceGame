@@ -34,6 +34,8 @@ namespace SpaceGame
         }
         Menu menu;
 
+        int BulletStart = 0;
+
         public Ship BaseShipSprite;
         Background Background1;
         Background Background2;
@@ -600,9 +602,15 @@ namespace SpaceGame
                 {
                     if (BaseShipSprite.bullets[i].SpriteBoundingBox.Intersects(objects[l].SpriteBoundingBox))
                     {
-
-                        objects.Remove(objects[l]);
+                        BulletStart++;
                         BaseShipSprite.bullets.Remove(BaseShipSprite.bullets[i]);
+                        if (BulletStart <= objects[l].BulletValue)
+                        {
+                            objects.Remove(objects[l]);
+                            BulletStart = 0;
+                            return true;
+                        }
+
                         return true;
                     }
                 }
