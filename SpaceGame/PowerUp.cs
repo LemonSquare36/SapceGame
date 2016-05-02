@@ -10,10 +10,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 namespace SpaceGame
 {
-    enum PowerUpType { HealthPack}
+    enum PowerUpType {Shield}
     class PowerUp : Sprite
     {
-        Random rand;
+        Random Rand = new Random();
         PowerUpType pType;
 
         Point startPoint;
@@ -27,30 +27,31 @@ namespace SpaceGame
         public PowerUp(ContentManager theContentManager, PowerUpType pType, int rand)
         {
             this.pType = pType;
+            int randInt = Rand.Next(100, 775);
 
             switch (pType)
             {
-                case PowerUpType.HealthPack:
-                    startPoint = new Point(rand, rand);
+                case PowerUpType.Shield:
+                    startPoint = new Point(randInt, rand);
                     break;
 
                 default:
                     break;
             }
-            LoadContent(theContentManager);
+            hLoadContent(theContentManager);
         }
 
         public void Update(GameTime gametime)
         {
             spriteBoundingBox = new Rectangle(startPoint.X, startPoint.Y, pTexture.Width, pTexture.Height);
 
-            if (pType == PowerUpType.HealthPack)
+            if (pType == PowerUpType.Shield)
             {
                 
             }
         }
 
-        public void LoadContent(ContentManager theContentManager)
+        public void hLoadContent(ContentManager theContentManager)
         {
             Position = new Vector2(pStartPositionX, pStartPositionY);
 
@@ -58,7 +59,7 @@ namespace SpaceGame
             {
                 switch (pType)
                 {
-                    case PowerUpType.HealthPack:
+                    case PowerUpType.Shield:
                         pTexture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
                         break;
 
@@ -75,7 +76,7 @@ namespace SpaceGame
         {
             switch (pType)
             {
-                case PowerUpType.HealthPack:
+                case PowerUpType.Shield:
                     spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X, SpriteBoundingBox.Y), null, Color.White);
                     break;
 
