@@ -56,7 +56,7 @@ namespace SpaceGame
 
         List<PowerUp> powerUps = new List<PowerUp>();
         List<Enemy> objects = new List<Enemy>();
-        Timer timer = new Timer(2000);
+        Timer RandTimer2 = new Timer();
         Timer RandTimer = new Timer();
         Timer CTimer = new Timer();
 
@@ -122,6 +122,7 @@ namespace SpaceGame
 
             RandTimer.Interval = Rand.Next(1000, 2000);
             CTimer.Interval = Rand.Next(4000, 6000);
+            RandTimer2.Interval = Rand.Next(10000, 20000);
 
             menu = new Menu(this);
 
@@ -196,6 +197,7 @@ namespace SpaceGame
             CTimer.Interval = Rand.Next(4000, 6000);
             CTimer.Start();
         }
+        //private void RandTimer2
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -604,7 +606,7 @@ namespace SpaceGame
                     {
                         BulletStart++;
                         BaseShipSprite.bullets.Remove(BaseShipSprite.bullets[i]);
-                        if (BulletStart <= objects[l].BulletValue)
+                        if (BulletStart >= objects[l].BulletValue)
                         {
                             objects.Remove(objects[l]);
                             BulletStart = 0;

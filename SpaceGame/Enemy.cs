@@ -21,6 +21,7 @@ namespace SpaceGame
         float rotation = 0;
 
         private int bulletValue;
+        private int bulletStart;
 
         public int BulletValue
         {
@@ -43,6 +44,7 @@ namespace SpaceGame
                     movement = new Point(5, 0);
                     start = new Point(900, rand);
                     bulletValue = 1;
+                    bulletStart = 0;
                     break;
 
 
@@ -50,6 +52,7 @@ namespace SpaceGame
                     start = new Point(900, rand);
                     movement = new Point(3, 0);
                     bulletValue = 2;
+                    bulletStart = 0;
                     break;
 
                 default:
