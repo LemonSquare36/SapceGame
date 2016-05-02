@@ -50,10 +50,12 @@ namespace SpaceGame
         bool doneMoving = true;
 
         Random Rand = new Random();
+        Random hRand = new Random();
         int WallPos;
         int Select;
         int Wall2Pos;
 
+        List<HealthPacks> healthPacks = new List<HealthPacks>();
         List<PowerUp> powerUps = new List<PowerUp>();
         List<Enemy> objects = new List<Enemy>();
         Timer RandTimer2 = new Timer();
@@ -185,7 +187,7 @@ namespace SpaceGame
         private void RandTimeElapsed(object sender, EventArgs e)
         {
             objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
-            powerUps.Add(new PowerUp(Content, PowerUpType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+            healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
             RandTimer.Stop();
             RandTimer.Interval = Rand.Next(1000, 2000);
             RandTimer.Start();
@@ -223,6 +225,7 @@ namespace SpaceGame
                     CheckEnemyCollision();
                     CheckBulletCollision();
                     CheckPowerUpCollision();
+                    CheckPackCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -577,8 +580,24 @@ namespace SpaceGame
 
                 if (A || B || C || D)
                 {
-                    health.Width += 15;
                     powerUps.Remove(powerUps[p]);
+                }
+            }
+        }
+        private void CheckPackCollision()
+        {
+
+            for (int h = 0; h < healthPacks.Count; h++)
+            {
+                bool Z = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.X <= healthPacks[h].spriteBoundingBox.X;
+                bool Y = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.Y <= healthPacks[h].spriteBoundingBox.Y;
+                bool X = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.X >= healthPacks[h].spriteBoundingBox.X;
+                bool W = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.Y <= healthPacks[h].spriteBoundingBox.Y;
+
+                if (Z || Y || X || W)
+                {
+                    health.Width += 15;
+                    healthPacks.Remove(healthPacks[h]);
                 }
             }
         }

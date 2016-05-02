@@ -24,15 +24,15 @@ namespace SpaceGame
         const int hStartPositionX = 100;
         const int hStartPositionY = 250;
 
-        public void HealPack(ContentManager contentManager, PackType hType, int rand)
+        public HealthPacks(ContentManager contentManager, PackType hType, int rand)
         {
             this.hType = hType;
-            int randInt = hRand.Next(100, 775);
+            int randomInt = hRand.Next(100, 775);
 
             switch (hType)
             {
                 case PackType.HealthPack:
-                    startingPoint = new Point(randInt, rand);
+                    startingPoint = new Point(randomInt, rand);
                     break;
 
                 default:
