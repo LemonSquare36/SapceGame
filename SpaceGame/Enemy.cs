@@ -21,22 +21,23 @@ namespace SpaceGame
         float rotation = 0;
 
         private int bulletValue;
-        private int bulletStart;
 
         public int BulletValue
         {
             get { return bulletValue; }
         }
-        
-        public int BulletStart
+        public Point Start       
         {
-            get { return bulletStart; }
-            set { bulletStart = value; }
+            get { return start; }
         }
+
+        public int BulletStart { get; set; }
 
         const string ObjectAssetName = "Object";
         const int StartPositionX = 100;
         const int StartPositionY = 250;
+
+        public List<CannonBullet> CannonBullet = new List<CannonBullet>();
 
         Point movement, start;
         //int health = 10;
@@ -50,7 +51,7 @@ namespace SpaceGame
                     movement = new Point(5, 0);
                     start = new Point(900, rand);
                     bulletValue = 1;
-                    bulletStart = 0;
+                    BulletStart = 0;
                     break;
 
 
@@ -58,7 +59,7 @@ namespace SpaceGame
                     start = new Point(900, rand);
                     movement = new Point(3, 0);
                     bulletValue = 2;
-                    bulletStart = 0;
+                    BulletStart = 0;
                     break;
 
                 default:
@@ -79,6 +80,13 @@ namespace SpaceGame
             }
             if (type == ObjectType.Cannon)
             {
+                CannonBulletAdd();
+                for (int i = 0; i < CannonBullet.Count; i++)
+                {
+                    CannonBullet[i].Update();
+                    if (CannonBullet[i].SpriteBoundingBox.X < 0) CannonBullet.Remove(CannonBullet[i]);
+                }
+
                 start -= movement;
                 if (start.X <= 500)
                 {
@@ -122,10 +130,18 @@ namespace SpaceGame
 
                 case ObjectType.Cannon:
                     spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
+                foreach (CannonBullet i in CannonBullet)
+                {
+                    i.Draw(spriteBatch);
+                }
                     break;
                 default:
                     break;
             }
+        }
+        private void CannonBulletAdd()
+        {
+            CannonBullet.Add(new CannonBullet(new Vector2(spriteBoundingBox.X, spriteBoundingBox.Y)));
         }
     }
 }
