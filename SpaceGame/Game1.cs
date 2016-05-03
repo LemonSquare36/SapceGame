@@ -48,6 +48,7 @@ namespace SpaceGame
 
         bool DoneMoving = true;
         bool doneMoving = true;
+        bool GameRunning = true;
 
         Random Rand = new Random();
         Random hRand = new Random();
@@ -228,7 +229,6 @@ namespace SpaceGame
                 case GameStates.GamePlaying:
                     WallMove(gameTime);
                     WallScroll();
-                    BaseShipSprite.Update(gameTime);
                     CheckEnemyCollision();
                     CheckBulletCollision();
                     CheckPowerUpCollision();
@@ -261,11 +261,16 @@ namespace SpaceGame
                     if (health.Width <= 0)
                     {
                         FadeDelay -= gameTime.ElapsedGameTime.TotalSeconds;
+                        GameRunning = false;
                     }
+
                     if (health.Width >= 250)
                     {
                         health.Width = 250;
                     }
+
+                    if (GameRunning) BaseShipSprite.Update(gameTime);
+
                     FadeIn();
                     break;
                 default:
