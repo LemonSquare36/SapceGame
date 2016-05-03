@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 namespace SpaceGame
 {
-    enum PowerUpType {Shield}
+    enum PowerUpType {Shield, DoubleShot}
     class PowerUp : Sprite
     {
         Random Rand = new Random();
@@ -35,6 +35,10 @@ namespace SpaceGame
                     startPoint = new Point(randInt, rand);
                     break;
 
+                case PowerUpType.DoubleShot:
+                    startPoint = new Point(randInt, rand);
+                    break;
+
                 default:
                     break;
             }
@@ -49,6 +53,11 @@ namespace SpaceGame
             {
                 
             }
+
+            if (pType == PowerUpType.DoubleShot)
+            {
+
+            }
         }
 
         public void hLoadContent(ContentManager theContentManager)
@@ -60,7 +69,11 @@ namespace SpaceGame
                 switch (pType)
                 {
                     case PowerUpType.Shield:
-                        pTexture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
+                        pTexture = Main.GameContent.Load<Texture2D>("Sprites/Shield");
+                        break;
+
+                    case PowerUpType.DoubleShot:
+                        pTexture = Main.GameContent.Load<Texture2D>("Sprites/DoubleShot");
                         break;
 
                     default:
@@ -77,7 +90,11 @@ namespace SpaceGame
             switch (pType)
             {
                 case PowerUpType.Shield:
-                    spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X, SpriteBoundingBox.Y), null, Color.White);
+                    spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X, SpriteBoundingBox.Location.Y), null, Color.White);
+                    break;
+
+                case PowerUpType.DoubleShot:
+                    spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X, SpriteBoundingBox.Location.Y), null, Color.White);
                     break;
 
                 default:

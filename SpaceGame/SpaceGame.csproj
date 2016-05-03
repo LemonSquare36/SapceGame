@@ -76,9 +76,11 @@
     <Content Include="Content\Sprites\Bullet.png" />
     <Content Include="Content\Sprites\Cannon.png" />
     <Content Include="Content\Sprites\CannonShot.png" />
+    <Content Include="Content\Sprites\DoubleShot.png" />
     <Content Include="Content\Sprites\HealthBar.png" />
     <Content Include="Content\Sprites\maxresdefault.png" />
     <Content Include="Content\Sprites\pix.png" />
+    <Content Include="Content\Sprites\Shield.png" />
     <Content Include="Content\Sprites\Untitled.png" />
     <Content Include="Content\Sprites\Wall.png" />
     <Content Include="Icon.ico" />

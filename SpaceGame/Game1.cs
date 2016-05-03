@@ -202,6 +202,7 @@ namespace SpaceGame
         private void RandTime2Elasped(object sender, EventArgs e)
         {
             healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+            powerUps.Add(new PowerUp(Content, PowerUpType.DoubleShot, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
             RandTimer2.Stop();
             RandTimer2.Interval = Rand.Next(10000 , 20000);
             RandTimer2.Start();

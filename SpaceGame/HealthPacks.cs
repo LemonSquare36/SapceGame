@@ -28,11 +28,12 @@ namespace SpaceGame
         {
             this.hType = hType;
             int randomInt = hRand.Next(100, 775);
+            int randH = hRand.Next(100, 775);
 
             switch (hType)
             {
                 case PackType.HealthPack:
-                    startingPoint = new Point(randomInt, rand);
+                    startingPoint = new Point(randH, randomInt);
                     break;
 
                 default:
