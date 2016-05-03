@@ -27,6 +27,7 @@ namespace SpaceGame
         const int MoveLeft = -1;
         const int MoveRight = 1;
         Main world;
+        //timer for bullets
         Timer timer = new Timer(300);
 
         public List<Bullet> bullets = new List<Bullet>();
