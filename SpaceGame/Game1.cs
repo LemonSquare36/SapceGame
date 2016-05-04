@@ -62,6 +62,7 @@ namespace SpaceGame
         Timer RandTimer2 = new Timer();
         Timer RandTimer = new Timer();
         Timer CTimer = new Timer();
+        Timer bulletTime = new Timer();
 
         WALL Wall1;
         WALL Wall2;
@@ -602,6 +603,7 @@ namespace SpaceGame
                 if (A || B || C || D)
                 {
                     powerUps.Remove(powerUps[p]);
+                    BaseShipSprite.sPowerUp.Add(sPowerUpType.DoubleShot);
                 }
             }
         }

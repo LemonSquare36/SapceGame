@@ -11,8 +11,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 namespace SpaceGame
 {
+    public enum sPowerUpType { DoubleShot }
     public class Ship : Sprite
     {
+
         public Texture2D baseShip;
         bool elapsed = true;
         // For Movement
@@ -28,9 +30,11 @@ namespace SpaceGame
         const int MoveRight = 1;
         Main world;
         //timer for bullets
-        Timer timer = new Timer(300);
+        public Timer timer = new Timer(300);
+        public Timer doubleShotTimer = new Timer(10000);
 
         public List<Bullet> bullets = new List<Bullet>();
+        public List<sPowerUpType> sPowerUp = new List<sPowerUpType>();
         //int theWidth = 27;
         //int theHeight = 23;
        
@@ -71,9 +75,17 @@ namespace SpaceGame
             spriteHeight = baseShip.Height;//theHeight;
 
             timer.Elapsed += TimerElapsed;
+            doubleShotTimer.Elapsed += bulletTimerElapsed;
 
             base.LoadContent(theContentManager, ShipAssetName);
         }
+
+        private void bulletTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            //doubleShotTimer.Start();
+            elapsed = true;
+        }
+
         public void Update(GameTime gameTime)
         {
             KeyboardState CurrentKeyBoardState = Keyboard.GetState();
@@ -143,9 +155,16 @@ namespace SpaceGame
                 Position.Y = 0;
             }
 
-            if (CurrentKeyBoardState.IsKeyDown(Keys.A)) hp--;
+            /*if (sPowerUp.Contains(sPowerUpType.DoubleShot))
+            {
+                timer.Interval = 150;
+            }
+            else
+            {
+                timer.Interval = 300;
+            }*/
 
-
+            //if (CurrentKeyBoardState.IsKeyDown(Keys.A)) hp--;
 
             base.Update(gameTime, mSpeed, mDirection);
 
