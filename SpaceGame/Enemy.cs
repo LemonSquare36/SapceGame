@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
@@ -19,6 +20,9 @@ namespace SpaceGame
         Random rand;
         ObjectType type;
         float rotation = 0;
+        Timer CannonTimer = new Timer(1000);
+        float ShipX, ShipY;
+        Ship ShipSprite;
 
         private int bulletValue;
 
@@ -42,9 +46,10 @@ namespace SpaceGame
         Point movement, start;
         //int health = 10;
 
-        public Enemy(ContentManager theContentManager, ObjectType type, int rand)
+        public Enemy(ContentManager theContentManager, ObjectType type, int rand, Ship shipSprite)
         {
             this.type = type;
+            ShipSprite = shipSprite;
             switch (type)
             {
                 case ObjectType.Asteroid:
@@ -60,6 +65,9 @@ namespace SpaceGame
                     movement = new Point(3, 0);
                     bulletValue = 2;
                     BulletStart = 0;
+                    CannonTimer.Start();
+                    CannonTimer.Elapsed += CannonTimeElasped;
+
                     break;
 
                 default:
@@ -80,17 +88,18 @@ namespace SpaceGame
             }
             if (type == ObjectType.Cannon)
             {
-                CannonBulletAdd();
-                for (int i = 0; i < CannonBullet.Count; i++)
-                {
-                    CannonBullet[i].Update();
-                    if (CannonBullet[i].SpriteBoundingBox.X < 0) CannonBullet.Remove(CannonBullet[i]);
-                }
-
+                ShipX = ShipSprite.Position.X;
+                ShipY = ShipSprite.Position.Y;
                 start -= movement;
                 if (start.X <= 500)
                 {
                     start.X = 500;
+                    for (int i = 0; i < CannonBullet.Count; i++)
+                    {
+                        CannonBullet[i].Update();
+                        if (CannonBullet[i].SpriteBoundingBox.X < 0) CannonBullet.Remove(CannonBullet[i]);
+                        
+                    }
                 }
             }
         }
@@ -141,7 +150,16 @@ namespace SpaceGame
         }
         private void CannonBulletAdd()
         {
-            CannonBullet.Add(new CannonBullet(new Vector2(spriteBoundingBox.X, spriteBoundingBox.Y)));
+            CannonBullet.Add(new CannonBullet(new Vector2(spriteBoundingBox.X, spriteBoundingBox.Y), ShipX, ShipY));
+        }
+        private void CannonTimeElasped(object sender, EventArgs e)
+        {
+            if (start.X <= 500)
+            {
+                CannonBulletAdd();
+            }
+                CannonTimer.Stop();
+                CannonTimer.Start();
+            }
         }
     }
-}

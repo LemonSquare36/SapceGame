@@ -189,14 +189,14 @@ namespace SpaceGame
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y -10)));
+            objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
             RandTimer.Stop();
             RandTimer.Interval = Rand.Next(1000, 2000);
             RandTimer.Start();
         }
         private void CTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+            objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10),BaseShipSprite));
             CTimer.Stop();
             CTimer.Interval = Rand.Next(4000, 6000);
             CTimer.Start();
@@ -273,6 +273,7 @@ namespace SpaceGame
                     if (GameRunning) BaseShipSprite.Update(gameTime);
 
                     FadeIn();
+
                     break;
                 default:
                     break;
