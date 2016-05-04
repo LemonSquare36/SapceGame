@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 namespace SpaceGame
 {
-    enum PowerUpType {Shield, DoubleShot}
+    enum PowerUpType { DoubleShot }
     class PowerUp : Sprite
     {
         Random Rand = new Random();
@@ -31,10 +31,6 @@ namespace SpaceGame
 
             switch (pType)
             {
-                case PowerUpType.Shield:
-                    startPoint = new Point(randInt, rand);
-                    break;
-
                 case PowerUpType.DoubleShot:
                     startPoint = new Point(randInt, rand);
                     break;
@@ -48,11 +44,6 @@ namespace SpaceGame
         public void Update(GameTime gametime)
         {
             spriteBoundingBox = new Rectangle(startPoint.X, startPoint.Y, pTexture.Width, pTexture.Height);
-
-            if (pType == PowerUpType.Shield)
-            {
-                
-            }
 
             if (pType == PowerUpType.DoubleShot)
             {
@@ -68,10 +59,6 @@ namespace SpaceGame
             {
                 switch (pType)
                 {
-                    case PowerUpType.Shield:
-                        pTexture = Main.GameContent.Load<Texture2D>("Sprites/Shield");
-                        break;
-
                     case PowerUpType.DoubleShot:
                         pTexture = Main.GameContent.Load<Texture2D>("Sprites/DoubleShot");
                         break;
@@ -89,10 +76,6 @@ namespace SpaceGame
         {
             switch (pType)
             {
-                case PowerUpType.Shield:
-                    spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X, SpriteBoundingBox.Location.Y), null, Color.White);
-                    break;
-
                 case PowerUpType.DoubleShot:
                     spriteBatch.Draw(pTexture, new Vector2(SpriteBoundingBox.Location.X, SpriteBoundingBox.Location.Y), null, Color.White);
                     break;

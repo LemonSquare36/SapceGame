@@ -603,6 +603,7 @@ namespace SpaceGame
                 if (A || B || C || D)
                 {
                     powerUps.Remove(powerUps[p]);
+                    BaseShipSprite.timer.Interval = 150;
                     BaseShipSprite.sPowerUp.Add(sPowerUpType.DoubleShot);
                 }
             }
