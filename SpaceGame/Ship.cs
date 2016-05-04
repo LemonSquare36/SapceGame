@@ -30,8 +30,7 @@ namespace SpaceGame
         const int MoveRight = 1;
         Main world;
         //timer for bullets
-        public Timer timer = new Timer(300);
-        public Timer doubleShotTimer = new Timer(10000);
+        public Timer timer = new Timer(300), doubleShotTimer = new Timer(10000);
 
         public List<Bullet> bullets = new List<Bullet>();
         public List<sPowerUpType> sPowerUp = new List<sPowerUpType>();
@@ -75,15 +74,9 @@ namespace SpaceGame
             spriteHeight = baseShip.Height;//theHeight;
 
             timer.Elapsed += TimerElapsed;
-            doubleShotTimer.Elapsed += bulletTimerElapsed;
+            doubleShotTimer.Elapsed += DoubleShotExpired;
 
             base.LoadContent(theContentManager, ShipAssetName);
-        }
-
-        private void bulletTimerElapsed(object sender, ElapsedEventArgs e)
-        {
-            //doubleShotTimer.Start();
-            elapsed = true;
         }
 
         public void Update(GameTime gameTime)
@@ -155,15 +148,6 @@ namespace SpaceGame
                 Position.Y = 0;
             }
 
-            /*if (sPowerUp.Contains(sPowerUpType.DoubleShot))
-            {
-                timer.Interval = 150;
-            }
-            else
-            {
-                timer.Interval = 300;
-            }*/
-
             //if (CurrentKeyBoardState.IsKeyDown(Keys.A)) hp--;
 
             base.Update(gameTime, mSpeed, mDirection);
@@ -218,15 +202,34 @@ namespace SpaceGame
                 elapsed = false;
                 timer.Stop();
                 timer.Start();
-            }
-            
-               
+            }      
         } 
 
         private void TimerElapsed(object sender, EventArgs e)
         {
             elapsed = true;
         }
-    }
 
+        private void DoubleShotExpired(object sender, EventArgs e)
+        {
+            timer.Interval = 300;
+            doubleShotTimer.Stop();
+            sPowerUp.Remove(sPowerUpType.DoubleShot);
+        }
+
+        public void AddPowerup(sPowerUpType type)
+        {
+            sPowerUp.Add(type);
+            switch (type)
+            {
+                case sPowerUpType.DoubleShot:
+                    doubleShotTimer.Start();
+                    timer.Interval = 150;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 }
