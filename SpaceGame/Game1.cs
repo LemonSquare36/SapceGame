@@ -191,7 +191,7 @@ namespace SpaceGame
         {
             objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
             RandTimer.Stop();
-            RandTimer.Interval = Rand.Next(1000, 2000);
+            RandTimer.Interval = Rand.Next(500, 1000);
             RandTimer.Start();
         }
         private void CTimeElapsed(object sender, EventArgs e)
