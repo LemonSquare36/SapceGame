@@ -71,10 +71,10 @@ namespace SpaceGame
         WALL Wall5;
         WALL Wall6;
         Vector2 Pos1 = new Vector2(0, 100);
-        Vector2 Pos2 = new Vector2(800, 100);
+        Vector2 Pos2 = new Vector2(0, 100);
         Vector2 Pos3 = new Vector2(1600, 100);
         Vector2 Pos4 = new Vector2(0, 380);
-        Vector2 Pos5 = new Vector2(800, 380);
+        Vector2 Pos5 = new Vector2(0, 380);
         Vector2 Pos6 = new Vector2(1600, 380);
 
         GraphicsDeviceManager graphics;
