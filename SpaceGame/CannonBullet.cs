@@ -19,17 +19,25 @@ namespace SpaceGame
             get { return Position; }
         }
 
-        public CannonBullet(Vector2 pos)
+        public CannonBullet(Vector2 pos, float X,float Y)
         {
             BulletStart = pos;
             BulletStart -= new Vector2(-16, -10);
+            float Movex = X - BulletStart.X;
+            float Movey = Y - BulletStart.Y;
+            double C = Math.Sqrt((Movex * Movex) + (Movey * Movey));
+            Movex /= (float)C;
+            Movey /= (float)C;
+            Movex *= 2.5f;
+            Movey *= 2.5f;
+            BulletMove = new Vector2(Movex,Movey); 
             LoadContent();
         }
 
         Texture2D Cannonbullet;
 
         Vector2 BulletStart;
-        Vector2 BulletMove = new Vector2(-5, 0);
+        Vector2 BulletMove;
         public void LoadContent()
         {
             Cannonbullet = Main.GameContent.Load<Texture2D>("Sprites/CannonShot");
