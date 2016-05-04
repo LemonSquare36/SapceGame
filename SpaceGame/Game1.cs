@@ -51,7 +51,6 @@ namespace SpaceGame
         bool GameRunning = true;
 
         Random Rand = new Random();
-        Random hRand = new Random();
         int WallPos;
         int Select;
         int Wall2Pos;
@@ -62,7 +61,6 @@ namespace SpaceGame
         Timer RandTimer2 = new Timer();
         Timer RandTimer = new Timer();
         Timer CTimer = new Timer();
-        Timer bulletTime = new Timer();
 
         WALL Wall1;
         WALL Wall2;
@@ -662,6 +660,6 @@ namespace SpaceGame
             }
             return false;
         }
-
+        for (int i = 0; i < CannonBullet.Count; i++)
     }
 }
