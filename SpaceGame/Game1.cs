@@ -701,6 +701,9 @@ namespace SpaceGame
                 case 4:
                     menu.type = MenuType.Highscores;
                     GameState = GameStates.MainMenu;
+                    menu.LoadContent();
+                    menu.HighScores.recordScore(score, "");
+                    menu.HighScores.retrieveScores();
                     break;
             }
         }
