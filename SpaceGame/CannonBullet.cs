@@ -19,6 +19,15 @@ namespace SpaceGame
             get { return Position; }
         }
 
+        public int cannonBallValue;
+
+        public int CannonBallValue
+        {
+            get { return cannonBallValue; }
+        }
+
+        public int cannonBallStart { get; set; }
+
         public CannonBullet(Vector2 pos, float X,float Y)
         {
             BulletStart = pos;
@@ -28,8 +37,8 @@ namespace SpaceGame
             double C = Math.Sqrt((Movex * Movex) + (Movey * Movey));
             Movex /= (float)C;
             Movey /= (float)C;
-            Movex *= 2.5f;
-            Movey *= 2.5f;
+            Movex *= 5f;//2.5
+            Movey *= 5f;//2.5
             BulletMove = new Vector2(Movex,Movey); 
             LoadContent();
         }
