@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
-    enum MenuType { MainMenu, Options }
+    enum MenuType { MainMenu, Options, Highscores }
 
     class Menu
     {
@@ -35,6 +35,7 @@ namespace SpaceGame
             OptionsUP = Main.GameContent.Load<Texture2D>("Menu/OptionsUP");
             MainMenuP = Main.GameContent.Load<Texture2D>("Menu/MainMenuP");
             MainMenuUP = Main.GameContent.Load<Texture2D>("Menu/MainMenuUP");
+            ScoreBoard HighScores = new ScoreBoard("Scores", "HighScores", 10);
             mouse = Mouse.GetState();
 
             switch (type)
@@ -47,6 +48,11 @@ namespace SpaceGame
                     options.ButtonPressed += ButtonPressed;
                     break;
                 case MenuType.Options:
+                    mainMenu = new Button(new Vector2(300, 400), 200, 50, 3, mouse, MainMenuUP, MainMenuP, 800, 480);
+
+                    mainMenu.ButtonPressed += ButtonPressed;
+                    break;
+                case MenuType.Highscores:
                     mainMenu = new Button(new Vector2(300, 400), 200, 50, 3, mouse, MainMenuUP, MainMenuP, 800, 480);
 
                     mainMenu.ButtonPressed += ButtonPressed;
@@ -65,6 +71,9 @@ namespace SpaceGame
                     options.Update(mouse);
                     break;
                 case MenuType.Options:
+                    mainMenu.Update(mouse);
+                    break;
+                case MenuType.Highscores:
                     mainMenu.Update(mouse);
                     break;
                 default:
@@ -104,6 +113,9 @@ namespace SpaceGame
                     case MenuType.Options:
                         spriteBatch.Draw(mainMenu.Texture, mainMenu.Position, Color.White);
 
+                        break;
+                    case MenuType.Highscores:
+                        spriteBatch.Draw(mainMenu.Texture, mainMenu.Position, Color.White);
                         break;
 
                     default:

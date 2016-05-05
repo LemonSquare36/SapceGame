@@ -45,9 +45,11 @@
     <Compile Include="bullet.cs" />
     <Compile Include="CannonBullet.cs" />
     <Compile Include="Duality.cs" />
+    <Compile Include="Encryption.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="HealthPacks.cs" />
+    <Compile Include="HighScores.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="PowerUp.cs" />
     <Compile Include="Program.cs" />
@@ -77,6 +79,8 @@
     <Content Include="Content\Sprites\Bullet.png" />
     <Content Include="Content\Sprites\Cannon.png" />
     <Content Include="Content\Sprites\CannonShot.png" />
+    <Content Include="Content\Menu\Continue.png" />
+    <Content Include="Content\Menu\ContinuePressed.png" />
     <Content Include="Content\Sprites\DoubleShot.png" />
     <Content Include="Content\Sprites\HealthBar.png" />
     <Content Include="Content\Sprites\maxresdefault.png" />
