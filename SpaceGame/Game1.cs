@@ -671,7 +671,6 @@ namespace SpaceGame
                     {
                         health.Width -= 15;
                         objects[l].BulletStart = objects[l].BulletStart + 1;
-                        //BaseShipSprite.bullets.Remove(BaseShipSprite.bullets[i]);
                         if (objects[i].CannonBullet[l].cannonBallStart >= objects[i].CannonBullet[l].cannonBallValue)
                         {
                             objects[i].CannonBullet.Remove(objects[i].CannonBullet[l]);
