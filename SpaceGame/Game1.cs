@@ -33,9 +33,10 @@ namespace SpaceGame
             }
         }
         Menu menu;
-
+        Button Continue;
+        Texture2D ContinueP, ContinueUP;
         int BulletStart = 0;
-
+        MouseState mouse;
         public Ship BaseShipSprite;
         Background Background1;
         Background Background2;
@@ -148,6 +149,8 @@ namespace SpaceGame
 
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             healthBar = Content.Load<Texture2D>("Sprites/HealthBar");
+            ContinueP = Content.Load<Texture2D>("Menu/ContinuePressed");
+            ContinueUP = Content.Load<Texture2D>("Menu/Continue");
             font = Content.Load<SpriteFont>("myFont");
 
             Background1.LoadContent(this.Content);
@@ -171,7 +174,8 @@ namespace SpaceGame
             CTimer.Elapsed += CTimeElapsed;
             RandTimer2.Elapsed += RandTime2Elasped;
             Parallel.Invoke(() => CTimer.Start(), () => RandTimer.Start(), () => RandTimer2.Start());
-
+            Continue = new Button(new Vector2(300, 400), 200, 50, 4, mouse, ContinueUP, ContinueP, 800, 480);
+            Continue.ButtonPressed += ButtonPressed;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
             graphics.IsFullScreen = true;
@@ -194,7 +198,7 @@ namespace SpaceGame
         }
         private void CTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10),BaseShipSprite));
+            objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
             CTimer.Stop();
             CTimer.Interval = Rand.Next(4000, 6000);
             CTimer.Start();
@@ -204,7 +208,7 @@ namespace SpaceGame
             healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
             powerUps.Add(new PowerUp(Content, PowerUpType.DoubleShot, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
             RandTimer2.Stop();
-            RandTimer2.Interval = Rand.Next(10000 , 20000);
+            RandTimer2.Interval = Rand.Next(10000, 20000);
             RandTimer2.Start();
         }
         /// <summary>
@@ -214,6 +218,7 @@ namespace SpaceGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param> 
         protected override void Update(GameTime gameTime)
         {
+            mouse = Mouse.GetState();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -241,7 +246,7 @@ namespace SpaceGame
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     if (health.Width > 0) score++;
 
-                    for (int i = 0; i < objects.Count; i++ )
+                    for (int i = 0; i < objects.Count; i++)
                     {
                         objects[i].Update(gameTime);
                     }
@@ -270,6 +275,7 @@ namespace SpaceGame
                     }
 
                     if (GameRunning) BaseShipSprite.Update(gameTime);
+                    else Continue.Update(mouse);
 
                     FadeIn();
 
@@ -351,6 +357,10 @@ namespace SpaceGame
                     for (int h = 0; h < healthPacks.Count; h++)
                     {
                         healthPacks[h].Draw(spriteBatch);
+                    }
+                    if (health.Width <= 0)
+                    {
+                        spriteBatch.Draw(Continue.Texture, Continue.Position, Color.White);
                     }
 
                     BaseShipSprite.Draw(this.spriteBatch);
@@ -683,6 +693,16 @@ namespace SpaceGame
                 }
             }
             return false;
+        }
+        private void ButtonPressed(object sender, EventArgs e)
+        {
+            switch (((Button)sender).ButtonNum)
+            {
+                case 4:
+                    menu.type = MenuType.Highscores;
+                    GameState = GameStates.MainMenu;
+                    break;
+            }
         }
     }
 }
