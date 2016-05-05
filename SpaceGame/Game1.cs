@@ -232,6 +232,7 @@ namespace SpaceGame
                     CheckBulletCollision();
                     CheckPowerUpCollision();
                     CheckPackCollision();
+                    CheckCannonballCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -660,6 +661,28 @@ namespace SpaceGame
             }
             return false;
         }
-        for (int i = 0; i < CannonBullet.Count; i++)
+        private bool CheckCannonballCollision()
+        {
+            for (int i = 0; i < objects.Count; i++)
+            {
+                for (int l = 0; l < objects[i].CannonBullet.Count; l++)
+                {
+                    if (BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].CannonBullet[l].SpriteBoundingBox))
+                    {
+                        health.Width -= 15;
+                        objects[l].BulletStart = objects[l].BulletStart + 1;
+                        //BaseShipSprite.bullets.Remove(BaseShipSprite.bullets[i]);
+                        if (objects[i].CannonBullet[l].cannonBallStart >= objects[i].CannonBullet[l].cannonBallValue)
+                        {
+                            objects[i].CannonBullet.Remove(objects[i].CannonBullet[l]);
+                            return true;
+                        }
+
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }
