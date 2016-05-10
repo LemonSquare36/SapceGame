@@ -278,6 +278,7 @@ namespace SpaceGame
                         GameRunning = false;
                     }
 
+
                     if (health.Width >= 250)
                     {
                         health.Width = 250;
