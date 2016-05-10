@@ -174,7 +174,7 @@ namespace SpaceGame
             CTimer.Elapsed += CTimeElapsed;
             RandTimer2.Elapsed += RandTime2Elasped;
             Parallel.Invoke(() => CTimer.Start(), () => RandTimer.Start(), () => RandTimer2.Start());
-            Continue = new Button(new Vector2(300, 400), 200, 50, 4, mouse, ContinueUP, ContinueP, 800, 480);
+            Continue = new Button(new Vector2(300, 350), 200, 50, 4, mouse, ContinueUP, ContinueP, 800, 480);
             Continue.ButtonPressed += ButtonPressed;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
