@@ -42,7 +42,7 @@ namespace SpaceGame
         Background Background2;
         Background Background3;
         Rectangle health = new Rectangle(100, 10, 200, 20);
-
+        int Start = 0;
         int AlphaValue = 1;
         double FadeInc = 3;
         double FadeDelay = 3;
@@ -191,25 +191,34 @@ namespace SpaceGame
         }
         private void RandTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
-            RandTimer.Stop();
-            RandTimer.Interval = Rand.Next(500, 1000);
-            RandTimer.Start();
+            if (Start != 0)
+            {
+                objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
+                RandTimer.Stop();
+                RandTimer.Interval = Rand.Next(500, 1000);
+                RandTimer.Start();
+            }
         }
         private void CTimeElapsed(object sender, EventArgs e)
         {
-            objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
-            CTimer.Stop();
-            CTimer.Interval = Rand.Next(4000, 6000);
-            CTimer.Start();
+            if (Start != 0)
+            {
+                objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
+                CTimer.Stop();
+                CTimer.Interval = Rand.Next(4000, 6000);
+                CTimer.Start();
+            }
         }
         private void RandTime2Elasped(object sender, EventArgs e)
         {
+            if (Start != 0)
+            {
             healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
             powerUps.Add(new PowerUp(Content, PowerUpType.DoubleShot, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
             RandTimer2.Stop();
             RandTimer2.Interval = Rand.Next(10000, 20000);
             RandTimer2.Start();
+            }
         }
         /// <summary>
         /// Allows the game to run logic such as updating the world,
@@ -273,6 +282,7 @@ namespace SpaceGame
                     {
                         health.Width = 250;
                     }
+                    Start = 1;
 
                     if (GameRunning) BaseShipSprite.Update(gameTime);
                     else Continue.Update(mouse);
