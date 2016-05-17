@@ -192,8 +192,8 @@ namespace SpaceGame
                     spriteBatch.End();
                     break;
                 case GameStates.GamePlaying:
-                    //WallMove(gameTime);
-                    //WallScroll();
+                    WallMove(gameTime);
+                    WallScroll();
                     BaseShipSprite.Update(gameTime);
                     CheckGameObjectCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -453,26 +453,26 @@ namespace SpaceGame
             if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X <= box1.spriteBoundingBox.X)
             {
                 BaseShipSprite.Position.X = box1.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
-                //health.Width--;
+                health.Width--;
             }
 
             else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
             {
                 BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Width;
-                //health.Width--;
+                health.Width--;
             }
 
             if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X >= box1.spriteBoundingBox.X)
             {
                 BaseShipSprite.Position.X = box1.SpriteBoundingBox.Right + BaseShipSprite.SpriteBoundingBox.Width;
                 Console.WriteLine("Colliding");
-                //health.Width--;
+                health.Width--;
             }
 
             else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
             {
                 BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Bottom - BaseShipSprite.SpriteBoundingBox.Height;
-                //health.Width--;
+                health.Width--;
             }
 
 
