@@ -11,30 +11,95 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
+    enum ObjectType { Box, Asteroid }
+
     class GameObject : Sprite
     {
-        public Texture2D boxyBox;
+        public Texture2D texture;
+        Random rand;
+        ObjectType type;
+        float rotation = 0;
+
         const string ObjectAssetName = "Object";
         const int StartPositionX = 100;
         const int StartPositionY = 250;
+
+        Point movement, start;
         //int health = 10;
+
+        public GameObject(ContentManager theContentManager, ObjectType type, int rand)
+        {
+            this.type = type;
+            switch (type)
+            {
+                case ObjectType.Asteroid:
+                    movement = new Point(5, 0);
+                    start = new Point(900, rand);
+                    break;
+
+                case ObjectType.Box:
+                    start = new Point(300, rand);
+                    movement = Point.Zero;
+                    break;
+
+                default:
+                    break;
+            }
+            LoadContent(theContentManager);
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            spriteBoundingBox = new Rectangle(start.X, start.Y, texture.Width, texture.Height);
+
+            if (type == ObjectType.Asteroid)
+            {
+                start -= movement;
+                rotation += MathHelper.ToRadians(-3);
+                if (MathHelper.ToDegrees(rotation) >= 360 || MathHelper.ToDegrees(rotation) <= -360) rotation = 0;
+            }
+        }
 
         public override void LoadContent(ContentManager theContentManager)
         {
             Position = new Vector2(StartPositionX, StartPositionY);
-            boxyBox = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
 
-            spriteWidth = boxyBox.Width;
-            spriteHeight = boxyBox.Height;
+            try
+            {
+                switch (type)
+                {
+                    case ObjectType.Asteroid:
+                        texture = Main.GameContent.Load<Texture2D>("Sprites/Asteriod");
+                        break;
 
-            spriteBoundingBox = new Rectangle(StartPositionX, StartPositionY, spriteWidth, spriteHeight);
+                    case ObjectType.Box:
+                        texture = Main.GameContent.Load<Texture2D>("Sprites/BoxyBox");
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch { }
 
             base.LoadContent(theContentManager, ObjectAssetName);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(boxyBox, SpriteBoundingBox, Color.White);
+            switch (type)
+            {
+                case ObjectType.Asteroid:
+                    spriteBatch.Draw(texture, new Vector2(SpriteBoundingBox.Location.X+25, SpriteBoundingBox.Location.Y+25), null, Color.White, rotation, new Vector2(25, 25), 1, SpriteEffects.None, 0);
+                    break;
+
+                case ObjectType.Box:
+                    spriteBatch.Draw(texture, SpriteBoundingBox, Color.White);
+                    break;
+                
+                default:
+                    break;
+            }
         }
     }
 }

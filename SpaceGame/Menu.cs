@@ -11,15 +11,17 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace SpaceGame
 {
-    enum MenuType { MainMenu, Options }
+    enum MenuType { MainMenu, Options, Highscores }
 
     class Menu
     {
         Main main;
         public MenuType type = MenuType.MainMenu;
         MouseState mouse;
+        public ScoreBoard HighScores;
         Button start, options, mainMenu;
         Texture2D  background, StartP, StartUP, OptionsP, OptionsUP, MainMenuP, MainMenuUP;
+        SpriteFont font;
 
 
         public Menu(Main main)
@@ -35,7 +37,9 @@ namespace SpaceGame
             OptionsUP = Main.GameContent.Load<Texture2D>("Menu/OptionsUP");
             MainMenuP = Main.GameContent.Load<Texture2D>("Menu/MainMenuP");
             MainMenuUP = Main.GameContent.Load<Texture2D>("Menu/MainMenuUP");
+            HighScores = new ScoreBoard("Scores", "HighScores", 10);
             mouse = Mouse.GetState();
+            font = Main.GameContent.Load<SpriteFont>("myFont");
 
             switch (type)
             {
@@ -48,8 +52,12 @@ namespace SpaceGame
                     break;
                 case MenuType.Options:
                     mainMenu = new Button(new Vector2(300, 400), 200, 50, 3, mouse, MainMenuUP, MainMenuP, 800, 480);
-
                     mainMenu.ButtonPressed += ButtonPressed;
+                    break;
+                case MenuType.Highscores:
+                    mainMenu = new Button(new Vector2(300, 400), 200, 50, 3, mouse, MainMenuUP, MainMenuP, 800, 480);
+                    mainMenu.ButtonPressed += ButtonPressed;
+                    HighScores.retrieveScores();
                     break;
                 default:
                     break;
@@ -65,6 +73,9 @@ namespace SpaceGame
                     options.Update(mouse);
                     break;
                 case MenuType.Options:
+                    mainMenu.Update(mouse);
+                    break;
+                case MenuType.Highscores:
                     mainMenu.Update(mouse);
                     break;
                 default:
@@ -105,12 +116,19 @@ namespace SpaceGame
                         spriteBatch.Draw(mainMenu.Texture, mainMenu.Position, Color.White);
 
                         break;
+                    case MenuType.Highscores:
+                        spriteBatch.Draw(mainMenu.Texture, mainMenu.Position, Color.White);
+                        for (int i = 0; i < HighScores.HighScores.Length; i++)
+                        {
+                            spriteBatch.DrawString(font, HighScores.HighScores[i], new Vector2(50, 50 * i), Color.White);
+                        }
+                        break;
 
                     default:
                         break;
                 }
             }
-            catch { }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
     }
 }

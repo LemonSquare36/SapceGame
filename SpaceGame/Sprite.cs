@@ -17,7 +17,7 @@ namespace SpaceGame
         private Texture2D baseShip, Starrybackground, Wall;
         // Size of sprite
         public Rectangle Size;
-       public Rectangle spriteBoundingBox;
+       public Rectangle spriteBoundingBox, asteroidBoundingBox;
         // Amount to increase/decrease size
         private float mScale = 1.0f;
         //For Updating under move
@@ -25,6 +25,8 @@ namespace SpaceGame
 
         protected int spriteWidth;
         protected int spriteHeight;
+        protected int asteroidWidth;
+        protected int asteroidHeight;
 
         public Rectangle SpriteBoundingBox
         {
@@ -62,6 +64,7 @@ namespace SpaceGame
         {
             Position += theDirection * theSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             spriteBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, spriteWidth, spriteHeight);
+            asteroidBoundingBox = new Rectangle((int)Position.X, (int)Position.Y, asteroidWidth, asteroidHeight);
 
         }
         public virtual void Draw(SpriteBatch spriteBatch)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
@@ -32,27 +33,35 @@ namespace SpaceGame
             }
         }
         Menu menu;
-
-
+        Button Continue;
+        Texture2D ContinueP, ContinueUP;
+        int BulletStart = 0;
+        MouseState mouse;
         public Ship BaseShipSprite;
         Background Background1;
         Background Background2;
         Background Background3;
         Rectangle health = new Rectangle(100, 10, 200, 20);
-
+        int Start = 0;
         int AlphaValue = 1;
         double FadeInc = 3;
         double FadeDelay = 3;
 
         bool DoneMoving = true;
         bool doneMoving = true;
+        bool GameRunning = true;
 
         Random Rand = new Random();
         int WallPos;
         int Select;
         int Wall2Pos;
 
-        GameObject box1;
+        List<HealthPacks> healthPacks = new List<HealthPacks>();
+        List<PowerUp> powerUps = new List<PowerUp>();
+        List<Enemy> objects = new List<Enemy>();
+        Timer RandTimer2 = new Timer();
+        Timer RandTimer = new Timer();
+        Timer CTimer = new Timer();
 
         WALL Wall1;
         WALL Wall2;
@@ -61,10 +70,10 @@ namespace SpaceGame
         WALL Wall5;
         WALL Wall6;
         Vector2 Pos1 = new Vector2(0, 100);
-        Vector2 Pos2 = new Vector2(800, 100);
+        Vector2 Pos2 = new Vector2(0, 100);
         Vector2 Pos3 = new Vector2(1600, 100);
         Vector2 Pos4 = new Vector2(0, 380);
-        Vector2 Pos5 = new Vector2(800, 380);
+        Vector2 Pos5 = new Vector2(0, 380);
         Vector2 Pos6 = new Vector2(1600, 380);
 
         GraphicsDeviceManager graphics;
@@ -107,14 +116,16 @@ namespace SpaceGame
             Background2 = new Background();
             Background3 = new Background();
 
-            box1 = new GameObject();
-
             Wall1 = new WALL(Pos1);
             Wall2 = new WALL(Pos2);
             Wall3 = new WALL(Pos3);
             Wall4 = new WALL(Pos4);
             Wall5 = new WALL(Pos5);
             Wall6 = new WALL(Pos6);
+
+            RandTimer.Interval = Rand.Next(1000, 2000);
+            CTimer.Interval = Rand.Next(4000, 6000);
+            RandTimer2.Interval = Rand.Next(10000, 20000);
 
             menu = new Menu(this);
 
@@ -138,6 +149,8 @@ namespace SpaceGame
 
             BaseShip = Content.Load<Texture2D>("Sprites/Base Ship");
             healthBar = Content.Load<Texture2D>("Sprites/HealthBar");
+            ContinueP = Content.Load<Texture2D>("Menu/ContinuePressed");
+            ContinueUP = Content.Load<Texture2D>("Menu/Continue");
             font = Content.Load<SpriteFont>("myFont");
 
             Background1.LoadContent(this.Content);
@@ -155,13 +168,17 @@ namespace SpaceGame
             Wall5.LoadContent(this.Content);
             Wall6.LoadContent(this.Content);
 
-            box1.LoadContent(this.Content);
-
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
 
+            RandTimer.Elapsed += RandTimeElapsed;
+            CTimer.Elapsed += CTimeElapsed;
+            RandTimer2.Elapsed += RandTime2Elasped;
+            Parallel.Invoke(() => CTimer.Start(), () => RandTimer.Start(), () => RandTimer2.Start());
+            Continue = new Button(new Vector2(300, 350), 200, 50, 4, mouse, ContinueUP, ContinueP, 800, 480);
+            Continue.ButtonPressed += ButtonPressed;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             BaseShipSprite.LoadContent(this.Content);
-
+            graphics.IsFullScreen = true;
         }
 
         /// <summary>
@@ -172,7 +189,37 @@ namespace SpaceGame
         {
             // TODO: Unload any non ContentManager content here
         }
-
+        private void RandTimeElapsed(object sender, EventArgs e)
+        {
+            if (Start != 0)
+            {
+                objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
+                RandTimer.Stop();
+                RandTimer.Interval = Rand.Next(500, 1000);
+                RandTimer.Start();
+            }
+        }
+        private void CTimeElapsed(object sender, EventArgs e)
+        {
+            if (Start != 0)
+            {
+                objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
+                CTimer.Stop();
+                CTimer.Interval = Rand.Next(4000, 6000);
+                CTimer.Start();
+            }
+        }
+        private void RandTime2Elasped(object sender, EventArgs e)
+        {
+            if (Start != 0)
+            {
+            healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+            powerUps.Add(new PowerUp(Content, PowerUpType.DoubleShot, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+            RandTimer2.Stop();
+            RandTimer2.Interval = Rand.Next(10000, 20000);
+            RandTimer2.Start();
+            }
+        }
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -180,6 +227,7 @@ namespace SpaceGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param> 
         protected override void Update(GameTime gameTime)
         {
+            mouse = Mouse.GetState();
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
@@ -194,8 +242,11 @@ namespace SpaceGame
                 case GameStates.GamePlaying:
                     WallMove(gameTime);
                     WallScroll();
-                    BaseShipSprite.Update(gameTime);
-                    CheckGameObjectCollision();
+                    CheckEnemyCollision();
+                    CheckBulletCollision();
+                    CheckPowerUpCollision();
+                    CheckPackCollision();
+                    CheckCannonballCollision();
                     Wall1.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall2.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     Wall3.Update(gameTime, Vector2.Zero, Vector2.Zero);
@@ -204,11 +255,41 @@ namespace SpaceGame
                     Wall6.Update(gameTime, Vector2.Zero, Vector2.Zero);
                     if (health.Width > 0) score++;
 
+                    for (int i = 0; i < objects.Count; i++)
+                    {
+                        objects[i].Update(gameTime);
+                    }
+
+                    for (int p = 0; p < powerUps.Count; p++)
+                    {
+                        powerUps[p].Update(gameTime);
+                    }
+
+                    for (int h = 0; h < healthPacks.Count; h++)
+                    {
+                        healthPacks[h].Update(gameTime);
+                    }
+
+                    //Console.WriteLine(CheckBulletCollision());
+
                     if (health.Width <= 0)
                     {
                         FadeDelay -= gameTime.ElapsedGameTime.TotalSeconds;
+                        GameRunning = false;
                     }
+
+
+                    if (health.Width >= 250)
+                    {
+                        health.Width = 250;
+                    }
+                    Start = 1;
+
+                    if (GameRunning) BaseShipSprite.Update(gameTime);
+                    else Continue.Update(mouse);
+
                     FadeIn();
+
                     break;
                 default:
                     break;
@@ -247,7 +328,7 @@ namespace SpaceGame
                 case GameStates.GamePlaying:
 
                     spriteBatch.Begin();
-
+                    //background
                     Background1.Draw(this.spriteBatch);
                     Background2.Draw(this.spriteBatch);
                     Background3.Draw(this.spriteBatch);
@@ -255,6 +336,7 @@ namespace SpaceGame
                     //spriteBatch.Draw(BaseShip, new Rectangle(400, 240, 27, 23), Color.White);
 
                     spriteBatch.End();
+                    //walls
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
 
 
@@ -271,9 +353,26 @@ namespace SpaceGame
                     spriteBatch.Draw(healthBar, health, Color.White);
 
                     spriteBatch.End();
+                    //everything else
                     spriteBatch.Begin();
 
-                    box1.Draw(spriteBatch);
+                    for (int i = 0; i < objects.Count; i++)
+                    {
+                        objects[i].Draw(spriteBatch);
+                    }
+
+                    for (int p = 0; p < powerUps.Count; p++)
+                    {
+                        powerUps[p].Draw(spriteBatch);
+                    }
+                    for (int h = 0; h < healthPacks.Count; h++)
+                    {
+                        healthPacks[h].Draw(spriteBatch);
+                    }
+                    if (health.Width <= 0)
+                    {
+                        spriteBatch.Draw(Continue.Texture, Continue.Position, Color.White);
+                    }
 
                     BaseShipSprite.Draw(this.spriteBatch);
                     spriteBatch.DrawString(font, "Score: " + score, new Vector2(100, 100), Color.Red);
@@ -304,10 +403,10 @@ namespace SpaceGame
                 Wall2Pos = Rand.Next(220, 455);
                 Select = Rand.Next(1, 3);
 
-                Console.WriteLine("WallPos " + WallPos);
+                /*Console.WriteLine("WallPos " + WallPos);
                 Console.WriteLine("Wall2Pos " + Wall2Pos);
                 Console.WriteLine("Wall2real " + Wall4.Position.Y);
-                Console.WriteLine(Select);
+                Console.WriteLine(Select);*/
                 DoneMoving = false;
                 doneMoving = false;
             }
@@ -375,7 +474,7 @@ namespace SpaceGame
                 }
             }
             Vector2 aDirection = new Vector2(-1, 0);
-            Vector2 aSpeed = new Vector2(50, 0);
+            Vector2 aSpeed = new Vector2(100, 0);
 
             Vector2 bSpeed = new Vector2(200, 0);
 
@@ -443,36 +542,25 @@ namespace SpaceGame
             }
         }
 
-        private void CheckGameObjectCollision()
+        private void CheckEnemyCollision()
         {
 
             //if (BaseShipSprite.SpriteBoundingBox.Intersects(Wall0.SpriteBoundingBox))
             //BaseShipSprite.Position.Y = Wall0.spriteBoundingBox.Bottom;
             //Console.WriteLine(Wall0.SpriteBoundingBox);
 
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X <= box1.spriteBoundingBox.X)
+            for (int i = 0; i < objects.Count; i++)
             {
-                BaseShipSprite.Position.X = box1.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
-                health.Width--;
-            }
-
-            else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
-            {
-                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Top - BaseShipSprite.SpriteBoundingBox.Width;
-                health.Width--;
-            }
-
-            if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.X >= box1.spriteBoundingBox.X)
-            {
-                BaseShipSprite.Position.X = box1.SpriteBoundingBox.Right + BaseShipSprite.SpriteBoundingBox.Width;
-                Console.WriteLine("Colliding");
-                health.Width--;
-            }
-
-            else if (BaseShipSprite.SpriteBoundingBox.Intersects(box1.spriteBoundingBox) && BaseShipSprite.Position.Y <= box1.spriteBoundingBox.Y)
-            {
-                BaseShipSprite.Position.Y = box1.SpriteBoundingBox.Bottom - BaseShipSprite.SpriteBoundingBox.Height;
-                health.Width--;
+                bool a = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.X <= objects[i].spriteBoundingBox.X;
+                bool b = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.Y <= objects[i].spriteBoundingBox.Y;
+                bool c = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.X >= objects[i].spriteBoundingBox.X;
+                bool d = BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].spriteBoundingBox) && BaseShipSprite.Position.Y <= objects[i].spriteBoundingBox.Y;
+                if (a || b || c || d)//left
+                {
+                    //BaseShipSprite.Position.X = i.SpriteBoundingBox.Left - BaseShipSprite.SpriteBoundingBox.Width;
+                    health.Width -= 10;
+                    objects.Remove(objects[i]);
+                }
             }
 
 
@@ -523,6 +611,42 @@ namespace SpaceGame
 
         }
 
+        private void CheckPowerUpCollision()
+        {
+
+            for (int p = 0; p < powerUps.Count; p++)
+            {
+                bool A = BaseShipSprite.SpriteBoundingBox.Intersects(powerUps[p].spriteBoundingBox) && BaseShipSprite.Position.X <= powerUps[p].spriteBoundingBox.X;
+                bool B = BaseShipSprite.SpriteBoundingBox.Intersects(powerUps[p].spriteBoundingBox) && BaseShipSprite.Position.Y <= powerUps[p].spriteBoundingBox.Y;
+                bool C = BaseShipSprite.SpriteBoundingBox.Intersects(powerUps[p].spriteBoundingBox) && BaseShipSprite.Position.X >= powerUps[p].spriteBoundingBox.X;
+                bool D = BaseShipSprite.SpriteBoundingBox.Intersects(powerUps[p].spriteBoundingBox) && BaseShipSprite.Position.Y <= powerUps[p].spriteBoundingBox.Y;
+
+                if (A || B || C || D)
+                {
+                    powerUps.Remove(powerUps[p]);
+                    //BaseShipSprite.timer.Interval = 150;
+                    BaseShipSprite.AddPowerup(sPowerUpType.DoubleShot);
+                }
+            }
+        }
+        private void CheckPackCollision()
+        {
+
+            for (int h = 0; h < healthPacks.Count; h++)
+            {
+                bool Z = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.X <= healthPacks[h].spriteBoundingBox.X;
+                bool Y = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.Y <= healthPacks[h].spriteBoundingBox.Y;
+                bool X = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.X >= healthPacks[h].spriteBoundingBox.X;
+                bool W = BaseShipSprite.SpriteBoundingBox.Intersects(healthPacks[h].spriteBoundingBox) && BaseShipSprite.Position.Y <= healthPacks[h].spriteBoundingBox.Y;
+
+                if (Z || Y || X || W)
+                {
+                    health.Width += 15;
+                    healthPacks.Remove(healthPacks[h]);
+                }
+            }
+        }
+
         private void FadeIn()
         {
             if (FadeDelay <= 0)
@@ -536,6 +660,62 @@ namespace SpaceGame
             }
         }
 
+        private bool CheckBulletCollision()
+        {
+            for (int i = 0; i < BaseShipSprite.bullets.Count; i++)
+            {
+                for (int l = 0; l < objects.Count; l++)
+                {
+                    if (BaseShipSprite.bullets[i].SpriteBoundingBox.Intersects(objects[l].SpriteBoundingBox))
+                    {
+                        objects[l].BulletStart = objects[l].BulletStart + 1;
+                        BaseShipSprite.bullets.Remove(BaseShipSprite.bullets[i]);
+                        if (objects[l].BulletStart >= objects[l].BulletValue)
+                        {
+                            objects.Remove(objects[l]);
+                            return true;
+                        }
 
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private bool CheckCannonballCollision()
+        {
+            for (int i = 0; i < objects.Count; i++)
+            {
+                for (int l = 0; l < objects[i].CannonBullet.Count; l++)
+                {
+                    if (BaseShipSprite.SpriteBoundingBox.Intersects(objects[i].CannonBullet[l].SpriteBoundingBox))
+                    {
+                        health.Width -= 15;
+                        objects[l].BulletStart = objects[l].BulletStart + 1;
+                        if (objects[i].CannonBullet[l].cannonBallStart >= objects[i].CannonBullet[l].cannonBallValue)
+                        {
+                            objects[i].CannonBullet.Remove(objects[i].CannonBullet[l]);
+                            return true;
+                        }
+
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        private void ButtonPressed(object sender, EventArgs e)
+        {
+            switch (((Button)sender).ButtonNum)
+            {
+                case 4:
+                    menu.type = MenuType.Highscores;
+                    GameState = GameStates.MainMenu;
+                    menu.LoadContent();
+                    menu.HighScores.recordScore(score, "");
+                    menu.HighScores.retrieveScores();
+                    break;
+            }
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace SpaceGame
 {
     public class Bullet : Sprite
     {
+
         public Vector2 position
         {
             get { return Position; }
@@ -29,8 +30,7 @@ namespace SpaceGame
 
         Vector2 BulletStart;
         Vector2 BulletMove = new Vector2(5, 0);
-        KeyboardState mPreviousKeyboardState;
-        public void LoadContent()
+        public void LoadContent() 
         {
             bullet = Main.GameContent.Load<Texture2D>("Sprites/Bullet");
 
@@ -38,11 +38,13 @@ namespace SpaceGame
         public void Update()
         {
             BulletStart += BulletMove;
+            spriteBoundingBox = new Rectangle((int)BulletStart.X, (int)BulletStart.Y, bullet.Width, bullet.Height);
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(bullet, BulletStart, new Rectangle(0, 0, bullet.Width, bullet.Height), Color.White);
+            spriteBatch.Draw(bullet, SpriteBoundingBox, Color.White);
         }
+
     }
 }
 

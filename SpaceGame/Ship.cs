@@ -11,8 +11,10 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 namespace SpaceGame
 {
+    public enum sPowerUpType { DoubleShot }
     public class Ship : Sprite
     {
+
         public Texture2D baseShip;
         bool elapsed = true;
         // For Movement
@@ -20,20 +22,21 @@ namespace SpaceGame
         const string ShipAssetName = "Ship";
         const int StartPositionX = 125;
         const int StartPositionY = 245;
-        const int SpeedLR = 400;//100
-        const int SpeedUD = 400;//160
+        const int SpeedLR = 250;
+        const int SpeedUD = 250;//160
         const int MoveUp = -1;
         const int MoveDown = 1;
         const int MoveLeft = -1;
         const int MoveRight = 1;
         Main world;
-        Timer timer = new Timer(300);
+        //timer for bullets
+        public Timer timer = new Timer(300), doubleShotTimer = new Timer(10000);
 
         public List<Bullet> bullets = new List<Bullet>();
+        public List<sPowerUpType> sPowerUp = new List<sPowerUpType>();
         //int theWidth = 27;
         //int theHeight = 23;
        
-
 
         public int HP
         {
@@ -71,9 +74,11 @@ namespace SpaceGame
             spriteHeight = baseShip.Height;//theHeight;
 
             timer.Elapsed += TimerElapsed;
+            doubleShotTimer.Elapsed += DoubleShotExpired;
 
             base.LoadContent(theContentManager, ShipAssetName);
         }
+
         public void Update(GameTime gameTime)
         {
             KeyboardState CurrentKeyBoardState = Keyboard.GetState();
@@ -82,9 +87,10 @@ namespace SpaceGame
 
             Shoot(CurrentKeyBoardState);
 
-            foreach (Bullet i in bullets)
+            for (int i = 0; i < bullets.Count; i++)
             {
-                i.Update();
+                bullets[i].Update();
+                if (bullets[i].SpriteBoundingBox.X > 800) bullets.Remove(bullets[i]);
             }
 
             //upper left hand corner
@@ -142,9 +148,7 @@ namespace SpaceGame
                 Position.Y = 0;
             }
 
-            if (CurrentKeyBoardState.IsKeyDown(Keys.A)) hp--;
-
-
+            //if (CurrentKeyBoardState.IsKeyDown(Keys.A)) hp--;
 
             base.Update(gameTime, mSpeed, mDirection);
 
@@ -198,15 +202,34 @@ namespace SpaceGame
                 elapsed = false;
                 timer.Stop();
                 timer.Start();
-            }
-            
-               
-        }
+            }      
+        } 
 
         private void TimerElapsed(object sender, EventArgs e)
         {
             elapsed = true;
         }
-    }
 
+        private void DoubleShotExpired(object sender, EventArgs e)
+        {
+            timer.Interval = 300;
+            doubleShotTimer.Stop();
+            sPowerUp.Remove(sPowerUpType.DoubleShot);
+        }
+
+        public void AddPowerup(sPowerUpType type)
+        {
+            sPowerUp.Add(type);
+            switch (type)
+            {
+                case sPowerUpType.DoubleShot:
+                    doubleShotTimer.Start();
+                    timer.Interval = 150;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
 }
