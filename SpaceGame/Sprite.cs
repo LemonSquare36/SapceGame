@@ -56,7 +56,7 @@ namespace SpaceGame
         public virtual void LoadContent(ContentManager theContentManager, string theAssetName)
         {
             baseShip = theContentManager.Load<Texture2D>("Sprites/Base Ship");
-            Wall = theContentManager.Load<Texture2D>("Sprites/Wall");
+            Wall = theContentManager.Load<Texture2D>("Sprites/Wall"); 
             Starrybackground = theContentManager.Load<Texture2D>("Sprites/maxresdefault");
         }
         public virtual void Update(GameTime gameTime, Vector2 theSpeed, Vector2 theDirection)
