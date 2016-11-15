@@ -66,12 +66,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\01 - Sandstorm %28Radio Edit%29.mp3" />
     <Content Include="Content\Menu\MainMenuP.png" />
     <Content Include="Content\Menu\MainMenuUP.png" />
     <Content Include="Content\Menu\OptionsP.png" />
     <Content Include="Content\Menu\OptionsUP.png" />
     <Content Include="Content\Menu\PlayButtonP.png" />
     <Content Include="Content\Menu\PlayButtonUP.png" />
+    <Content Include="Content\Menu\SapceGame.png" />
     <Content Include="Content\Menu\YouDied.png" />
     <Content Include="Content\Sprites\Asteriod.png" />
     <Content Include="Content\Sprites\Base Ship.png" />

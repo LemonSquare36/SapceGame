@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 
 namespace SpaceGame
 {
@@ -20,7 +20,7 @@ namespace SpaceGame
         MouseState mouse;
         public ScoreBoard HighScores;
         Button start, options, mainMenu;
-        Texture2D  background, StartP, StartUP, OptionsP, OptionsUP, MainMenuP, MainMenuUP;
+        Texture2D background, StartP, StartUP, OptionsP, OptionsUP, MainMenuP, MainMenuUP, Title;
         SpriteFont font;
 
 
@@ -31,6 +31,7 @@ namespace SpaceGame
         public void LoadContent()
         {
             background = Main.GameContent.Load<Texture2D>("Sprites/maxresdefault");
+            Title = Main.GameContent.Load<Texture2D>("Menu/SapceGame");
             StartP = Main.GameContent.Load<Texture2D>("Menu/PlayButtonP");
             StartUP = Main.GameContent.Load<Texture2D>("Menu/PlayButtonUP");
             OptionsP = Main.GameContent.Load<Texture2D>("Menu/OptionsP");
@@ -88,14 +89,16 @@ namespace SpaceGame
             {
                 case 1:
                     main.GameState = GameStates.GamePlaying;
-                        break;
+                    MediaPlayer.IsRepeating = true;
+                    MediaPlayer.Play(main.soDarude);
+                    break;
                 case 2:
-                        type = MenuType.Options;
-                        LoadContent();
-                        break;
+                    type = MenuType.Options;
+                    LoadContent();
+                    break;
                 case 3:
-                        type = MenuType.MainMenu;
-                        break;
+                    type = MenuType.MainMenu;
+                    break;
             }
         }
         public void Draw(SpriteBatch spriteBatch)
@@ -107,7 +110,7 @@ namespace SpaceGame
                 switch (type)
                 {
                     case MenuType.MainMenu:
-
+                        spriteBatch.Draw(Title, new Vector2(225, 100), Color.White);
                         spriteBatch.Draw(start.Texture, start.Position, Color.White);
                         spriteBatch.Draw(options.Texture, options.Position, Color.White);
 

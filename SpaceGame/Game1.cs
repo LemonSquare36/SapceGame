@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace SpaceGame
 {
@@ -63,12 +64,8 @@ namespace SpaceGame
         Timer RandTimer = new Timer();
         Timer CTimer = new Timer();
 
-        WALL Wall1;
-        WALL Wall2;
-        WALL Wall3;
-        WALL Wall4;
-        WALL Wall5;
-        WALL Wall6;
+        WALL Wall1, Wall2, Wall3, Wall4, Wall5, Wall6;
+
         Vector2 Pos1 = new Vector2(0, 100);
         Vector2 Pos2 = new Vector2(0, 100);
         Vector2 Pos3 = new Vector2(1600, 100);
@@ -78,6 +75,8 @@ namespace SpaceGame
 
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
+        public Song soDarude;
 
         private SpriteFont font;
         private int score = 0;
@@ -170,6 +169,8 @@ namespace SpaceGame
 
             YOUDIED = Content.Load<Texture2D>("Menu/YouDied");
 
+            soDarude = Content.Load<Song>("01 - Sandstorm (Radio Edit)");
+
             RandTimer.Elapsed += RandTimeElapsed;
             CTimer.Elapsed += CTimeElapsed;
             RandTimer2.Elapsed += RandTime2Elasped;
@@ -195,7 +196,7 @@ namespace SpaceGame
             {
                 objects.Add(new Enemy(Content, ObjectType.Asteroid, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
                 RandTimer.Stop();
-                RandTimer.Interval = Rand.Next(500, 1000);
+                RandTimer.Interval = Rand.Next(500, 700);
                 RandTimer.Start();
             }
         }
@@ -203,9 +204,9 @@ namespace SpaceGame
         {
             if (Start != 0)
             {
-                objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10), BaseShipSprite));
+                objects.Add(new Enemy(Content, ObjectType.Cannon, Rand.Next((int)Wall1.Position.Y, (int)Wall4.Position.Y), BaseShipSprite));
                 CTimer.Stop();
-                CTimer.Interval = Rand.Next(4000, 6000);
+                CTimer.Interval = Rand.Next(3000, 4000);
                 CTimer.Start();
             }
         }
@@ -213,11 +214,11 @@ namespace SpaceGame
         {
             if (Start != 0)
             {
-            healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
-            powerUps.Add(new PowerUp(Content, PowerUpType.DoubleShot, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
-            RandTimer2.Stop();
-            RandTimer2.Interval = Rand.Next(10000, 20000);
-            RandTimer2.Start();
+                healthPacks.Add(new HealthPacks(Content, PackType.HealthPack, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+                powerUps.Add(new PowerUp(Content, PowerUpType.DoubleShot, Rand.Next((int)Wall1.Position.Y + 10, (int)Wall4.Position.Y - 10)));
+                RandTimer2.Stop();
+                RandTimer2.Interval = Rand.Next(16000, 22000);
+                RandTimer2.Start();
             }
         }
         /// <summary>
@@ -381,7 +382,7 @@ namespace SpaceGame
                     Rectangle sourceRectangle = new Rectangle(0, 0, BaseShip.Width, BaseShip.Height);
                     Vector2 origin = new Vector2(BaseShip.Width / 2, BaseShip.Height * 3);
 
-                    if (health.Width <= 0) spriteBatch.Draw(YOUDIED, new Vector2(25, 100), new Color(255, 255, 255, (byte)MathHelper.Clamp(AlphaValue, 0, 255)));
+                    if (health.Width <= 0) spriteBatch.Draw(YOUDIED, new Vector2(25, 100), Color.Orange);
 
                     //spriteBatch.Draw(BaseShip, location, sourceRectangle, Color.White, angle, origin, 1.0f, SpriteEffects.None, 1);
 
@@ -393,16 +394,14 @@ namespace SpaceGame
         public void WallMove(GameTime gameTime)
         {
             Vector2 bDirection = new Vector2(0, -1);
-            Vector2 cDirection = new Vector2(0, 1);
             Vector2 cSpeed = new Vector2(0, 20);
             Vector2 dSpeed = new Vector2(0, -20);
 
             if (DoneMoving && doneMoving)
             {
-                WallPos = Rand.Next(10, 155);
-                Wall2Pos = Rand.Next(220, 455);
+                WallPos = Rand.Next(25, 155);
+                Wall2Pos = Rand.Next(235, 425);
                 Select = Rand.Next(1, 3);
-
                 /*Console.WriteLine("WallPos " + WallPos);
                 Console.WriteLine("Wall2Pos " + Wall2Pos);
                 Console.WriteLine("Wall2real " + Wall4.Position.Y);
@@ -415,7 +414,7 @@ namespace SpaceGame
             {
                 if (Select == 1)
                 {
-                    if (Wall1.Position.Y <= 10)
+                    if (Wall1.Position.Y <= 30)
                     {
                         DoneMoving = true;
                     }
@@ -424,12 +423,12 @@ namespace SpaceGame
                         Wall1.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         Wall2.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                         Wall3.Position += bDirection * cSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-                        if (Wall1.Position.Y >= WallPos) DoneMoving = true;
+                        if (Wall1.Position.Y <= WallPos) DoneMoving = true;
                     }
                 }
                 else if (Select == 2)
                 {
-                    if (Wall1.Position.Y >= 160)
+                    if (Wall1.Position.Y >= 165)
                     {
                         DoneMoving = true;
                     }
@@ -446,7 +445,7 @@ namespace SpaceGame
             {
                 if (Select == 1)
                 {
-                    if (Wall4.Position.Y <= 250)
+                    if (Wall4.Position.Y <= 240)
                     {
                         doneMoving = true;
                     }
@@ -460,7 +459,7 @@ namespace SpaceGame
                 }
                 else if (Select == 2)
                 {
-                    if (Wall4.Position.Y >= 460)
+                    if (Wall4.Position.Y >= 420)
                     {
                         doneMoving = true;
                     }

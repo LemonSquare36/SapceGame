@@ -283,3 +283,21 @@
 /processorParam:TextureFormat=Color
 /build:Menu/ContinuePressed.png
 
+#begin 01 - Sandstorm (Radio Edit).mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:01 - Sandstorm (Radio Edit).mp3
+
+#begin Menu/SapceGame.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Menu/SapceGame.png
+
